@@ -817,51 +817,96 @@
       )
       .join("");
 
+    /* VS Code orders a folder's children folders-first, each group A-Z, and
+       marks expandable rows with a chevron rather than a folder icon. Badges
+       are the problem counts the language server reports. */
+    const ICON = {
+      ts: '<b class="vs-ts">TS</b>',
+      json: '<i class="vs-json">{}</i>',
+      md: '<i class="vs-md">' + GLYPH.info + "</i>",
+      toml: '<i class="vs-toml">' + GLYPH.gear + "</i>",
+      png: '<i class="vs-png">' + GLYPH.image + "</i>",
+    };
+
     const tree = [
-      [0, "", GLYPH.folderOpen, "omarchy-themes"],
-      [1, "", GLYPH.folder, "themes"],
-      [2, "file", GLYPH.file, "colors.toml"],
-      [2, "file", GLYPH.file, "preview.png"],
-      [1, "", GLYPH.folder, "src"],
-      [2, "file on", GLYPH.file, "theme.ts"],
-      [2, "file", GLYPH.file, "palette.ts"],
-      [2, "file", GLYPH.file, "index.ts"],
-      [1, "", GLYPH.folder, "test"],
-      [2, "file", GLYPH.file, "theme.test.ts"],
-      [1, "file", GLYPH.file, "package.json"],
-      [1, "file", GLYPH.file, "tsconfig.json"],
-      [1, "file", GLYPH.file, "README.md"],
+      [0, "dir", "chev", "omarchy-themes", ""],
+      [1, "dir", "chev", "src", "dot"],
+      [2, "", "ts", "index.ts", ""],
+      [2, "", "ts", "palette.ts", ""],
+      [2, "on", "ts", "theme.ts", "4"],
+      [1, "dir", "chev", "test", ""],
+      [2, "", "ts", "theme.test.ts", ""],
+      [1, "dir", "chev", "themes", ""],
+      [2, "", "toml", "colors.toml", ""],
+      [2, "", "png", "preview.png", ""],
+      [1, "", "json", "package.json", ""],
+      [1, "", "md", "README.md", ""],
+      [1, "", "json", "tsconfig.json", "1"],
     ]
-      .map(
-        (n) =>
+      .map(function (n) {
+        const icon = n[2] === "chev" ? '<i class="vs-chev">\u2304</i>' : ICON[n[2]];
+        const badge =
+          n[4] === "dot"
+            ? '<u class="vs-dot"></u>'
+            : n[4]
+            ? '<u class="vs-badge">' + n[4] + "</u>"
+            : "";
+        return (
           '<div class="vs-node ' + n[1] + '" style="--depth:' + n[0] + '">' +
-          "<i>" + n[2] + "</i>" + esc(n[3]) + "</div>"
-      )
+          icon + "<span>" + esc(n[3]) + "</span>" + badge +
+          "</div>"
+        );
+      })
       .join("");
 
+    /* The minimap runs the full height of the editor and carries the code's
+       own colours, so it reads as a shrunken buffer rather than grey noise. */
     const rnd = noise(99);
-    const mini = Array.from(
-      { length: 26 },
-      () => '<span style="width:' + (18 + Math.round(rnd() * 80)) + '%"></span>'
-    ).join("");
+    const MINI_INK = ["--accent", "--fg-dark", "--green", "--yellow", "--muted", "--magenta"];
+    const mini = Array.from({ length: 60 }, function () {
+      const blank = rnd() < 0.16;
+      return (
+        '<span style="width:' + (blank ? 0 : 14 + Math.round(rnd() * 80)) +
+        "%;margin-left:" + Math.round(rnd() * 22) +
+        "%;background:var(" + MINI_INK[Math.floor(rnd() * MINI_INK.length)] + ')"></span>'
+      );
+    }).join("");
 
     return (
       '<div class="app app-vscode">' +
+        /* VS Code draws its own title bar: menus, the command centre with the
+           workspace name, and the window controls. */
+        '<div class="vs-title">' +
+          '<span class="vs-menu">File</span><span class="vs-menu">Edit</span>' +
+          '<span class="vs-menu">Selection</span><span class="vs-menu">\u22ef</span>' +
+          '<div class="vs-centre">' + GLYPH.search + " omarchy-themes</div>" +
+          '<span class="vs-wctl">\u2500</span><span class="vs-wctl">\u25a1</span>' +
+          '<span class="vs-wctl">\u2715</span>' +
+        "</div>" +
         '<div class="vs-top">' +
           '<div class="vs-rail">' +
             "<i class='on'>" + GLYPH.files + "</i><i>" + GLYPH.search + "</i>" +
             "<i>" + GLYPH.branch + "</i><i>" + GLYPH.play + "</i>" +
             "<i>" + GLYPH.pkg + "</i>" +
-            "<div style='flex:1'></div><i>" + GLYPH.gear + "</i>" +
+            "<div style='flex:1'></div>" +
+            "<i class='vs-acct'></i><i>" + GLYPH.gear + "</i>" +
           "</div>" +
-          '<div class="vs-side"><h3>Explorer</h3>' + tree + "</div>" +
+          '<div class="vs-side">' +
+            '<div class="vs-side-head">Explorer<span>\u22ef</span></div>' +
+            '<div class="vs-tree">' + tree + "</div>" +
+            '<div class="vs-panes">' +
+              '<div><i class="vs-chev closed">\u2304</i>Outline</div>' +
+              '<div><i class="vs-chev closed">\u2304</i>Timeline</div>' +
+            "</div>" +
+          "</div>" +
           '<div class="vs-main">' +
             '<div class="vs-tabs">' +
-              '<div class="vs-tab"><i>' + GLYPH.code + "</i>palette.ts</div>" +
-              '<div class="vs-tab on"><i>' + GLYPH.code + "</i>theme.ts</div>" +
-              '<div class="vs-tab"><i>' + GLYPH.file + "</i>colors.toml</div>" +
+              '<div class="vs-tab"><b class="vs-ts">TS</b>palette.ts</div>' +
+              '<div class="vs-tab on"><b class="vs-ts">TS</b>theme.ts' +
+                '<u class="vs-badge">4</u></div>' +
+              '<div class="vs-tab"><i class="vs-toml">' + GLYPH.gear + "</i>colors.toml</div>" +
             "</div>" +
-            '<div class="vs-crumbs">src &rsaquo; theme.ts &rsaquo; loadPalette</div>' +
+            '<div class="vs-crumbs">src &rsaquo; <b class="vs-ts">TS</b> theme.ts &rsaquo; loadPalette</div>' +
             '<div class="vs-editor">' +
               '<div class="vs-code">' + lines + "</div>" +
               '<div class="vs-mini">' + mini + "</div>" +
@@ -870,10 +915,10 @@
         "</div>" +
         '<div class="vs-status">' +
           "<span>" + GLYPH.git + " main*</span>" +
-          "<span>" + GLYPH.refresh + " 0 " + GLYPH.close + " 0 " + GLYPH.info + " 2</span>" +
+          "<span>" + GLYPH.close + " 5 " + GLYPH.refresh + " 0</span>" +
           '<span class="right">' +
             "<span>Ln 18, Col 42</span><span>Spaces: 2</span><span>UTF-8</span>" +
-            "<span>TypeScript</span><span>" + esc(theme.name) + "</span>" +
+            "<span>LF</span><span>{} TypeScript</span><span>" + esc(theme.name) + "</span>" +
           "</span>" +
         "</div>" +
       "</div>"

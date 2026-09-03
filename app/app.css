@@ -672,6 +672,12 @@ body[data-mode="light"] {
 
 /* ── vs code ─────────────────────────────────────────────────────────── */
 
+/* The chrome is flat, and that is not a simplification: Omarchy's
+   vscode-theme.json.tpl paints sideBar, activityBar, titleBar, the tab strip,
+   the editor and the status bar all in `background`, with `muted` for inactive
+   text and `accent` used only for the tab's top border, the activity badge and
+   a 19%-alpha selection tint. Omacon ships its own file and lands on the same
+   values, so this holds whether a theme supplies one or Omarchy renders it. */
 .app-vscode {
   font-size: var(--ui-fs);
   display: flex;
@@ -679,12 +685,38 @@ body[data-mode="light"] {
   background: var(--bg);
   white-space: normal;
 }
+
+.vs-title {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  padding: 0.3em 0.7em;
+  font-size: 0.92em;
+  color: var(--fg);
+  white-space: nowrap;
+  overflow: hidden;
+}
+.vs-menu { color: var(--fg); flex: 0 0 auto; }
+.vs-centre {
+  flex: 0 1 22em;
+  margin: 0 auto;
+  padding: 0.1em 0.8em;
+  border: 1px solid color-mix(in srgb, var(--muted) 40%, transparent);
+  border-radius: 5px;
+  color: var(--muted);
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.vs-wctl { color: var(--fg); flex: 0 0 auto; font-size: 0.85em; }
+
 .vs-top { flex: 1; display: flex; min-height: 0; }
 .vs-rail {
   flex: 0 0 auto;
   width: 3.1em;
-  background: var(--bg-dark);
-  border-right: 1px solid var(--bg-darker);
+  background: var(--bg);
+  border-right: 1px solid color-mix(in srgb, var(--muted) 25%, transparent);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -693,31 +725,104 @@ body[data-mode="light"] {
   font-size: 1.25em;
   color: var(--fg-dark);
 }
-.vs-rail i { font-style: normal; }
-.vs-rail i.on { color: var(--fg-bright); }
+.vs-rail { color: var(--muted); }
+.vs-rail i { font-style: normal; position: relative; }
+/* The active tool is marked by a bar down the rail's left edge, not just a
+   brighter glyph. */
+.vs-rail i.on { color: var(--fg); }
+.vs-rail i.on::before {
+  content: "";
+  position: absolute;
+  left: -0.85em;
+  top: -0.15em;
+  bottom: -0.15em;
+  width: 2px;
+  background: var(--fg);
+}
+.vs-acct {
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--muted) 55%, var(--bg));
+  display: block;
+}
 .vs-side {
   flex: 0 0 23%;
-  background: var(--bg-dark);
-  padding: 0.6em 0;
+  background: var(--bg);
+  padding: 0.4em 0 0;
   overflow: hidden;
   color: var(--fg);
+  display: flex;
+  flex-direction: column;
 }
-.vs-side h3 {
-  margin: 0 0 0.5em;
-  padding: 0 1.1em;
-  font: inherit;
-  font-size: 0.85em;
-  letter-spacing: 0.12em;
-  color: var(--fg-dark);
-  text-transform: uppercase;
+.vs-side-head {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.15em 0.9em 0.6em;
+  font-size: 0.92em;
+  color: var(--fg);
+  flex: 0 0 auto;
 }
+.vs-side-head span { color: var(--muted); }
+.vs-tree { flex: 1; min-height: 0; overflow: hidden; }
+/* Outline and Timeline sit collapsed at the foot of the Explorer. */
+.vs-panes { flex: 0 0 auto; border-top: 1px solid color-mix(in srgb, var(--muted) 25%, transparent); }
+.vs-panes div {
+  padding: 0.3em 0.9em;
+  font-size: 0.92em;
+}
+.vs-chev { font-style: normal; display: inline-block; width: 1.1em; color: var(--fg); }
+.vs-chev.closed { transform: rotate(-90deg); }
 .vs-node {
-  padding: 0.15em 0.6em 0.15em calc(1.1em + var(--depth, 0) * 0.95em);
+  display: flex;
+  align-items: center;
+  gap: 0.15em;
+  padding: 0.15em 0.6em 0.15em calc(0.5em + var(--depth, 0) * 0.9em);
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
 }
-.vs-node.on { background: var(--sel); color: var(--fg-bright); }
+.vs-node > span { overflow: hidden; text-overflow: ellipsis; }
+/* list.activeSelectionBackground is the accent at 19% alpha, not a solid bar. */
+.vs-node.on {
+  background: color-mix(in srgb, var(--accent) 19%, transparent);
+  color: var(--fg);
+}
+.vs-node.dir > span { color: var(--fg); }
+
+/* Seti-ish file icons: the extension is what carries the colour. */
+.vs-ts {
+  font-family: var(--sans);
+  font-size: 0.72em;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--blue);
+  flex: 0 0 auto;
+  margin-right: 0.45em;
+}
+.vs-json { color: var(--yellow); }
+.vs-md { color: var(--blue); }
+.vs-toml { color: var(--muted); }
+.vs-png { color: var(--green); }
+
+/* Problem counts, and the dot a folder shows when something inside it has one. */
+.vs-badge {
+  margin-left: auto;
+  padding: 0 0.4em;
+  font-size: 0.85em;
+  text-decoration: none;
+  color: var(--fg);
+  background: color-mix(in srgb, var(--accent) 45%, transparent);
+  border-radius: 999px;
+  flex: 0 0 auto;
+}
+.vs-dot {
+  margin-left: auto;
+  width: 0.4em;
+  height: 0.4em;
+  border-radius: 50%;
+  background: var(--accent);
+  flex: 0 0 auto;
+}
 /* Fixed cell so every glyph, whatever its advance width, leaves the same gap
    before the label and lines up in a column. */
 .vs-node i {
@@ -728,26 +833,29 @@ body[data-mode="light"] {
   margin-right: 0.5em;
   text-align: center;
 }
-.vs-node.file i { color: var(--fg-dark); }
+.vs-node i { color: var(--muted); }
 .vs-main {
   flex: 1;
   min-width: 0;
   display: flex;
   flex-direction: column;
-  border-left: 1px solid var(--bg-darker);
+  border-left: 1px solid color-mix(in srgb, var(--muted) 25%, transparent);
 }
-.vs-tabs { display: flex; background: var(--bg-dark); flex: 0 0 auto; }
+.vs-tabs { display: flex; background: var(--bg); flex: 0 0 auto; }
 .vs-tab {
+  display: flex;
+  align-items: center;
   padding: 0.4em 1.1em;
-  color: var(--fg-dark);
+  color: var(--muted);
   border-top: 2px solid transparent;
   white-space: nowrap;
 }
 .vs-tab.on {
   background: var(--bg);
-  color: var(--fg-bright);
+  color: var(--fg);
   border-top-color: var(--accent);
 }
+.vs-tab .vs-badge { margin-left: 0.6em; }
 .vs-tab i,
 .nv-tab i {
   font-style: normal;
@@ -758,7 +866,7 @@ body[data-mode="light"] {
   flex: 0 0 auto;
 }
 .vs-tab i { color: var(--yellow); }
-.vs-crumbs { padding: 0.25em 1.2em; color: var(--fg-dark); font-size: 0.9em; flex: 0 0 auto; }
+.vs-crumbs { padding: 0.25em 1.2em; color: var(--muted); font-size: 0.9em; flex: 0 0 auto; }
 .vs-editor {
   flex: 1;
   min-height: 0;
@@ -775,18 +883,22 @@ body[data-mode="light"] {
   padding: 0.4em 0.5em;
   display: flex;
   flex-direction: column;
-  gap: 0.18em;
-  opacity: 0.5;
+  justify-content: space-between;
+  overflow: hidden;
+  opacity: 0.55;
 }
-.vs-mini span { height: 0.22em; background: var(--muted); border-radius: 1px; }
+.vs-mini span { height: 0.2em; border-radius: 1px; flex: 0 0 auto; }
 .vs-status {
   flex: 0 0 auto;
   display: flex;
   align-items: center;
   gap: 1.3em;
   padding: 0.25em 1em;
-  background: var(--accent);
-  color: var(--bg);
+  /* statusBar.background is the editor background, not the accent: VS Code
+     only goes accent-coloured when no folder is open. */
+  background: var(--bg);
+  color: var(--fg);
+  border-top: 1px solid color-mix(in srgb, var(--muted) 25%, transparent);
   font-size: 0.9em;
   font-family: var(--mono);
   white-space: nowrap;
