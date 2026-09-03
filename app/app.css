@@ -688,22 +688,25 @@ body[data-mode="light"] {
 }
 
 /* VS Code: straight from the theme's own tokenColors, so an import keyword and
-   a plain keyword keep the two different colours the theme gives them. */
+   a plain keyword keep the two different colours the theme gives them.
+   Every one falls back to the palette slot Omarchy's template would have used,
+   so a theme with no token colours -- or an older server that does not send
+   them -- still highlights instead of going flat. */
 .app-vscode {
-  --tk-key: var(--vs-key);
-  --tk-imp: var(--vs-imp);
-  --tk-fn: var(--vs-fn);
-  --tk-str: var(--vs-str);
-  --tk-num: var(--vs-num);
-  --tk-bool: var(--vs-bool);
-  --tk-com: var(--vs-com);
-  --tk-tag: var(--vs-com);
-  --tk-typ: var(--vs-typ);
-  --tk-prim: var(--vs-prim);
-  --tk-var: var(--vs-var);
-  --tk-prop: var(--vs-prop);
-  --tk-op: var(--vs-op);
-  --tk-pun: var(--vs-pun);
+  --tk-key: var(--vs-key, var(--br-magenta));
+  --tk-imp: var(--vs-imp, var(--blue));
+  --tk-fn: var(--vs-fn, var(--blue));
+  --tk-str: var(--vs-str, var(--green));
+  --tk-num: var(--vs-num, var(--orange));
+  --tk-bool: var(--vs-bool, var(--orange));
+  --tk-com: var(--vs-com, var(--muted));
+  --tk-tag: var(--vs-com, var(--muted));
+  --tk-typ: var(--vs-typ, var(--yellow));
+  --tk-prim: var(--vs-prim, var(--fg));
+  --tk-var: var(--vs-var, var(--fg));
+  --tk-prop: var(--vs-prop, var(--cyan));
+  --tk-op: var(--vs-op, var(--br-blue));
+  --tk-pun: var(--vs-pun, var(--fg-dark));
 }
 
 /* ── vs code ─────────────────────────────────────────────────────────── */
@@ -956,16 +959,24 @@ body[data-mode="light"] {
 }
 .vs-code { flex: 1; min-width: 0; overflow: hidden; padding-left: 0.5em; }
 .vs-num { color: var(--muted); display: inline-block; width: 2.6em; text-align: right; margin-right: 1.2em; }
+/* One rule per line of the buffer, indented and as long as the line is, in the
+   colour of that line's first token -- a miniature of the code rather than a
+   scatter of bars. Each slot takes an equal share of the height so the map
+   spans the editor, and the mark itself stays a hairline. */
 .vs-mini {
   flex: 0 0 5.5em;
   padding: 0.4em 0.5em;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   overflow: hidden;
-  opacity: 0.55;
+  opacity: 0.7;
 }
-.vs-mini span { height: 0.2em; border-radius: 1px; flex: 0 0 auto; }
+.vs-mini span {
+  flex: 1 1 0;
+  min-height: 0;
+  border-top: 2px solid currentColor;
+}
+.vs-mini span.blank { border-top-color: transparent; }
 .vs-status {
   flex: 0 0 auto;
   display: flex;

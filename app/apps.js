@@ -972,16 +972,19 @@
       })
       .join("");
 
-    /* The minimap runs the full height of the editor and carries the code's
-       own colours, so it reads as a shrunken buffer rather than grey noise. */
-    const rnd = noise(99);
-    const MINI_INK = ["--accent", "--fg-dark", "--green", "--yellow", "--muted", "--magenta"];
-    const mini = Array.from({ length: 60 }, function () {
-      const blank = rnd() < 0.16;
+    /* The minimap is drawn from the buffer itself: one hairline per line, at the
+       line's indent, as long as the line is, in the colour of its first token.
+       Reusing the t-* classes means it tracks the theme with the code. */
+    const mini = THEME_TS.map(function (line, i) {
+      const text = line.replace(/\s+$/, "");
+      if (!text.trim()) return '<span class="blank"></span>';
+      const indent = text.length - text.replace(/^\s+/, "").length;
+      const found = /class="(t-[a-z]+)"/.exec(code[i] || "");
+      const width = Math.min(100 - indent * 1.1, (text.length - indent) * 1.15);
       return (
-        '<span style="width:' + (blank ? 0 : 14 + Math.round(rnd() * 80)) +
-        "%;margin-left:" + Math.round(rnd() * 22) +
-        "%;background:var(" + MINI_INK[Math.floor(rnd() * MINI_INK.length)] + ')"></span>'
+        '<span class="' + (found ? found[1] : "t-var") +
+        '" style="margin-left:' + (indent * 1.1).toFixed(1) +
+        "%;width:" + Math.max(4, width).toFixed(1) + '%"></span>'
       );
     }).join("");
 
