@@ -35,17 +35,15 @@
   }
 
   /* btop-style braille meter: filled cells recoloured as the value climbs. */
+  /* btop colours a meter by position along its length, not by the value: a
+     block near the right end is the gradient's end colour whatever the reading
+     is. So the filled run carries a gradient spanning the whole meter and the
+     empty run is painted flat -- see .gauge in app.css. */
   function gauge(pct, width) {
     const filled = Math.round((pct / 100) * width);
-    const level = pct > 80 ? " hot" : pct > 55 ? " warn" : "";
     return (
-      '<span class="gauge"><i class="' +
-      level.trim() +
-      '">' +
-      rep("⣿", filled) +
-      "</i>" +
-      rep("⣀", width - filled) +
-      "</span>"
+      '<span class="gauge"><i>' + rep("⣿", filled) + "</i>" +
+      "<u>" + rep("⣀", width - filled) + "</u></span>"
     );
   }
 
@@ -491,7 +489,7 @@
         "</div>" +
         '<div class="btop-row" style="flex:1">' +
           '<div class="col" style="flex:1;display:flex;flex-direction:column;gap:1.1em">' +
-            '<div class="box">' +
+            '<div class="box box-mem">' +
               '<span class="box-title">mem</span>' +
               '<span class="box-tools">disks</span>' +
               mem +
@@ -504,7 +502,7 @@
                 ' <span class="dim">1,0G</span>' +
               "</div>" +
             "</div>" +
-            '<div class="box">' +
+            '<div class="box box-net">' +
               '<span class="box-title">net</span>' +
               '<span class="box-tools">enp5s0</span>' +
               '<div class="dim">▼ download <span class="ok">3,18 KiB/s</span></div>' +
@@ -513,7 +511,7 @@
               '<div class="graph up">' + sparkline(38, 43, 0.02, 0.6) + "</div>" +
             "</div>" +
           "</div>" +
-          '<div class="box btop-proc" style="flex:1.25">' +
+          '<div class="box box-proc btop-proc" style="flex:1.25">' +
             '<span class="box-title">proc</span>' +
             '<span class="box-tools">cpu lazy</span>' +
             '<div class="proc-head">' +

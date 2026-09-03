@@ -155,7 +155,45 @@
     Object.keys(VARS).forEach((key) => {
       if (t.colors[key]) root.setProperty(VARS[key], t.colors[key]);
     });
-    root.setProperty("--panel-border", t.colors.muted);
+    /* Window borders come from the theme's own Hyprland config when it sets
+       them -- omacon's are #f200f3 and #4a2e4a, neither of which is derivable
+       from the ANSI palette -- and fall back to the palette otherwise. */
+    const borders = t.borders || {};
+    root.setProperty("--panel-border", borders.inactive || t.colors.muted);
+    root.setProperty("--panel-border-active", borders.active || t.colors.accent);
+
+    /* Same for btop: a theme ships its whole btop palette, and btop picks box
+       borders and meter gradients independently of the terminal colours. Each
+       falls back to what the preview used to derive. */
+    const bt = t.btop || {};
+    const BTOP_VARS = {
+      "--bt-title": bt.title || t.colors.accent,
+      "--bt-hi": bt.hi_fg || t.colors.accent,
+      "--bt-dim": bt.inactive_fg || t.colors.dark_foreground,
+      "--bt-div": bt.div_line || t.colors.muted,
+      "--bt-cpu-box": bt.cpu_box || t.colors.muted,
+      "--bt-mem-box": bt.mem_box || t.colors.muted,
+      "--bt-net-box": bt.net_box || t.colors.muted,
+      "--bt-proc-box": bt.proc_box || t.colors.muted,
+      "--bt-graph": bt.cpu_mid || t.colors.accent,
+      "--bt-graph-alt": bt.cpu_start || t.colors.cyan,
+      "--bt-meter-start": bt.cpu_start || t.colors.green,
+      "--bt-meter-mid": bt.cpu_mid || t.colors.yellow,
+      "--bt-meter-end": bt.cpu_end || t.colors.red,
+      "--bt-temp": bt.temp_start || t.colors.green,
+      "--bt-key": bt.proc_misc || t.colors.yellow,
+      "--bt-down": bt.download_mid || t.colors.green,
+      "--bt-up": bt.upload_mid || t.colors.magenta,
+      "--bt-sel-bg": bt.selected_bg || t.colors.selection,
+      "--bt-sel-fg": bt.selected_fg || t.colors.bright_foreground,
+      "--bt-meter-bg": bt.meter_bg || t.colors.muted,
+    };
+    Object.keys(BTOP_VARS).forEach((key) => root.setProperty(key, BTOP_VARS[key]));
+
+    /* fastfetch draws its logo in ANSI green -- `"color": {"1": "green"}` in
+       Omarchy's fastfetch config -- which is why omacon's mark is violet on
+       the real desktop and not the magenta accent. */
+    root.setProperty("--logo-ink", t.colors.green || t.colors.accent);
     root.setProperty("--folder", t.folderColor || t.colors.accent);
     /* Hyprland rounding is in logical px against a 1920-wide screen; the
        preview's viewport stands in for that screen, so scale it the same way. */

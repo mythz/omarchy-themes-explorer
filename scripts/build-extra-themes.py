@@ -56,7 +56,9 @@ from server import (  # noqa: E402
     FOLDER_COLORS,
     IMAGE_EXT,
     ROUNDING_RE,
+    btop_colors_from_text,
     flatten_alacritty,
+    hypr_border_colors_from_text,
     normalize,
 )
 
@@ -392,14 +394,25 @@ def build_theme(listing, cache_dir, refresh, http=None):
     colors = normalize(raw)
     mode = colors.pop("mode")
 
+    # One pass over the Hyprland config for both the corner radius and the
+    # window border colours, so an extra theme carries what an installed one
+    # does -- the page paints from the same fields either way.
     rounding = 0
+    borders = {}
     for name in ("hyprland.lua", "hyprland.conf"):
         text = clone.read(prefix + name)
-        if text:
+        if not text:
+            continue
+        if not rounding:
             found = ROUNDING_RE.search(text)
             if found:
                 rounding = int(found.group(1))
-                break
+        if not borders:
+            borders = hypr_border_colors_from_text(text)
+        if rounding and borders:
+            break
+
+    btop = btop_colors_from_text(clone.read(prefix + "btop.theme") or "")
 
     icon_theme = ""
     text = clone.read(prefix + "icons.theme")
@@ -422,6 +435,8 @@ def build_theme(listing, cache_dir, refresh, http=None):
         "source": "extra",
         "mode": mode,
         "rounding": rounding,
+        "borders": borders,
+        "btop": btop,
         "iconTheme": icon_theme,
         "folderColor": FOLDER_COLORS.get(icon_theme, colors["accent"]),
         "colors": colors,

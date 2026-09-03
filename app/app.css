@@ -91,7 +91,7 @@ html, body {
   transition: border-color 0.18s ease;
 }
 
-.panel.is-focused { border-color: var(--accent); }
+.panel.is-focused { border-color: var(--panel-border-active); }
 
 .panel[data-app="omenu"] {
   background: transparent;
@@ -235,7 +235,7 @@ html, body {
      mid-letter. Fixed whenever it fits, shrunk only to avoid the crop. */
   font-size: min(var(--term-fs), 1.9cqw);
   line-height: 1;
-  color: var(--accent);
+  color: var(--logo-ink);
   margin: 0 0 1.8em;
   align-self: center;
 }
@@ -256,7 +256,7 @@ html, body {
 .btop-row > * { min-width: 0; }
 
 .box {
-  border: 1px solid var(--muted);
+  border: 1px solid var(--bt-cpu-box);
   border-radius: 3px;
   position: relative;
   padding: 0.75em 0.55em 0.35em;
@@ -272,7 +272,7 @@ html, body {
   left: 0.8em;
   padding: 0 0.35em;
   background: var(--bg);
-  color: var(--accent);
+  color: var(--bt-title);
   font-weight: 700;
 }
 
@@ -282,20 +282,30 @@ html, body {
   right: 0.8em;
   padding: 0 0.35em;
   background: var(--bg);
-  color: var(--fg-dark);
+  color: var(--bt-dim);
 }
 
+/* The gradient is clipped to the meter's own box, so a block lands on the
+   colour its position along the meter earns -- which is how btop paints one.
+   The empty run opts back out with text-fill-color. */
 .gauge {
   display: inline-block;
-  color: var(--muted);
   letter-spacing: -0.03em;
+  background-image: linear-gradient(
+    90deg,
+    var(--bt-meter-start),
+    var(--bt-meter-mid) 50%,
+    var(--bt-meter-end)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
-.gauge i { font-style: normal; color: var(--accent); }
-.gauge i.warn { color: var(--yellow); }
-.gauge i.hot { color: var(--red); }
+.gauge i { font-style: normal; }
+.gauge u { text-decoration: none; -webkit-text-fill-color: var(--bt-meter-bg); }
 
 .graph {
-  color: var(--accent);
+  color: var(--bt-graph);
   display: block;
   height: 1.35em;
   line-height: 1.35;
@@ -303,16 +313,27 @@ html, body {
   letter-spacing: -0.05em;
   opacity: 0.9;
 }
-.graph.alt { color: var(--cyan); }
-.graph.up { color: var(--magenta); }
+.graph.alt { color: var(--bt-graph-alt); }
+.graph.up { color: var(--bt-up); }
 
-.dim { color: var(--fg-dark); }
-.key { color: var(--yellow); }
-.ok  { color: var(--green); }
-.hot { color: var(--red); }
+/* btop's own palette drives the terminal-app text too: these classes are only
+   ever used inside .app-btop. */
+.dim { color: var(--bt-dim); }
+.key { color: var(--bt-key); }
+.ok  { color: var(--bt-temp); }
+.hot { color: var(--bt-up); }
 
-.proc-head { color: var(--accent); border-bottom: 1px solid var(--muted); }
-.proc-row.sel { background: var(--sel); color: var(--fg-bright); }
+.proc-head { color: var(--bt-title); border-bottom: 1px solid var(--bt-div); }
+.proc-row.sel { background: var(--bt-sel-bg); color: var(--bt-sel-fg); }
+
+/* Each btop box draws its own border colour, and a theme need not make them
+   agree -- omacon's mem box is violet while the rest are magenta. */
+.box-mem  { border-color: var(--bt-mem-box); }
+.box-net  { border-color: var(--bt-net-box); }
+.box-proc { border-color: var(--bt-proc-box); }
+.box-mem  > .box-title { color: var(--bt-mem-box); }
+.box-net  > .box-title { color: var(--bt-net-box); }
+.box-proc > .box-title { color: var(--bt-proc-box); }
 
 /* ── fastfetch ───────────────────────────────────────────────────────── */
 
@@ -324,7 +345,7 @@ html, body {
   padding: 0.8em 1em;
 }
 .ff-art {
-  color: var(--accent);
+  color: var(--logo-ink);
   flex: 0 0 auto;
   width: 50cqw;          /* half the panel, beside the specs */
   aspect-ratio: 1;

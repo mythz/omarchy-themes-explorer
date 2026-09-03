@@ -232,6 +232,79 @@ FOLDER_COLORS = {
 }
 
 
+# A theme ships btop's palette outright, so the preview reads it instead of
+# guessing one from the terminal colours. btop picks the box borders and meter
+# gradients independently of the ANSI palette -- omacon's mem box is #8563ff
+# while its cpu box is #ff66ff -- and no derivation recovers that.
+BTOP_KEY_RE = re.compile(r'theme\[([a-z_]+)\]\s*=\s*"(#[0-9a-fA-F]{3,6})"')
+
+# Only the keys the page actually paints with: the file has forty-odd, and the
+# rest would be dead weight in extra-themes.json.
+BTOP_KEYS = {
+    "title", "hi_fg", "inactive_fg", "div_line", "proc_misc",
+    "cpu_box", "mem_box", "net_box", "proc_box",
+    "selected_bg", "selected_fg", "meter_bg",
+    "cpu_start", "cpu_mid", "cpu_end", "temp_start",
+    "download_mid", "upload_mid",
+}
+
+
+def btop_colors_from_text(text):
+    out = {}
+    for key, value in BTOP_KEY_RE.findall(text or ""):
+        if key in BTOP_KEYS and parse_hex(value):
+            out[key] = to_hex(parse_hex(value))
+    return out
+
+
+def btop_colors(theme_dir):
+    try:
+        return btop_colors_from_text((theme_dir / "btop.theme").read_text(errors="replace"))
+    except OSError:
+        return {}
+
+
+# Hyprland writes a colour as rgba(rrggbbaa), rgb(rrggbb) or 0xaarrggbb, and a
+# border may be a gradient of several plus an angle -- the first colour is the
+# one this preview can show.
+HYPR_RGBA_RE = re.compile(r"rgba?\(\s*([0-9a-fA-F]{6,8})\s*\)|0x([0-9a-fA-F]{8})")
+BORDER_RE = re.compile(r"(?:col\.)?(active|inactive)_border\s*=\s*(.+)")
+
+
+def hypr_border_colors_from_text(text):
+    """active/inactive window border colours, as CSS."""
+    out = {}
+    for which, rest in BORDER_RE.findall(text or ""):
+        if which in out:
+            continue
+        found = HYPR_RGBA_RE.search(rest)
+        if not found:
+            continue
+        if found.group(1):
+            # rgba() is rrggbbaa; rgb() has no alpha to move.
+            css = "#" + found.group(1)
+        else:
+            # 0xaarrggbb -> #rrggbbaa
+            digits = found.group(2)
+            css = "#" + digits[2:] + digits[:2]
+        out[which] = css.lower()
+    return out
+
+
+def hypr_border_colors(theme_dir):
+    for name in ("hyprland.lua", "hyprland.conf"):
+        path = theme_dir / name
+        if not path.is_file():
+            continue
+        try:
+            found = hypr_border_colors_from_text(path.read_text(errors="replace"))
+        except OSError:
+            continue
+        if found:
+            return found
+    return {}
+
+
 def icon_theme_for(theme_dir):
     path = theme_dir / "icons.theme"
     try:
@@ -273,6 +346,8 @@ def discover_themes():
                 "source": source,
                 "mode": colors.pop("mode"),
                 "rounding": rounding_for(theme_dir),
+                "borders": hypr_border_colors(theme_dir),
+                "btop": btop_colors(theme_dir),
                 "iconTheme": icons,
                 "folderColor": FOLDER_COLORS.get(icons, colors["accent"]),
                 "colors": colors,
