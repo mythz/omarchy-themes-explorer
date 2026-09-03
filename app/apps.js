@@ -1029,21 +1029,6 @@
       })
       .join("");
 
-    /* The minimap is drawn from the buffer itself: one hairline per line, at the
-       line's indent, as long as the line is, in the colour of its first token.
-       Reusing the t-* classes means it tracks the theme with the code. */
-    const mini = THEME_TS.map(function (line, i) {
-      const text = line.replace(/\s+$/, "");
-      if (!text.trim()) return '<span class="blank"></span>';
-      const indent = text.length - text.replace(/^\s+/, "").length;
-      const found = /class="(t-[a-z]+)"/.exec(code[i] || "");
-      const width = Math.min(100 - indent * 1.1, (text.length - indent) * 1.15);
-      return (
-        '<span class="' + (found ? found[1] : "t-var") +
-        '" style="margin-left:' + (indent * 1.1).toFixed(1) +
-        "%;width:" + Math.max(4, width).toFixed(1) + '%"></span>'
-      );
-    }).join("");
 
     return (
       '<div class="app app-vscode">' +
@@ -1085,7 +1070,6 @@
             '<div class="vs-crumbs">src &rsaquo; <b class="vs-ts">TS</b> theme.ts &rsaquo; loadPalette</div>' +
             '<div class="vs-editor">' +
               '<div class="vs-code">' + lines + "</div>" +
-              '<div class="vs-mini">' + mini + "</div>" +
             "</div>" +
           "</div>" +
         "</div>" +

@@ -1001,24 +1001,6 @@ body[data-mode="light"] {
 }
 .vs-code { flex: 1; min-width: 0; overflow: hidden; padding-left: 0.5em; }
 .vs-num { color: var(--muted); display: inline-block; width: 2.6em; text-align: right; margin-right: 1.2em; }
-/* One rule per line of the buffer, indented and as long as the line is, in the
-   colour of that line's first token -- a miniature of the code rather than a
-   scatter of bars. Each slot takes an equal share of the height so the map
-   spans the editor, and the mark itself stays a hairline. */
-.vs-mini {
-  flex: 0 0 5.5em;
-  padding: 0.4em 0.5em;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  opacity: 0.7;
-}
-.vs-mini span {
-  flex: 1 1 0;
-  min-height: 0;
-  border-top: 2px solid currentColor;
-}
-.vs-mini span.blank { border-top-color: transparent; }
 .vs-status {
   flex: 0 0 auto;
   display: flex;
@@ -1362,7 +1344,6 @@ body[data-mode="light"] {
 @media (max-width: 1280px) {
   .vs-side { display: none; }
   .vs-main { flex: 1; border-left: 0; }
-  .vs-mini { display: none; }
   .vs-status { gap: 0.9em; }
   .vs-status .right > :nth-child(-n + 3) { display: none; }
 
