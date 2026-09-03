@@ -746,41 +746,48 @@
         .join("") +
       "</span>";
 
+    /* `eza -l --tree --level=2` over a cloned theme repo -- the listing, the
+       sizes and the tree glyphs are the real ones. No icons: eza draws those
+       only under --icons, and the colours are its own, keyed off the file
+       extension rather than anything the theme says. */
     const entries = [
-      ["drwxr-xr-x", "-", "backgrounds", "dir", GLYPH.folder],
-      [".rw-r--r--", "1.8M", "  1.png", "img", GLYPH.image, 1],
-      [".rw-r--r--", "962k", "  2.jpg", "img", GLYPH.image, 1],
-      ["drwxr-xr-x", "-", "colors", "dir", GLYPH.folder],
-      [".rw-r--r--", "1.0k", "alacritty.toml", "doc", GLYPH.file],
-      [".rw-r--r--", "1.5k", "btop.theme", "doc", GLYPH.file],
-      [".rw-r--r--", "508", "chromium.theme", "doc", GLYPH.file],
-      [".rw-r--r--", "1.1k", "colors.toml", "doc", GLYPH.file],
-      [".rw-r--r--", "224", "ghostty.conf", "file", GLYPH.file],
-      [".rw-r--r--", "233", "hyprland.conf", "file", GLYPH.file],
-      [".rw-r--r--", "112", "hyprlock.conf", "file", GLYPH.file],
-      [".rw-r--r--", "9", "icons.theme", "file", GLYPH.file],
-      [".rw-r--r--", "335", "kitty.conf", "file", GLYPH.file],
-      [".rw-r--r--", "165", "mako.ini", "file", GLYPH.file],
-      [".rw-r--r--", "3.3k", "neovim.lua", "doc", GLYPH.file],
-      [".rw-r--r--", "1.1k", "README.md", "doc", GLYPH.file],
-      [".rw-r--r--", "191", "swayosd.css", "file", GLYPH.file],
-      [".rw-r--r--", "334", "walker.css", "file", GLYPH.file],
-      [".rw-r--r--", "795", "waybar.css", "file", GLYPH.file],
-      [".rw-r--r--", "612", "vscode.json", "doc", GLYPH.file],
+      ["drwxr-xr-x", "-", "", ".", "file"],
+      [".rw-r--r--", "1.0k", "├── ", "alacritty.toml", "file"],
+      ["drwxr-xr-x", "-", "├── ", "backgrounds", "dir"],
+      [".rw-r--r--", "136k", "│   └── ", "1.png", "img"],
+      [".rw-r--r--", "1.5k", "├── ", "btop.theme", "file"],
+      [".rw-r--r--", "9", "├── ", "chromium.theme", "file"],
+      [".rw-r--r--", "439", "├── ", "ghostty-theme", "file"],
+      [".rw-r--r--", "439", "├── ", "ghostty.conf", "file"],
+      [".rw-r--r--", "224", "├── ", "hyprland.conf", "file"],
+      [".rw-r--r--", "233", "├── ", "hyprlock.conf", "file"],
+      [".rw-r--r--", "13", "├── ", "icons.theme", "file"],
+      [".rw-r--r--", "365", "├── ", "kitty.conf", "file"],
+      [".rw-r--r--", "335", "├── ", "mako.ini", "file"],
+      [".rw-r--r--", "1.0k", "├── ", "neovim.lua", "src"],
+      [".rw-r--r--", "966", "├── ", "README.md", "md"],
+      [".rw-r--r--", "165", "├── ", "swayosd.css", "src"],
+      [".rw-r--r--", "3.4M", "├── ", "theme.png", "img"],
+      [".rw-r--r--", "191", "├── ", "walker.css", "src"],
+      [".rw-r--r--", "334", "├── ", "waybar.css", "src"],
+      [".rw-r--r--", "795", "└── ", "wofi.css", "src"],
     ];
 
     const rows = entries
-      .map(
-        (e) =>
+      .map(function (e) {
+        // eza brightens a size once it carries a unit.
+        const big = /[kMG]$/.test(e[1]);
+        return (
           "<div>" +
           perm(e[0]) + " " +
-          '<span class="ls-size">' + padL(e[1], 5) + "</span> " +
+          '<span class="ls-size' + (big ? " big" : "") + '">' + padL(e[1], 4) + "</span> " +
           '<span class="ls-user">mythz</span> ' +
-          '<span class="ls-date">14 Sep 15:3' + (e[2].length % 10) + "  </span>" +
-          (e[5] ? '<span class="ls-perm">└─ </span>' : "") +
-          '<span class="ls-' + e[3] + '">' + e[4] + " " + esc(e[2].trim()) + "</span>" +
+          '<span class="ls-date"> 9 Feb 10:32</span> ' +
+          '<span class="ls-tree">' + e[2] + "</span>" +
+          '<span class="ls-' + e[4] + '">' + esc(e[3]) + "</span>" +
           "</div>"
-      )
+        );
+      })
       .join("");
 
     return (

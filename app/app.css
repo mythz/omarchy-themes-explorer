@@ -372,19 +372,28 @@ html, body {
 /* ── eza / ls -l ─────────────────────────────────────────────────────── */
 
 .app-ls { font-size: var(--term-fs); padding: 0.6em 0.8em; }
+/* eza's own palette, read off `eza --color=always`: the perm bits are
+   1;34/33/31/32 with dim placeholders, the size 1;32, the owner 1;33, the date
+   34, the tree glyphs 1;90, and the name is keyed off the extension -- 34 for a
+   directory, 35 for an image, 33 for source, 4;33 for markdown, and the plain
+   foreground for everything else. Those are ANSI slots, so the theme's palette
+   is still what colours them. */
 .ls-perm { color: var(--muted); }
 .ls-perm b { font-weight: 400; }
 .ls-perm .r { color: var(--yellow); }
 .ls-perm .w { color: var(--red); }
 .ls-perm .x { color: var(--green); }
-.ls-perm .d { color: var(--accent); }
+.ls-perm .d { color: var(--blue); font-weight: 700; }
 .ls-size { color: var(--green); }
-.ls-user { color: var(--yellow); }
+.ls-size.big { color: var(--br-green); font-weight: 700; }
+.ls-user { color: var(--br-yellow); font-weight: 700; }
 .ls-date { color: var(--blue); }
-.ls-dir  { color: var(--accent); font-weight: 700; }
+.ls-tree { color: var(--muted); }
+.ls-dir  { color: var(--blue); }
 .ls-file { color: var(--fg); }
 .ls-img  { color: var(--magenta); }
-.ls-doc  { color: var(--cyan); }
+.ls-src  { color: var(--yellow); }
+.ls-md   { color: var(--yellow); text-decoration: underline; }
 
 /* ── nautilus ────────────────────────────────────────────────────────── */
 
