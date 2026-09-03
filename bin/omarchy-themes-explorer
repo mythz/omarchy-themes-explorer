@@ -1,0 +1,173 @@
+#!/bin/bash
+# Themes Explorer -- preview every installed Omarchy theme on a simulated desktop.
+#
+#   omarchy-themes-explorer            # open fullscreen as a web app (or focus it)
+#   omarchy-themes-explorer --tab      # open in a normal browser tab instead
+#   omarchy-themes-explorer --hide     # toggle the app's scratchpad away
+#   omarchy-themes-explorer --stop     # shut the server down
+#   omarchy-themes-explorer --port N   # use a different port
+
+set -euo pipefail
+
+# Everything the plugin needs lives inside the plugin folder, resolved relative
+# to this script. `omarchy plugin add` only clones a repo -- there is no install
+# step -- so nothing may assume a copy under ~/.local or a name on PATH.
+SELF_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+APP_DIR="$SELF_DIR/../app"
+RUN_DIR="${XDG_RUNTIME_DIR:-/tmp}"
+
+# Chrome derives an app window's class from the URL host, and resolves any
+# *.localhost name to loopback itself. Serving the app under an alias therefore
+# earns it a window class of its own -- worth doing, because a bare 127.0.0.1
+# would collide with every other local web app, and because a plain browser tab
+# showing the page has an identical title.
+# Its own scratchpad, not Omarchy's shared one (Super+S), so toggling this
+# never disturbs whatever the user keeps in theirs. A special workspace is the
+# whole point: the app overlays the current workspace without joining its
+# tiling, so hiding it restores the previous layout exactly rather than
+# relying on the layout engine to undo a reflow.
+#
+# Crucially the placement is a *window rule*, applied when the window maps, not
+# a move afterwards. Moving is too late: the window has already been mapped into
+# the current workspace, dwindle has already re-split it around it, and moving it
+# out leaves the split ratios disturbed -- which is exactly how an existing
+# layout gets mangled. With the rule the window is never a member of the user's
+# workspace at all, so there is nothing to reflow and nothing to restore.
+SPECIAL="themes-explorer"
+
+APP_HOST="omarchy-themes-explorer.localhost"
+WINDOW_CLASS="chrome-omarchy-themes-explorer.localhost__-Default"
+
+PORT=8777
+MODE=app
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --port) PORT="$2"; shift 2 ;;
+    --tab) MODE=tab; shift ;;
+    --no-open) MODE=none; shift ;;
+    --hide) MODE=hide; shift ;;
+    --stop) STOP=1; shift ;;
+    -h|--help) sed -n '2,7p' "$0" | sed 's/^# \?//'; exit 0 ;;
+    *) echo "Unknown option: $1" >&2; exit 1 ;;
+  esac
+done
+
+PID_FILE="$RUN_DIR/omarchy-themes-explorer.$PORT.pid"
+URL="http://127.0.0.1:$PORT/"          # health checks and --tab
+APP_URL="http://$APP_HOST:$PORT/"      # what the app window loads
+
+app_window() {
+  hyprctl clients -j 2>/dev/null | python3 -c "
+import json, sys
+want = sys.argv[1]
+for c in json.load(sys.stdin):
+    if c.get('class') == want:
+        print(c['address'], c['workspace']['name'], c.get('fullscreen', 0))
+        break
+" "$WINDOW_CLASS"
+}
+
+# Omarchy runs Hyprland's Lua config provider, where hyprctl dispatch takes Lua
+# rather than the classic string form. Try Lua first and fall back, the way
+# omarchy-launch-or-focus does, so this keeps working on a .conf setup.
+#
+# Always name the window: on a cold start the new window is still mapping and is
+# not the focused one yet, so an untargeted dispatch would fullscreen whatever
+# the user was looking at. Note the dispatcher toggles, so callers must only
+# reach here when the window is not already fullscreen.
+hypr() {
+  local out
+  out=$(hyprctl dispatch "$1" 2>&1 || true)
+  [[ $out == ok* ]] && return 0
+  [[ -n ${2:-} ]] && hyprctl dispatch $2 >/dev/null 2>&1
+  return 0
+}
+
+# Register the placement rule for this window class. Rules are per-Hyprland-run
+# and are dropped on a config reload -- and applying a theme reloads the config --
+# so register right before every launch rather than trusting an earlier one to
+# have survived. Omarchy runs the Lua config provider, whose `o.window` helper is
+# reachable from `hyprctl eval`; fall back to the legacy keyword form otherwise.
+ensure_rules() {
+  local class_re="^chrome-omarchy-themes-explorer\\.localhost__-Default$"
+  hyprctl eval "o.window({ class = \"$class_re\" }, { workspace = \"special:$SPECIAL silent\", float = false, fullscreen = true })" >/dev/null 2>&1 && return 0
+  hyprctl keyword windowrulev2 "workspace special:$SPECIAL silent,class:$class_re" >/dev/null 2>&1 || true
+}
+
+toggle_special() {
+  hypr "hl.dsp.workspace.toggle_special(\"$SPECIAL\")" "togglespecialworkspace $SPECIAL"
+}
+
+hypr_fullscreen() {
+  local addr="$1" out
+  out=$(hyprctl dispatch \
+    "hl.dsp.window.fullscreen({ mode = \"fullscreen\", window = \"address:$addr\" })" 2>&1 || true)
+  [[ $out == ok* ]] && return 0
+  hyprctl dispatch focuswindow "address:$addr" >/dev/null 2>&1 || true
+  hyprctl dispatch fullscreen 0 >/dev/null 2>&1 || true
+}
+
+if [[ -n ${STOP:-} ]]; then
+  if [[ -f $PID_FILE ]] && kill "$(<"$PID_FILE")" 2>/dev/null; then
+    rm -f "$PID_FILE"
+    echo "Stopped."
+  else
+    rm -f "$PID_FILE"
+    echo "Not running."
+  fi
+  exit 0
+fi
+
+if ! curl -sf --max-time 1 "$URL" >/dev/null 2>&1; then
+  setsid python3 "$APP_DIR/server.py" "$PORT" >/dev/null 2>&1 </dev/null &
+  echo $! > "$PID_FILE"
+  for _ in {1..40}; do
+    curl -sf --max-time 1 "$URL" >/dev/null 2>&1 && break
+    sleep 0.1
+  done
+fi
+
+case "$MODE" in
+  app)
+    # Already running: just toggle the scratchpad. Showing and hiding keeps the
+    # window alive, so the previewed theme and panel layout survive a round trip.
+    read -r addr ws full <<<"$(app_window)"
+    if [[ -n ${addr:-} ]]; then
+      toggle_special
+      exit 0
+    fi
+
+    ensure_rules
+    setsid omarchy-launch-webapp "$APP_URL" >/dev/null 2>&1 </dev/null &
+    for _ in {1..60}; do
+      read -r addr ws full <<<"$(app_window)"
+      [[ -n ${addr:-} ]] && break
+      sleep 0.25
+    done
+    [[ -z ${addr:-} ]] && exit 0
+
+    # Safety net for a setup where the rule did not take: move it out. This
+    # reflows the workspace it briefly landed on, so it is the fallback, never
+    # the plan.
+    if [[ ${ws:-} != "special:$SPECIAL" ]]; then
+      hypr "hl.dsp.window.move({ workspace = \"special:$SPECIAL\", follow = false, window = \"address:$addr\" })" \
+           "movetoworkspacesilent special:$SPECIAL,address:$addr"
+    fi
+    toggle_special
+
+    # Chrome ignores --start-fullscreen under Wayland, so ask the compositor.
+    read -r addr ws full <<<"$(app_window)"
+    [[ -n ${addr:-} && ${full:-0} == 0 ]] && hypr_fullscreen "$addr"
+    ;;
+  hide)
+    toggle_special
+    ;;
+  tab)
+    echo "Themes Explorer: $URL"
+    xdg-open "$URL" >/dev/null 2>&1 || true
+    ;;
+  none)
+    echo "Themes Explorer: $URL"
+    ;;
+esac

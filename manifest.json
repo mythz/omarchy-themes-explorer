@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "mythz.themes-explorer",
+  "name": "Themes Explorer",
+  "version": "1.0.0",
+  "author": "mythz",
+  "description": "Try on every installed theme against a simulated desktop before you switch",
+  "homepage": "https://github.com/mythz/omarchy-themes-explorer",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Themes Explorer",
+    "description": "Opens Themes Explorer as a fullscreen web app",
+    "category": "Style",
+    "allowMultiple": false,
+    "defaultSection": "right"
+  }
+}

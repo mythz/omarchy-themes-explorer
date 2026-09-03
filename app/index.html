@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Omarchy Themes Explorer</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+<div id="desktop" class="desktop">
+  <div class="wallpaper" id="wallpaper"></div>
+  <div class="wallpaper-tint"></div>
+
+  <div class="bar" id="bar"></div>
+
+  <div class="tiles">
+    <div class="col">
+      <section class="panel" data-slot="left-top"></section>
+      <section class="panel" data-slot="left-bottom"></section>
+    </div>
+    <div class="col">
+      <section class="panel is-focused" data-slot="center"></section>
+    </div>
+    <div class="col">
+      <section class="panel" data-slot="right-top"></section>
+      <section class="panel" data-slot="right-bottom"></section>
+    </div>
+  </div>
+</div>
+
+<div class="hud" id="hud">
+  <button class="hud-arrow" id="prev" title="Previous theme (←)">‹</button>
+  <div class="hud-theme-wrap" id="themeWrap">
+    <div class="hud-theme">
+      <div class="hud-name" id="themeName">Loading…</div>
+      <div class="hud-meta" id="themeMeta">&nbsp;</div>
+    </div>
+    <div class="picker" id="picker">
+      <div class="picker-head">Installed themes</div>
+      <div class="picker-list" id="pickerList"></div>
+    </div>
+  </div>
+  <button class="hud-arrow" id="next" title="Next theme (→)">›</button>
+  <div class="hud-swatches" id="swatches"></div>
+  <button class="hud-apply" id="apply">Set as current theme</button>
+  <button class="hud-icon" id="cycleBg" title="Cycle background (B)">⛰</button>
+  <button class="hud-icon" id="help" title="Shortcuts (?)">?</button>
+  <button class="hud-icon" id="close" title="Close (Esc)">✕</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="menu" id="menu" hidden>
+  <div class="menu-title" id="menuTitle">Swap panel</div>
+  <div class="menu-items" id="menuItems"></div>
+</div>
+
+<div class="shortcuts" id="shortcuts" hidden>
+  <h2>Omarchy Themes Explorer</h2>
+  <dl>
+    <dt>← / →</dt><dd>Previous / next installed theme</dd>
+    <dt>Home / End</dt><dd>First / last theme</dd>
+    <dt>Enter</dt><dd>Set the viewed theme as current</dd>
+    <dt>B</dt><dd>Cycle this theme's backgrounds</dd>
+    <dt>Right click a panel</dt><dd>Swap in a different app</dd>
+    <dt>H</dt><dd>Hide / show this control bar</dd>
+    <dt>?</dt><dd>Toggle this help</dd>
+    <dt>Esc</dt><dd>Close — returns to exactly the layout you left</dd>
+    <dt>Super + W</dt><dd>Quit the app entirely</dd>
+  </dl>
+  <p class="shortcuts-foot">Panel layout is remembered in this browser.</p>
+</div>
+
+<script src="icons.js"></script>
+<script src="apps.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

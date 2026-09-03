@@ -1,0 +1,895 @@
+/* Simulated applications. Each renderer returns the innerHTML for a panel and
+   draws purely with CSS custom properties, so swapping the palette repaints
+   every window at once. Content is deterministic — only the colours move. */
+
+(function (global) {
+  "use strict";
+
+  const esc = (s) =>
+    String(s).replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+
+  const rep = (s, n) => (n > 0 ? s.repeat(n) : "");
+
+  /* Deterministic noise so graphs look organic but never flicker between
+     themes or re-renders. */
+  function noise(seed) {
+    let s = seed >>> 0;
+    return function () {
+      s = (s * 1664525 + 1013904223) >>> 0;
+      return s / 4294967296;
+    };
+  }
+
+  const SPARK = "▁▂▃▄▅▆▇█";
+
+  function sparkline(count, seed, min, max) {
+    const rnd = noise(seed);
+    let wave = 0.5;
+    let out = "";
+    for (let i = 0; i < count; i++) {
+      wave = Math.min(1, Math.max(0, wave + (rnd() - 0.5) * 0.42));
+      const v = min + wave * (max - min);
+      out += SPARK[Math.min(7, Math.max(0, Math.round(v * 7)))];
+    }
+    return out;
+  }
+
+  /* btop-style braille meter: filled cells recoloured as the value climbs. */
+  function gauge(pct, width) {
+    const filled = Math.round((pct / 100) * width);
+    const level = pct > 80 ? " hot" : pct > 55 ? " warn" : "";
+    return (
+      '<span class="gauge"><i class="' +
+      level.trim() +
+      '">' +
+      rep("⣿", filled) +
+      "</i>" +
+      rep("⣀", width - filled) +
+      "</span>"
+    );
+  }
+
+  const pad = (s, n) => (String(s) + " ".repeat(n)).slice(0, n);
+  const padL = (s, n) => (" ".repeat(n) + String(s)).slice(-n);
+
+  const GLYPH = {
+    home: "", folder: "", folderOpen: "", file: "",
+    image: "", doc: "", download: "", music: "",
+    video: "", picture: "", trash: "", search: "",
+    gear: "", term: "", clock: "", disk: "",
+    chip: "", display: "", bolt: "", refresh: "",
+    power: "", bars: "", left: "", right: "",
+    book: "", camera: "", brush: "", cloud: "",
+    info: "", cogs: "", linux: "", git: "",
+    code: "", pkg: "", db: "", star: "",
+    files: "", plug: "", play: "", close: "",
+    branch: "",
+  };
+
+  const OMARCHY_MARK_SVG =
+    '<svg class="oma-mark" viewBox="0 0 1200 1200" fill="currentColor" ' +
+    'xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path ' +
+    'fill-rule="evenodd" clip-rule="evenodd" d="m1200 1200h-480v-80h400v-1040' +
+    'h-479.996v160h-400v720h720v-720h-80v-80h159.996v880h-400v160h-640v-1200h1200z' +
+    'm-1120-80h480v-80h-400l.004-400h-80.004zm0-560h80.004v-400h400v-80h-480.004z"' +
+    '/></svg>';
+
+  /* ── ascii art ───────────────────────────────────────────────────── */
+
+  const OMARCHY_WORDMARK = [
+    "                 ▄▄▄",
+    " ▄█████▄    ▄███████████▄    ▄███████   ▄███████   ▄███████   ▄█   █▄    ▄█   █▄",
+    "███   ███  ███   ███   ███  ███   ███  ███   ███  ███   ███  ███   ███  ███   ███",
+    "███   ███  ███   ███   ███  ███   ███  ███   ███  ███   █▀   ███   ███  ███   ███",
+    "███   ███  ███   ███   ███ ▄███▄▄▄███ ▄███▄▄▄██▀  ███       ▄███▄▄▄███▄ ███▄▄▄███",
+    "███   ███  ███   ███   ███ ▀███▀▀▀███ ▀███▀▀▀▀    ███      ▀▀███▀▀▀███  ▀▀▀▀▀▀███",
+    "███   ███  ███   ███   ███  ███   ███ ██████████  ███   █▄   ███   ███  ▄██   ███",
+    "███   ███  ███   ███   ███  ███   ███  ███   ███  ███   ███  ███   ███  ███   ███",
+    " ▀█████▀    ▀█   ███   █▀   ███   █▀   ███   ███  ███████▀   ███   █▀    ▀█████▀",
+    "                                       ███   █▀",
+  ].join("\n");
+
+  const LAZYVIM_ART = [
+    "██╗      █████╗ ███████╗██╗   ██╗██╗   ██╗██╗███╗   ███╗",
+    "██║     ██╔══██╗╚══███╔╝╚██╗ ██╔╝██║   ██║██║████╗ ████║",
+    "██║     ███████║  ███╔╝  ╚████╔╝ ██║   ██║██║██╔████╔██║",
+    "██║     ██╔══██║ ███╔╝    ╚██╔╝  ╚██╗ ██╔╝██║██║╚██╔╝██║",
+    "███████╗██║  ██║███████╗   ██║    ╚████╔╝ ██║██║ ╚═╝ ██║",
+    "╚══════╝╚═╝  ╚═╝╚══════╝   ╚═╝     ╚═══╝  ╚═╝╚═╝     ╚═╝",
+  ].join("\n");
+
+  /* ── typescript highlighter ──────────────────────────────────────── */
+
+  const KEYWORDS = new RegExp(
+    "\\b(const|let|var|function|return|async|await|export|import|default|from|new|" +
+      "if|else|for|while|of|in|class|interface|type|enum|extends|implements|throw|" +
+      "try|catch|finally|as|void|null|undefined|true|false|this|super|switch|case|" +
+      "break|continue|yield|typeof|instanceof|delete|readonly|private|public|static)\\b"
+  );
+
+  const TYPES = new RegExp(
+    "\\b(string|number|boolean|bigint|symbol|any|unknown|never|object|Promise|" +
+      "Uint8Array|ArrayBuffer|CryptoKey|TextEncoder|TextDecoder|Record|Array|Map|" +
+      "Set|Date|Error|JSON|Math|Object|Window|Buffer|Partial|Readonly)\\b"
+  );
+
+  const TOKEN = new RegExp(
+    "(\\/\\/.*$)|" + // 1 line comment
+      "(`[^`]*`|'[^']*'|\"[^\"]*\")|" + // 2 string
+      "(\\b0x[0-9a-fA-F]+\\b|\\b\\d+(?:\\.\\d+)?\\b)|" + // 3 number
+      "(" + KEYWORDS.source + ")|" + // 4 keyword
+      "(" + TYPES.source + ")|" + // 6 type
+      "([A-Za-z_$][\\w$]*)(?=\\s*\\()|" + // 8 call
+      "([{}()\\[\\];,.:=<>!&|+\\-*/?]+)", // 9 punctuation
+    "g"
+  );
+
+  function highlightComment(text) {
+    return esc(text).replace(/@\w+/g, (m) => '<span class="t-tag">' + m + "</span>");
+  }
+
+  /* Highlights one line of TS; `state` carries block-comment continuation. */
+  function highlightLine(line, state) {
+    if (state.block) {
+      const end = line.indexOf("*/");
+      if (end === -1) return '<span class="t-doc">' + highlightComment(line) + "</span>";
+      state.block = false;
+      return (
+        '<span class="t-doc">' +
+        highlightComment(line.slice(0, end + 2)) +
+        "</span>" +
+        highlightLine(line.slice(end + 2), state)
+      );
+    }
+
+    const open = line.indexOf("/*");
+    if (open !== -1) {
+      const head = highlightLine(line.slice(0, open), state);
+      state.block = true;
+      return head + highlightLine(line.slice(open), state);
+    }
+
+    let out = "";
+    let last = 0;
+    TOKEN.lastIndex = 0;
+    let m;
+    while ((m = TOKEN.exec(line))) {
+      out += esc(line.slice(last, m.index));
+      const cls = m[1] ? "t-com" : m[2] ? "t-str" : m[3] ? "t-num"
+        : m[4] ? "t-key" : m[6] ? "t-typ" : m[8] ? "t-fn" : "t-pun";
+      out += '<span class="' + cls + '">' + esc(m[0]) + "</span>";
+      last = m.index + m[0].length;
+    }
+    return out + esc(line.slice(last));
+  }
+
+  function highlightAll(lines) {
+    const state = { block: false };
+    return lines.map((l) => highlightLine(l, state));
+  }
+
+  const CRYPTO_TS = [
+    "/**",
+    " * Generates a random 256-bit (32-byte) salt.",
+    " * @returns {string} A 32-character string to be used as a salt.",
+    " */",
+    "export const generateSalt = (): string => {",
+    "  return nanoid(32);",
+    "};",
+    "",
+    "/**",
+    " * Derives a 256-bit AES-GCM key from a user-provided string.",
+    " * Uses PBKDF2 for key derivation, which is more secure than hashing.",
+    " * @param {string} userKeyString - The user's password or generated key.",
+    " * @param {string} salt - A unique identifier for the secret.",
+    " * @returns {Promise<CryptoKey>} A promise that resolves to a CryptoKey.",
+    " */",
+    "async function getDerivedKey(userKeyString: string, salt: string) {",
+    "  const keyMaterial = await window.crypto.subtle.importKey(",
+    "    'raw',",
+    "    new TextEncoder().encode(userKeyString),",
+    "    { name: 'PBKDF2' },",
+    "    false,",
+    "    ['deriveBits', 'deriveKey']",
+    "  );",
+    "",
+    "  return window.crypto.subtle.deriveKey(",
+    "    {",
+    "      name: 'PBKDF2',",
+    "      salt: new TextEncoder().encode(salt),",
+    "      iterations: 100000,",
+    "      hash: 'SHA-256',",
+    "    },",
+    "    keyMaterial,",
+    "    { name: 'AES-GCM', length: 256 },",
+    "    true,",
+    "    ['encrypt', 'decrypt']",
+    "  );",
+    "}",
+    "",
+    "/**",
+    " * Encrypts data using AES-256-GCM.",
+    " * @param {string} text - The string data to encrypt.",
+    " * @param {string} userEncryptionKey - The user's password.",
+    " * @param {string} salt - The salt to use for key derivation.",
+    " * @returns {Promise<Uint8Array>} Resolves to the encrypted data.",
+    " */",
+    "export const encrypt = async (text: string, userKey: string, salt: string) => {",
+    "  const key = await getDerivedKey(userKey, salt);",
+    "  const iv = window.crypto.getRandomValues(new Uint8Array(12));",
+    "",
+    "  const ciphertext = await window.crypto.subtle.encrypt(",
+    "    {",
+    "      name: 'AES-GCM',",
+    "      iv: iv,",
+    "    },",
+    "    key,",
+    "    plaintext",
+    "  );",
+    "",
+    "  const fullMessage = new Uint8Array(iv.length + ciphertext.byteLength);",
+    "  fullMessage.set(iv);",
+    "  fullMessage.set(new Uint8Array(ciphertext), iv.length);",
+    "",
+    "  return fullMessage;",
+    "};",
+    "",
+    "/**",
+    " * Encrypts a file buffer using AES-256-GCM.",
+    " * @param {ArrayBuffer} fileBuffer - The file data to encrypt.",
+    " * @param {string} userEncryptionKey - The user's password.",
+    " * @param {string} salt - The salt to use for key derivation.",
+    " * @returns {Promise<Uint8Array>} Resolves to the encrypted data.",
+    " */",
+    "export const encryptFile = async (fileBuffer: ArrayBuffer) => {",
+    "  const key = await getDerivedKey(userKey, salt);",
+    "  return aesGcmSeal(key, new Uint8Array(fileBuffer));",
+    "};",
+  ];
+
+  const THEME_TS = [
+    "import { readFile } from 'node:fs/promises';",
+    "import { parse } from 'smol-toml';",
+    "",
+    "export interface Palette {",
+    "  background: string;",
+    "  foreground: string;",
+    "  accent: string;",
+    "  bright: Record<string, string>;",
+    "}",
+    "",
+    "const ANSI = ['black', 'red', 'green', 'yellow',",
+    "  'blue', 'magenta', 'cyan', 'white'] as const;",
+    "",
+    "/** Reads colors.toml and folds both dialects into one palette. */",
+    "export async function loadPalette(dir: string): Promise<Palette> {",
+    "  const raw = parse(await readFile(`${dir}/colors.toml`, 'utf8'));",
+    "  const named = typeof raw.red === 'string';",
+    "",
+    "  const bright = Object.fromEntries(",
+    "    ANSI.map((name, i) => [",
+    "      name,",
+    "      named ? raw[`bright_${name}`] : raw[`color${i + 8}`],",
+    "    ])",
+    "  );",
+    "",
+    "  return {",
+    "    background: raw.background ?? raw.color0,",
+    "    foreground: raw.foreground ?? raw.color7,",
+    "    accent: raw.accent ?? raw.color4,",
+    "    bright,",
+    "  };",
+    "}",
+    "",
+    "export function isLight(hex: string): boolean {",
+    "  const [r, g, b] = hex.match(/\\w\\w/g)!.map((c) => parseInt(c, 16));",
+    "  return (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255 > 0.5;",
+    "}",
+    "",
+    "/** Mixes two hex colours; t of 0 returns a, t of 1 returns b. */",
+    "export function mix(a: string, b: string, t: number): string {",
+    "  const channels = (hex: string) =>",
+    "    hex.match(/\\w\\w/g)!.map((c) => parseInt(c, 16));",
+    "",
+    "  const [ar, ag, ab] = channels(a);",
+    "  const [br, bg, bb] = channels(b);",
+    "",
+    "  return ('#' +",
+    "    [ar + (br - ar) * t, ag + (bg - ag) * t, ab + (bb - ab) * t]",
+    "      .map((c) => Math.round(c).toString(16).padStart(2, '0'))",
+    "      .join(''));",
+    "}",
+    "",
+    "/** Fills in whatever a theme leaves out, so downstream code sees a",
+    " *  complete palette no matter which dialect it was written in. */",
+    "export function complete(palette: Partial<Palette>): Palette {",
+    "  const background = palette.background ?? '#1a1b26';",
+    "  const foreground = palette.foreground ?? '#c0caf5';",
+    "  const light = isLight(background);",
+    "",
+    "  return {",
+    "    ...palette,",
+    "    background,",
+    "    foreground,",
+    "    accent: palette.accent ?? mix(foreground, background, 0.3),",
+    "    muted: palette.muted ?? mix(background, foreground, 0.42),",
+    "    selection: palette.selection ?? mix(background, foreground, 0.2),",
+    "    surface: mix(background, light ? '#000000' : '#ffffff', 0.1),",
+    "  } as Palette;",
+    "}",
+  ];
+
+  /* ── renderers ───────────────────────────────────────────────────── */
+
+  function shellPrompt(theme, cmd) {
+    return (
+      '<span class="prompt-dir">' + esc(theme.slug) + "</span> " +
+      '<span class="prompt-git">' + GLYPH.git + " main</span> " +
+      '<span class="prompt-mark">❯</span> ' +
+      (cmd ? esc(cmd) : '<span class="cursor-block"></span>')
+    );
+  }
+
+  function renderLogo() {
+    return (
+      '<div class="app app-logo">' +
+      '<pre class="logo-art">' + esc(OMARCHY_WORDMARK) + "</pre>" +
+      '<div class="logo-prompt">~ <span class="prompt-mark">❯</span> ' +
+      '<span class="cursor-block"></span></div>' +
+      "</div>"
+    );
+  }
+
+  function renderBtop() {
+    const cores = [];
+    const rnd = noise(20260902);
+    for (let i = 0; i < 12; i++) {
+      const pct = Math.round(rnd() * 22) + (i % 4 === 0 ? 8 : 1);
+      cores.push(
+        '<span class="dim">' + pad("C" + i, 3) + "</span>" +
+        padL(pct, 3) + "% " + gauge(pct, 6)
+      );
+    }
+    let coreRows = "";
+    for (let i = 0; i < 12; i += 3) {
+      coreRows += "<div>" + cores.slice(i, i + 3).join("  ") + "</div>";
+    }
+
+    const procs = [
+      ["45916", "spotify", "mythz", "487M", "2.4"],
+      ["348377", "claude", "mythz", "440M", "0.0"],
+      ["3264", "chromium", "mythz", "507M", "0.2"],
+      ["352417", "nvim", "mythz", "49M", "1.5"],
+      ["1092", "Hyprland", "mythz", "179M", "0.3"],
+      ["262835", "dotnet", "mythz", "2.0G", "0.0"],
+      ["306265", "chromium", "mythz", "1.0G", "0.1"],
+      ["351741", "alacritty", "mythz", "244M", "0.1"],
+      ["353024", "btop", "mythz", "35M", "0.1"],
+      ["1396", "chromium", "mythz", "244M", "0.0"],
+      ["256840", "rider", "mythz", "1.0G", "0.0"],
+      ["319145", "btop", "mythz", "36M", "0.0"],
+    ];
+    const procRows = procs
+      .map(
+        (p, i) =>
+          '<div class="proc-row' + (i === 1 ? " sel" : "") + '">' +
+          padL(p[0], 7) + " " + pad(p[1], 11) +
+          '<span class="dim">' + pad(p[2], 7) + "</span>" +
+          '<span class="ok">' + padL(p[3], 5) + "</span>" +
+          padL(p[4], 6) +
+          "</div>"
+      )
+      .join("");
+
+    const mem = [
+      ["Total", "15,5 GiB", 100, "dim"],
+      ["Used", "12,5 GiB", 80, ""],
+      ["Avail", "3,04 GiB", 20, ""],
+      ["Cache", "4,13 GiB", 27, ""],
+      ["Free", "387 MiB", 2, ""],
+    ]
+      .map(
+        (m) =>
+          "<div>" +
+          '<span class="key">' + pad(m[0] + ":", 6) + "</span>" +
+          '<span class="' + (m[3] || "") + '">' + padL(m[1], 9) + "</span> " +
+          gauge(m[2], 10) +
+          "</div>"
+      )
+      .join("");
+
+    return (
+      '<div class="app app-btop">' +
+        '<div class="box" style="flex:0 0 auto">' +
+          '<span class="box-title">cpu</span>' +
+          '<span class="box-tools">menu · preset · 17:52:00</span>' +
+          "<div>" +
+            '<span class="key">Ryzen 5 2600X</span> ' +
+            gauge(7, 22) +
+            ' <span class="dim">7%</span>  <span class="ok">42°C</span>' +
+            '  <span class="dim">2000ms</span>' +
+          "</div>" +
+          '<div class="graph">' + sparkline(96, 7, 0.05, 0.75) + "</div>" +
+          '<div class="graph alt">' + sparkline(96, 11, 0.02, 0.45) + "</div>" +
+          coreRows +
+          "<div>" +
+            '<span class="key">GPU</span>  ' + gauge(1, 10) +
+            ' <span class="dim">1%</span>  <span class="ok">3.0G/8.0G</span>' +
+            '  <span class="ok">47°C</span> <span class="dim">27.6W</span>' +
+          "</div>" +
+        "</div>" +
+        '<div class="btop-row" style="flex:1">' +
+          '<div class="col" style="flex:1;display:flex;flex-direction:column;gap:1.1em">' +
+            '<div class="box">' +
+              '<span class="box-title">mem</span>' +
+              '<span class="box-tools">disks</span>' +
+              mem +
+              '<div class="btop-disks" style="margin-top:.35em">' +
+                '<span class="key">root</span> ' + gauge(64, 10) +
+                ' <span class="dim">446G</span>' +
+              "</div>" +
+              '<div class="btop-disks">' +
+                '<span class="key">boot</span> ' + gauge(20, 10) +
+                ' <span class="dim">1,0G</span>' +
+              "</div>" +
+            "</div>" +
+            '<div class="box">' +
+              '<span class="box-title">net</span>' +
+              '<span class="box-tools">enp5s0</span>' +
+              '<div class="dim">▼ download <span class="ok">3,18 KiB/s</span></div>' +
+              '<div class="graph">' + sparkline(38, 31, 0.05, 0.9) + "</div>" +
+              '<div class="dim">▲ upload <span class="hot">1,91 KiB/s</span></div>' +
+              '<div class="graph up">' + sparkline(38, 43, 0.02, 0.6) + "</div>" +
+            "</div>" +
+          "</div>" +
+          '<div class="box btop-proc" style="flex:1.25">' +
+            '<span class="box-title">proc</span>' +
+            '<span class="box-tools">cpu lazy</span>' +
+            '<div class="proc-head">' +
+              padL("Pid", 7) + " " + pad("Program", 11) + pad("User", 7) +
+              padL("MemB", 5) + padL("Cpu%", 6) +
+            "</div>" +
+            procRows +
+          "</div>" +
+        "</div>" +
+      "</div>"
+    );
+  }
+
+  function renderFastfetch(theme) {
+    const group = (title, rows) =>
+      '<div class="ff-group ff-' + title.toLowerCase() + '">' +
+      '<span class="box-title">' + esc(title) + "</span>" +
+      rows
+        .map(
+          (r) =>
+            '<div class="ff-line"><b>' + r[0] + "</b><span>" + esc(r[1]) + "</span></div>"
+        )
+        .join("") +
+      "</div>";
+
+    const swatches = ["red", "yellow", "green", "cyan", "blue", "magenta", "fg", "muted"]
+      .map((c) => '<i style="background:var(--' + c + ')"></i>')
+      .join("");
+
+    return (
+      '<div class="app app-fastfetch">' +
+        '<div class="ff-art">' + OMARCHY_MARK_SVG + "</div>" +
+        '<div class="ff-info">' +
+          group("Hardware", [
+            [GLYPH.display, "Komplett PC"],
+            [GLYPH.chip, "AMD Ryzen 5 2600X (12) @ 3.6 GHz"],
+            [GLYPH.display, "NVIDIA GeForce RTX 3060"],
+            [GLYPH.disk, "3840x2160 @ 60 Hz"],
+            [GLYPH.db, "12.5 GiB / 15.5 GiB (80%)"],
+            [GLYPH.disk, "2.75 TiB / 3.63 TiB (75%)"],
+          ]) +
+          group("Software", [
+            [GLYPH.linux, "Omarchy v2.12 x86_64"],
+            [GLYPH.git, "master"],
+            [GLYPH.term, "Linux 6.16.7-arch1-1"],
+            [GLYPH.bars, "Hyprland 0.51.1 (Wayland)"],
+            [GLYPH.term, "alacritty 0.16.1"],
+            [GLYPH.pkg, "1061 (pacman), 23 (aur)"],
+            [GLYPH.brush, theme.name],
+            [GLYPH.star, "JetBrainsMono Nerd Font"],
+          ]) +
+          '<div class="ff-line ff-uptime"><b>' + GLYPH.clock + "</b><span>" +
+            "OS Age 52 days · Uptime 23 hours</span></div>" +
+          '<div class="ff-swatches">' + swatches + "</div>" +
+        "</div>" +
+      "</div>"
+    );
+  }
+
+  function renderLs(theme) {
+    const perm = (mode) =>
+      '<span class="ls-perm">' +
+      mode
+        .split("")
+        .map((c) => {
+          const cls = { d: "d", r: "r", w: "w", x: "x" }[c];
+          return cls ? '<span class="' + cls + '">' + c + "</span>" : c;
+        })
+        .join("") +
+      "</span>";
+
+    const entries = [
+      ["drwxr-xr-x", "-", "backgrounds", "dir", GLYPH.folder],
+      [".rw-r--r--", "1.8M", "  1.png", "img", GLYPH.image, 1],
+      [".rw-r--r--", "962k", "  2.jpg", "img", GLYPH.image, 1],
+      ["drwxr-xr-x", "-", "colors", "dir", GLYPH.folder],
+      [".rw-r--r--", "1.0k", "alacritty.toml", "doc", GLYPH.file],
+      [".rw-r--r--", "1.5k", "btop.theme", "doc", GLYPH.file],
+      [".rw-r--r--", "508", "chromium.theme", "doc", GLYPH.file],
+      [".rw-r--r--", "1.1k", "colors.toml", "doc", GLYPH.file],
+      [".rw-r--r--", "224", "ghostty.conf", "file", GLYPH.file],
+      [".rw-r--r--", "233", "hyprland.conf", "file", GLYPH.file],
+      [".rw-r--r--", "112", "hyprlock.conf", "file", GLYPH.file],
+      [".rw-r--r--", "9", "icons.theme", "file", GLYPH.file],
+      [".rw-r--r--", "335", "kitty.conf", "file", GLYPH.file],
+      [".rw-r--r--", "165", "mako.ini", "file", GLYPH.file],
+      [".rw-r--r--", "3.3k", "neovim.lua", "doc", GLYPH.file],
+      [".rw-r--r--", "1.1k", "README.md", "doc", GLYPH.file],
+      [".rw-r--r--", "191", "swayosd.css", "file", GLYPH.file],
+      [".rw-r--r--", "334", "walker.css", "file", GLYPH.file],
+      [".rw-r--r--", "795", "waybar.css", "file", GLYPH.file],
+      [".rw-r--r--", "612", "vscode.json", "doc", GLYPH.file],
+    ];
+
+    const rows = entries
+      .map(
+        (e) =>
+          "<div>" +
+          perm(e[0]) + " " +
+          '<span class="ls-size">' + padL(e[1], 5) + "</span> " +
+          '<span class="ls-user">mythz</span> ' +
+          '<span class="ls-date">14 Sep 15:3' + (e[2].length % 10) + "  </span>" +
+          (e[5] ? '<span class="ls-perm">└─ </span>' : "") +
+          '<span class="ls-' + e[3] + '">' + e[4] + " " + esc(e[2].trim()) + "</span>" +
+          "</div>"
+      )
+      .join("");
+
+    return (
+      '<div class="app app-ls term">' +
+        "<div>" + shellPrompt(theme, "eza -l --tree --level=2") + "</div>" +
+        rows +
+        '<div style="margin-top:.4em">' + shellPrompt(theme) + "</div>" +
+      "</div>"
+    );
+  }
+
+  /* Nautilus, following the real window: a headerbar whose path button shows
+     just the current folder, an icon grid of Adwaita icons, and a places
+     sidebar that the narrow layout trades for a bottom action bar. */
+  function renderNautilus(theme) {
+    const ico = global.AdwaitaIcons;
+
+    const places = [
+      ["home", "Home", "on"],
+      ["recent", "Recent"],
+      ["star", "Starred"],
+      ["network", "Network"],
+      ["trash", "Trash"],
+      ["sep"],
+      ["folder", "media"],
+      ["folder", "opt"],
+      ["folder", "src"],
+      ["download", "Downloads"],
+    ]
+      .map((p) =>
+        p[0] === "sep"
+          ? '<div class="nt-sep"></div>'
+          : '<div class="nt-place ' + (p[2] || "") + '">' +
+            ico.symbol(p[0]) + "<span>" + esc(p[1]) + "</span></div>"
+      )
+      .join("");
+
+    const items = [
+      ["dir", "backgrounds", "on"],
+      ["dir", "colors"],
+      ["doc", "alacritty.toml"],
+      ["doc", "btop.theme"],
+      ["doc", "colors.toml"],
+      ["doc", "ghostty.conf"],
+      ["dir", "themes"],
+      ["doc", "hyprland.conf"],
+      ["doc", "icons.theme"],
+      ["doc", "kitty.conf"],
+      ["doc", "neovim.lua"],
+      ["doc", "preview.png"],
+      ["doc", "README.md"],
+      ["doc", "vscode.json"],
+      ["doc", "waybar.css"],
+      ["doc", "walker.css"],
+      ["dir", "backgrounds-extra"],
+      ["doc", "mako.ini"],
+      ["doc", "swayosd.css"],
+      ["doc", "wofi.css"],
+      ["doc", "hyprlock.conf"],
+      ["doc", "chromium.theme"],
+      ["doc", "keyboard.rgb"],
+      ["doc", "shell.toml"],
+      ["doc", "helix.toml"],
+      ["doc", "gum_env.lua"],
+      ["doc", "unlock.png"],
+      ["doc", "LICENSE"],
+      ["doc", "foot.ini"],
+    ]
+      .map(
+        (it) =>
+          '<div class="nt-item ' + (it[2] || "") + '">' +
+          (it[0] === "dir" ? ico.folderIcon() : ico.docIcon()) +
+          "<span>" + esc(it[1]) + "</span></div>"
+      )
+      .join("");
+
+    /* One pill naming the folder you are in — Nautilus does not spell out the
+       whole path, and a wrapped breadcrumb chain looked nothing like it. */
+    const pathButton =
+      '<div class="nt-path">' + ico.symbol("home") +
+      "<span>" + esc(theme.name) + "</span>" + ico.symbol("more", "dim") + "</div>";
+
+    return (
+      '<div class="app app-nautilus">' +
+        '<div class="nt-side">' +
+          '<div class="nt-side-head">' +
+            '<button class="nt-btn">' + ico.symbol("search") + "</button>" +
+            "<b>Files</b>" +
+            '<button class="nt-btn">' + ico.symbol("menu") + "</button>" +
+          "</div>" +
+          '<div class="nt-places">' + places + "</div>" +
+        "</div>" +
+        '<div class="nt-main">' +
+          '<div class="nt-head">' +
+            '<button class="nt-btn only-narrow">' + ico.symbol("sidebar") + "</button>" +
+            '<button class="nt-btn only-wide">' + ico.symbol("prev") + "</button>" +
+            '<button class="nt-btn only-wide">' + ico.symbol("next") + "</button>" +
+            pathButton +
+            '<button class="nt-btn">' + ico.symbol("find") + "</button>" +
+            '<button class="nt-btn only-wide">' + ico.symbol("list") + "</button>" +
+            '<button class="nt-btn only-wide">' + ico.symbol("down") + "</button>" +
+            '<button class="nt-btn round">' + ico.symbol("close") + "</button>" +
+          "</div>" +
+          '<div class="nt-grid">' + items + "</div>" +
+          '<div class="nt-foot only-narrow">' +
+            '<button class="nt-btn">' + ico.symbol("prev") + "</button>" +
+            '<button class="nt-btn">' + ico.symbol("next") + "</button>" +
+            '<div style="flex:1"></div>' +
+            '<button class="nt-btn">' + ico.symbol("list") + "</button>" +
+            '<button class="nt-btn">' + ico.symbol("down") + "</button>" +
+          "</div>" +
+        "</div>" +
+      "</div>"
+    );
+  }
+
+  function renderLazyVim(theme) {
+    const items = [
+      [GLYPH.search, "Find File", "f"],
+      [GLYPH.file, "New File", "n"],
+      [GLYPH.clock, "Recent Files", "r"],
+      [GLYPH.book, "Find Text", "g"],
+      [GLYPH.gear, "Config", "c"],
+      [GLYPH.refresh, "Restore Session", "s"],
+      [GLYPH.pkg, "Lazy Extras", "x"],
+      [GLYPH.bolt, "Lazy", "l"],
+      [GLYPH.power, "Quit", "q"],
+    ]
+      .map(
+        (it, i) =>
+          '<div class="lv-item' + (i === 0 ? " on" : "") + '"><i>' + it[0] + "</i>" +
+          esc(it[1]) + "<b>" + it[2] + "</b></div>"
+      )
+      .join("");
+
+    return (
+      '<div class="app app-lazyvim term">' +
+        '<pre class="lv-art">' + esc(LAZYVIM_ART) + "</pre>" +
+        '<div class="lv-menu">' + items + "</div>" +
+        '<div class="lv-foot">' + GLYPH.bolt +
+          " Neovim loaded 42/280 plugins in 31.42ms · " + esc(theme.name) + "</div>" +
+      "</div>"
+    );
+  }
+
+  function renderNvim(theme) {
+    const cursorAt = 24; // index into CRYPTO_TS that holds the cursor
+    const code = highlightAll(CRYPTO_TS);
+    const selection = [19, 20, 21, 22];
+
+    const lines = code
+      .map((html, i) => {
+        const rel = Math.abs(i - cursorAt);
+        const num = i === cursorAt ? 56 : rel;
+        const cls =
+          "nv-line" + (i === cursorAt ? " on" : "") + (selection.includes(i) ? " nv-sel" : "");
+        return (
+          '<div class="' + cls + '">' +
+          '<span class="nv-num">' + num + "</span>" +
+          '<span class="nv-code">' + (html || "&nbsp;") + "</span>" +
+          "</div>"
+        );
+      })
+      .join("");
+
+    return (
+      '<div class="app app-nvim">' +
+        '<div class="nv-tabline">' +
+          '<div class="nv-tab"><i>' + GLYPH.code + "</i>api.ts" +
+            '<span class="x">' + GLYPH.close + "</span></div>" +
+          '<div class="nv-tab on"><i>' + GLYPH.code + "</i>crypto.ts" +
+            '<span class="x">' + GLYPH.close + "</span></div>" +
+          '<div style="flex:1"></div>' +
+        "</div>" +
+        '<div class="nv-body">' + lines + "</div>" +
+        '<div class="nv-status">' +
+          '<span class="nv-mode">VISUAL</span>' +
+          '<span class="nv-branch">' + GLYPH.git + " main</span>" +
+          '<span class="nv-file">' + GLYPH.folder + " ~/Code/lib/crypto.ts</span>" +
+          "<span>" + esc(theme.name) + "</span>" +
+          "<span>33%</span><span>56:22</span>" +
+          '<span class="nv-right">' + GLYPH.clock + " 17:52</span>" +
+        "</div>" +
+      "</div>"
+    );
+  }
+
+  function renderVscode(theme) {
+    const code = highlightAll(THEME_TS);
+    const lines = code
+      .map(
+        (html, i) =>
+          "<div>" +
+          '<span class="vs-num">' + (i + 1) + "</span>" +
+          (html || "&nbsp;") +
+          "</div>"
+      )
+      .join("");
+
+    const tree = [
+      [0, "", GLYPH.folderOpen, "omarchy-themes"],
+      [1, "", GLYPH.folder, "themes"],
+      [2, "file", GLYPH.file, "colors.toml"],
+      [2, "file", GLYPH.file, "preview.png"],
+      [1, "", GLYPH.folder, "src"],
+      [2, "file on", GLYPH.file, "theme.ts"],
+      [2, "file", GLYPH.file, "palette.ts"],
+      [2, "file", GLYPH.file, "index.ts"],
+      [1, "", GLYPH.folder, "test"],
+      [2, "file", GLYPH.file, "theme.test.ts"],
+      [1, "file", GLYPH.file, "package.json"],
+      [1, "file", GLYPH.file, "tsconfig.json"],
+      [1, "file", GLYPH.file, "README.md"],
+    ]
+      .map(
+        (n) =>
+          '<div class="vs-node ' + n[1] + '" style="--depth:' + n[0] + '">' +
+          "<i>" + n[2] + "</i>" + esc(n[3]) + "</div>"
+      )
+      .join("");
+
+    const rnd = noise(99);
+    const mini = Array.from(
+      { length: 26 },
+      () => '<span style="width:' + (18 + Math.round(rnd() * 80)) + '%"></span>'
+    ).join("");
+
+    return (
+      '<div class="app app-vscode">' +
+        '<div class="vs-top">' +
+          '<div class="vs-rail">' +
+            "<i class='on'>" + GLYPH.files + "</i><i>" + GLYPH.search + "</i>" +
+            "<i>" + GLYPH.branch + "</i><i>" + GLYPH.play + "</i>" +
+            "<i>" + GLYPH.pkg + "</i>" +
+            "<div style='flex:1'></div><i>" + GLYPH.gear + "</i>" +
+          "</div>" +
+          '<div class="vs-side"><h3>Explorer</h3>' + tree + "</div>" +
+          '<div class="vs-main">' +
+            '<div class="vs-tabs">' +
+              '<div class="vs-tab"><i>' + GLYPH.code + "</i>palette.ts</div>" +
+              '<div class="vs-tab on"><i>' + GLYPH.code + "</i>theme.ts</div>" +
+              '<div class="vs-tab"><i>' + GLYPH.file + "</i>colors.toml</div>" +
+            "</div>" +
+            '<div class="vs-crumbs">src &rsaquo; theme.ts &rsaquo; loadPalette</div>' +
+            '<div class="vs-editor">' +
+              '<div class="vs-code">' + lines + "</div>" +
+              '<div class="vs-mini">' + mini + "</div>" +
+            "</div>" +
+          "</div>" +
+        "</div>" +
+        '<div class="vs-status">' +
+          "<span>" + GLYPH.git + " main*</span>" +
+          "<span>" + GLYPH.refresh + " 0 " + GLYPH.close + " 0 " + GLYPH.info + " 2</span>" +
+          '<span class="right">' +
+            "<span>Ln 18, Col 42</span><span>Spaces: 2</span><span>UTF-8</span>" +
+            "<span>TypeScript</span><span>" + esc(theme.name) + "</span>" +
+          "</span>" +
+        "</div>" +
+      "</div>"
+    );
+  }
+
+  /* Mirrors Omarchy's own root menu: the entries from omarchy-menu.jsonc,
+     a "Go" header, and a chevron on every row that drills down. */
+  function renderOmarchyMenu() {
+    const items = [
+      ["\u{F003B}", "Apps", true],
+      ["\u{F09D1}", "Learn", true],
+      ["\u{F14DE}", "Trigger", true],
+      ["\u{EBCF}", "Style", true],
+      ["\u{E615}", "Setup", true],
+      ["\u{F0249}", "Install", true],
+      ["\u{F0B4C}", "Remove", true],
+      ["\u{F021}", "Update", true],
+      ["\u{EA74}", "About", false],
+      ["\u{F011}", "System", true],
+    ]
+      .map(
+        (it, i) =>
+          '<div class="om-item' + (i === 0 ? " on" : "") + '">' +
+          "<i>" + it[0] + "</i><span>" + esc(it[1]) + "</span>" +
+          (it[2] ? '<b class="om-chevron">\u203a</b>' : "") +
+          "</div>"
+      )
+      .join("");
+
+    return (
+      '<div class="app app-omenu">' +
+        '<div class="om-card">' +
+          '<div class="om-header">Go\u2026</div>' +
+          '<div class="om-rows">' + items + "</div>" +
+        "</div>" +
+      "</div>"
+    );
+  }
+
+  function renderBar(theme) {
+    const active = 1;
+    const occupied = [2, 3];
+    const ws = [1, 2, 3, 4, 5]
+      .map((n) => {
+        if (n === active) return '<span class="ws on"><i class="ws-pill"></i></span>';
+        const cls = occupied.includes(n) ? "ws used" : "ws";
+        return '<span class="' + cls + '">' + n + "</span>";
+      })
+      .join("");
+
+    /* The clock is positioned against the bar itself rather than sitting
+       between two spacers, so a longer theme name cannot shift it. */
+    return (
+      '<div class="bar-left">' +
+        '<div class="bar-logo">' + OMARCHY_MARK_SVG + "</div>" +
+        '<div class="bar-ws">' + ws + "</div>" +
+        '<div class="bar-theme">' + GLYPH.brush + " " + esc(theme.name) + "</div>" +
+      "</div>" +
+      '<div class="bar-clock">Wednesday 17:52</div>' +
+      '<div class="bar-tray">' +
+        "<span>" + GLYPH.plug + "</span><span>" + GLYPH.db + "</span>" +
+        "<span>" + GLYPH.music + "</span><span>" + GLYPH.bolt + "</span>" +
+      "</div>"
+    );
+  }
+
+  /* ── registry ────────────────────────────────────────────────────── */
+
+  const SMALL = [
+    { id: "logo", label: "Omarchy logo", glyph: "", render: renderLogo },
+    { id: "btop", label: "btop", glyph: "", render: renderBtop },
+    { id: "fastfetch", label: "fastfetch", glyph: "", render: renderFastfetch },
+    { id: "ls", label: "eza / ls -l", glyph: "", render: renderLs },
+    { id: "nautilus", label: "Nautilus", glyph: "", render: renderNautilus },
+    { id: "lazyvim", label: "LazyVim", glyph: "", render: renderLazyVim },
+    { id: "none", label: "Nothing (show wallpaper)", glyph: "", render: () => "" },
+  ];
+
+  const LARGE = [
+    { id: "nvim", label: "Neovim", glyph: "", render: renderNvim },
+    { id: "vscode", label: "VS Code", glyph: "", render: renderVscode },
+    { id: "omenu", label: "Omarchy menu", glyph: "", render: renderOmarchyMenu },
+    { id: "none", label: "Nothing (show wallpaper)", glyph: "", render: () => "" },
+  ];
+
+  global.OmarchyApps = { SMALL, LARGE, renderBar };
+})(window);

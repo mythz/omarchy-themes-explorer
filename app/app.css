@@ -1,0 +1,1033 @@
+/* Omarchy Themes Explorer — a simulated desktop that repaints itself from a
+   theme's palette. Every colour below comes from a --* var set by app.js. */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #08080b;
+  color: #fff;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+:root {
+  --mono: "JetBrainsMono Nerd Font", "CaskaydiaMono Nerd Font", "Symbols Nerd Font",
+          ui-monospace, "DejaVu Sans Mono", monospace;
+  --sans: "Adwaita Sans", system-ui, "Segoe UI", sans-serif;
+  --gap: clamp(6px, 0.75vh, 14px);
+  /* Fixed, never resolution-relative: Omarchy's windows keep the same text
+     size whatever the screen, and a bigger window simply shows more. */
+  --term-fs: 13px;   /* every terminal window: btop, eza, nvim, lazyvim, ... */
+  --ui-fs: 13px;     /* vs code chrome and editor */
+  --radius: 0px;
+  --glass: rgba(18, 18, 22, 0.82);
+  --glass-solid: #14141a;   /* opaque plate for dense text panels */
+  --glass-line: rgba(255, 255, 255, 0.13);
+}
+
+/* ── desktop ─────────────────────────────────────────────────────────── */
+
+.desktop {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  isolation: isolate;
+}
+
+.wallpaper {
+  position: absolute;
+  inset: 0;
+  background-color: var(--bg-darker);
+  background-size: cover;
+  background-position: center;
+  z-index: -2;
+  transition: opacity 0.25s ease;
+}
+
+/* Keeps busy wallpapers from fighting the palette being previewed. */
+.wallpaper-tint {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(160deg,
+    color-mix(in srgb, var(--bg-darker) 22%, transparent),
+    color-mix(in srgb, var(--bg-darker) 45%, transparent));
+}
+
+.tiles {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 1fr 1.16fr 1fr;
+  grid-auto-rows: minmax(0, 1fr);
+  gap: var(--gap);
+  padding: var(--gap) var(--gap) var(--gap);
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  min-width: 0;
+  min-height: 0;
+}
+
+.panel {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  border: 2px solid var(--panel-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  container-type: size;
+  background: color-mix(in srgb, var(--bg) 93%, transparent);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  transition: border-color 0.18s ease;
+}
+
+.panel.is-focused { border-color: var(--accent); }
+
+.panel[data-app="omenu"] {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.panel.is-empty {
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+}
+
+.panel.is-empty::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px dashed transparent;
+  border-radius: var(--radius);
+  transition: border-color 0.18s ease;
+}
+
+.panel.is-empty:hover::after { border-color: rgba(255, 255, 255, 0.16); }
+
+.panel.is-target { outline: 2px solid rgba(255, 255, 255, 0.5); outline-offset: -2px; }
+
+.app {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--mono);
+  color: var(--fg);
+  line-height: 1.32;
+  white-space: pre;
+  tab-size: 4;
+}
+
+/* ── top bar ─────────────────────────────────────────────────────────── */
+
+.bar {
+  position: relative;
+  flex: 0 0 auto;
+  height: clamp(22px, 3.3vh, 36px);
+  display: flex;
+  align-items: center;
+  gap: 1.2em;
+  padding: 0 calc(var(--gap) + 4px);
+  background: color-mix(in srgb, var(--bg-dark) 84%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--fg) 13%, transparent);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--fg);
+}
+
+.bar-left {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  min-width: 0;
+  margin-right: auto;
+}
+.bar-theme { color: var(--fg-dark); white-space: nowrap; }
+
+.bar-logo { display: flex; align-items: center; color: var(--fg); }
+.bar-logo .oma-mark { width: 1.05em; height: 1.05em; display: block; }
+
+.bar-ws { display: flex; gap: 0.9em; align-items: center; }
+.bar-ws .ws { color: var(--fg-dark); display: flex; align-items: center; }
+.bar-ws .ws.used { color: var(--fg); }
+.bar-ws .ws.on { color: var(--fg-bright); }
+.ws-pill {
+  width: 0.66em;
+  height: 0.66em;
+  border-radius: 0.2em;
+  background: currentColor;
+  display: block;
+}
+/* Centred on the bar, not on the space left over by its neighbours. */
+.bar-clock {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--fg-bright);
+  white-space: nowrap;
+  pointer-events: none;
+}
+.bar-tray { display: flex; gap: 0.9em; color: var(--fg-dark); }
+
+/* ── shared terminal chrome ──────────────────────────────────────────── */
+
+.term {
+  height: 100%;
+  padding: 0.55em 0.75em;
+  background: color-mix(in srgb, var(--bg) 96%, transparent);
+}
+
+.prompt-dir { color: var(--accent); font-weight: 600; }
+.prompt-git { color: var(--magenta); }
+.prompt-mark { color: var(--green); }
+.cursor-block {
+  display: inline-block;
+  width: 0.6em;
+  height: 1.1em;
+  vertical-align: -0.2em;
+  background: var(--fg);
+  animation: blink 1.15s steps(1) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ── omarchy logo ────────────────────────────────────────────────────── */
+
+.app-logo { display: flex; flex-direction: column; justify-content: center; }
+.app-logo .logo-art {
+  /* The one place a fixed size cannot hold: the wordmark is 81 characters
+     wide, so at --term-fs it needs ~630px and a 600px panel would crop it
+     mid-letter. Fixed whenever it fits, shrunk only to avoid the crop. */
+  font-size: min(var(--term-fs), 1.9cqw);
+  line-height: 1;
+  color: var(--accent);
+  margin: 0 0 1.8em;
+  align-self: center;
+}
+.app-logo .logo-prompt { font-size: var(--term-fs); padding-left: 0.4em; }
+
+/* ── btop ────────────────────────────────────────────────────────────── */
+
+.app-btop {
+  font-size: var(--term-fs);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+  padding: 1em 0.5em 0.4em;
+  line-height: 1.22;
+}
+
+.btop-row { display: flex; gap: 0.5em; min-height: 0; padding-top: 0.55em; }
+.btop-row > * { min-width: 0; }
+
+.box {
+  border: 1px solid var(--muted);
+  border-radius: 3px;
+  position: relative;
+  padding: 0.75em 0.55em 0.35em;
+  flex: 1;
+  min-height: 0;
+  overflow: clip;
+  overflow-clip-margin: 1.2em;
+}
+
+.box-title {
+  position: absolute;
+  top: -0.68em;
+  left: 0.8em;
+  padding: 0 0.35em;
+  background: var(--bg);
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.box-tools {
+  position: absolute;
+  top: -0.68em;
+  right: 0.8em;
+  padding: 0 0.35em;
+  background: var(--bg);
+  color: var(--fg-dark);
+}
+
+.gauge {
+  display: inline-block;
+  color: var(--muted);
+  letter-spacing: -0.03em;
+}
+.gauge i { font-style: normal; color: var(--accent); }
+.gauge i.warn { color: var(--yellow); }
+.gauge i.hot { color: var(--red); }
+
+.graph {
+  color: var(--accent);
+  display: block;
+  height: 1.35em;
+  line-height: 1.35;
+  overflow: hidden;
+  letter-spacing: -0.05em;
+  opacity: 0.9;
+}
+.graph.alt { color: var(--cyan); }
+.graph.up { color: var(--magenta); }
+
+.dim { color: var(--fg-dark); }
+.key { color: var(--yellow); }
+.ok  { color: var(--green); }
+.hot { color: var(--red); }
+
+.proc-head { color: var(--accent); border-bottom: 1px solid var(--muted); }
+.proc-row.sel { background: var(--sel); color: var(--fg-bright); }
+
+/* ── fastfetch ───────────────────────────────────────────────────────── */
+
+.app-fastfetch {
+  font-size: var(--term-fs);
+  display: flex;
+  align-items: center;
+  gap: 1.4em;
+  padding: 0.8em 1em;
+}
+.ff-art {
+  color: var(--accent);
+  flex: 0 0 auto;
+  width: 50cqw;          /* half the panel, beside the specs */
+  aspect-ratio: 1;
+  height: auto;
+  margin: 0 20px 10px;   /* breathing room around and under the mark */
+}
+.ff-art .oma-mark { width: 100%; height: 100%; display: block; }
+.ff-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.9em; }
+.ff-group {
+  border: 1px solid var(--muted);
+  border-radius: 3px;
+  padding: 0.45em 0.6em 0.45em calc(0.6em - 4px);
+  position: relative;
+}
+.ff-group .box-title { background: var(--bg); }
+.ff-line { display: flex; gap: calc(0.6em + 2px); }
+.ff-line b { color: var(--accent); font-weight: 400; flex: 0 0 1.4em; text-align: right; }
+.ff-line span { color: var(--fg); overflow: hidden; text-overflow: ellipsis; }
+.ff-swatches { display: flex; gap: 0.15em; margin-top: 0.2em; }
+.ff-swatches i { width: 1.1em; height: 0.9em; display: block; }
+
+/* ── eza / ls -l ─────────────────────────────────────────────────────── */
+
+.app-ls { font-size: var(--term-fs); padding: 0.6em 0.8em; }
+.ls-perm { color: var(--muted); }
+.ls-perm b { font-weight: 400; }
+.ls-perm .r { color: var(--yellow); }
+.ls-perm .w { color: var(--red); }
+.ls-perm .x { color: var(--green); }
+.ls-perm .d { color: var(--accent); }
+.ls-size { color: var(--green); }
+.ls-user { color: var(--yellow); }
+.ls-date { color: var(--blue); }
+.ls-dir  { color: var(--accent); font-weight: 700; }
+.ls-file { color: var(--fg); }
+.ls-img  { color: var(--magenta); }
+.ls-doc  { color: var(--cyan); }
+
+/* ── nautilus ────────────────────────────────────────────────────────── */
+
+/* Fixed metrics, measured off a real Nautilus window: a 72px icon, 14px
+   labels, a 225px sidebar and a 56px headerbar. Nothing here scales with the
+   panel -- a bigger window simply fits more columns and rows, which is how the
+   file manager actually behaves. */
+.app-nautilus {
+  font-family: var(--sans);
+  font-size: 15px;
+  white-space: normal;
+  display: flex;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+/* Adwaita icons: symbolic ones inherit colour, the folder and document take
+   their fills from these vars so they follow the theme's icons.theme. */
+.app-nautilus .ico { width: 16px; height: 16px; display: block; flex: 0 0 auto; }
+.app-nautilus .ico.dim { opacity: 0.6; }
+.app-nautilus .ico-lg {
+  width: 72px;
+  height: 72px;
+  display: block;
+  margin: 0 auto 4px;
+  --folder-back: color-mix(in srgb, var(--folder) 86%, #000000);
+  --folder-front: var(--folder);
+  --paper: #f6f5f4;
+  --paper-ink: color-mix(in srgb, #f6f5f4 55%, #7a7a78);
+}
+
+.nt-btn {
+  all: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  color: var(--fg);
+  flex: 0 0 auto;
+}
+.nt-btn.round {
+  border-radius: 50%;
+  background: var(--lighter-bg);
+  margin-left: 2px;
+}
+
+/* sidebar */
+.nt-side {
+  flex: 0 0 225px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-dark);
+  padding-bottom: 8px;
+  overflow: hidden;
+}
+.nt-side-head {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 10px;
+  flex: 0 0 auto;
+}
+.nt-side-head b { flex: 1; font-weight: 700; font-size: 16px; }
+.nt-places { display: flex; flex-direction: column; gap: 2px; padding: 0 8px; }
+.nt-place {
+  height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 10px;
+  border-radius: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  flex: 0 0 auto;
+}
+.nt-place span { overflow: hidden; text-overflow: ellipsis; }
+.nt-place .ico { color: var(--fg-dark); }
+.nt-place.on { background: var(--lighter-bg); }
+.nt-place.on .ico { color: var(--fg-bright); }
+.nt-sep { height: 1px; margin: 8px 10px; background: var(--lighter-bg); flex: 0 0 auto; }
+
+/* main pane */
+.nt-main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.nt-head {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 0 10px;
+  flex: 0 0 auto;
+}
+.nt-path {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  padding: 0 12px;
+  margin: 0 5px;
+  border-radius: 10px;
+  background: var(--lighter-bg);
+  border: 1px solid color-mix(in srgb, var(--fg) 12%, transparent);
+}
+.nt-path span {
+  flex: 1;
+  min-width: 0;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* auto-fill is what makes the window size change the column COUNT while every
+   item keeps the same footprint */
+.nt-grid {
+  flex: 1;
+  min-height: 0;
+  padding: 6px 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 4px;
+  align-content: start;
+  overflow: hidden;
+}
+.nt-item {
+  padding: 8px 4px;
+  border-radius: 10px;
+  text-align: center;
+  min-width: 0;
+}
+.nt-item span {
+  display: block;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+.nt-item.on { background: var(--lighter-bg); }
+
+.nt-foot {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 0 10px;
+  flex: 0 0 auto;
+}
+
+.only-narrow { display: none; }
+
+/* Narrow window: Nautilus folds the sidebar away and moves navigation and
+   view controls into a bottom bar. */
+@container (max-width: 620px) {
+  .app-nautilus .nt-side { display: none; }
+  .app-nautilus .only-narrow { display: flex; }
+  .app-nautilus .only-wide { display: none; }
+}
+
+/* ── lazyvim dashboard ───────────────────────────────────────────────── */
+
+.app-lazyvim {
+  font-size: var(--term-fs);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.4em;
+  padding: 1em;
+}
+.lv-art { color: var(--accent); font-size: 0.72em; line-height: 1.05; text-align: center; }
+.lv-menu { display: flex; flex-direction: column; gap: 0.15em; }
+.lv-item { display: flex; gap: 0.8em; align-items: center; color: var(--fg); }
+.lv-item i { font-style: normal; color: var(--accent); width: 1.4em; }
+.lv-item b { font-weight: 400; color: var(--fg-dark); margin-left: auto; padding-left: 1.6em; }
+.lv-item.on { color: var(--fg-bright); }
+.lv-foot { color: var(--fg-dark); font-size: 0.85em; }
+
+/* ── neovim ──────────────────────────────────────────────────────────── */
+
+.app-nvim {
+  font-size: var(--term-fs);
+  display: flex;
+  flex-direction: column;
+  line-height: 1.42;
+}
+.nv-tabline {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: stretch;
+  background: var(--bg-dark);
+  color: var(--fg-dark);
+}
+.nv-tab { padding: 0.25em 1.1em; display: flex; gap: 0.5em; align-items: center; }
+.nv-tab i { color: var(--yellow); }
+.nv-tab.on { background: var(--bg); color: var(--accent); font-weight: 600; }
+.nv-tab .x { color: var(--fg-dark); }
+.nv-body { flex: 1; min-height: 0; overflow: hidden; padding: 0.15em 0 0; }
+.nv-line { display: flex; }
+.nv-line.on { background: var(--lighter-bg); }
+.nv-num {
+  flex: 0 0 3.4em;
+  text-align: right;
+  padding-right: 1.1em;
+  color: var(--muted);
+}
+.nv-line.on .nv-num { color: var(--yellow); font-weight: 700; }
+.nv-code { flex: 1; min-width: 0; overflow: hidden; }
+.nv-sel { background: var(--sel); }
+.nv-status {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  background: var(--bg-dark);
+  color: var(--fg-dark);
+  font-size: 0.95em;
+}
+.nv-status > * { padding: 0.2em 0.85em; }
+.nv-mode { background: var(--accent); color: var(--bg); font-weight: 700; }
+.nv-branch { color: var(--magenta); }
+.nv-file { color: var(--fg); flex: 1; min-width: 0; overflow: hidden; }
+.nv-right { background: var(--accent); color: var(--bg); font-weight: 600; }
+
+/* vim/ts syntax */
+.t-key { color: var(--magenta); }
+.t-fn  { color: var(--blue); }
+.t-str { color: var(--green); }
+.t-num { color: var(--orange); }
+.t-com { color: var(--muted); font-style: italic; }
+.t-doc { color: var(--muted); font-style: italic; }
+.t-tag { color: var(--cyan); font-style: italic; }
+.t-typ { color: var(--yellow); }
+.t-var { color: var(--fg); }
+.t-op  { color: var(--cyan); }
+.t-pun { color: var(--fg-dark); }
+.t-cls { color: var(--red); }
+
+/* ── vs code ─────────────────────────────────────────────────────────── */
+
+.app-vscode {
+  font-size: var(--ui-fs);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  white-space: normal;
+}
+.vs-top { flex: 1; display: flex; min-height: 0; }
+.vs-rail {
+  flex: 0 0 auto;
+  width: 3.1em;
+  background: var(--bg-dark);
+  border-right: 1px solid var(--bg-darker);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+  padding: 0.85em 0;
+  font-size: 1.25em;
+  color: var(--fg-dark);
+}
+.vs-rail i { font-style: normal; }
+.vs-rail i.on { color: var(--fg-bright); }
+.vs-side {
+  flex: 0 0 23%;
+  background: var(--bg-dark);
+  padding: 0.6em 0;
+  overflow: hidden;
+  color: var(--fg);
+}
+.vs-side h3 {
+  margin: 0 0 0.5em;
+  padding: 0 1.1em;
+  font: inherit;
+  font-size: 0.85em;
+  letter-spacing: 0.12em;
+  color: var(--fg-dark);
+  text-transform: uppercase;
+}
+.vs-node {
+  padding: 0.15em 0.6em 0.15em calc(1.1em + var(--depth, 0) * 0.95em);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.vs-node.on { background: var(--sel); color: var(--fg-bright); }
+/* Fixed cell so every glyph, whatever its advance width, leaves the same gap
+   before the label and lines up in a column. */
+.vs-node i {
+  font-style: normal;
+  color: var(--accent);
+  display: inline-block;
+  width: 1.15em;
+  margin-right: 0.5em;
+  text-align: center;
+}
+.vs-node.file i { color: var(--fg-dark); }
+.vs-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--bg-darker);
+}
+.vs-tabs { display: flex; background: var(--bg-dark); flex: 0 0 auto; }
+.vs-tab {
+  padding: 0.4em 1.1em;
+  color: var(--fg-dark);
+  border-top: 2px solid transparent;
+  white-space: nowrap;
+}
+.vs-tab.on {
+  background: var(--bg);
+  color: var(--fg-bright);
+  border-top-color: var(--accent);
+}
+.vs-tab i,
+.nv-tab i {
+  font-style: normal;
+  display: inline-block;
+  width: 1.5em;
+  margin-right: 0.5em;
+  text-align: center;
+  flex: 0 0 auto;
+}
+.vs-tab i { color: var(--yellow); }
+.vs-crumbs { padding: 0.25em 1.2em; color: var(--fg-dark); font-size: 0.9em; flex: 0 0 auto; }
+.vs-editor {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  overflow: hidden;
+  font-family: var(--mono);
+  white-space: pre;
+  line-height: 1.45;
+}
+.vs-code { flex: 1; min-width: 0; overflow: hidden; padding-left: 0.5em; }
+.vs-num { color: var(--muted); display: inline-block; width: 2.6em; text-align: right; margin-right: 1.2em; }
+.vs-mini {
+  flex: 0 0 5.5em;
+  padding: 0.4em 0.5em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.18em;
+  opacity: 0.5;
+}
+.vs-mini span { height: 0.22em; background: var(--muted); border-radius: 1px; }
+.vs-status {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1.3em;
+  padding: 0.25em 1em;
+  background: var(--accent);
+  color: var(--bg);
+  font-size: 0.9em;
+  font-family: var(--mono);
+  white-space: nowrap;
+  overflow: hidden;
+}
+.vs-status .right { margin-left: auto; display: flex; gap: 1.3em; }
+
+/* ── omarchy menu ────────────────────────────────────────────────────── */
+
+/* Fixed size, straight from omarchy-shell's Menu.qml, because the real menu is
+   a fixed number of logical pixels — it does not grow with the screen.
+   cardWidth 300, baseRowHeight 50, headerHeight 34, panelPadding 18,
+   spacing.md 6, spacing.xs 3, rowPaddingX 12. The label is set larger than
+   Style.font.body, matching the system menu. */
+.app-omenu {
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+}
+.om-card {
+  width: 300px;
+  max-width: 90%;
+  max-height: 100%;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--bg-dark) 96%, transparent);
+  border: 3px solid var(--accent);
+  border-radius: var(--radius);
+  /* padding on every side, so the selected row is inset from the frame
+     rather than running edge to edge */
+  padding: 18px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.5);
+  font-family: var(--mono);
+}
+.om-header {
+  height: 34px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+  color: var(--fg-dark);
+}
+.om-rows { display: flex; flex-direction: column; gap: 3px; }
+.om-item {
+  height: 50px;
+  display: flex;
+  gap: 17px;
+  align-items: center;
+  padding: 0 12px;
+  border-radius: var(--radius);
+  color: var(--fg);
+}
+.om-item i {
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: 20px;
+  color: var(--fg);
+  width: 24px;
+  text-align: center;
+}
+.om-item span { flex: 1; min-width: 0; }
+.om-chevron { font-weight: 400; color: var(--fg-dark); }
+.om-item.on { background: var(--lighter-bg); color: var(--accent); }
+.om-item.on i { color: var(--accent); }
+
+/* ── hud ─────────────────────────────────────────────────────────────── */
+
+.hud {
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 9px 14px;
+  border-radius: 999px;
+  background: var(--glass);
+  border: 1px solid var(--glass-line);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5);
+  font-size: 13px;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.hud.hidden { opacity: 0; transform: translate(-50%, 24px); pointer-events: none; }
+
+.hud button {
+  font: inherit;
+  white-space: nowrap;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--glass-line);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.hud button:hover { background: rgba(255, 255, 255, 0.2); }
+
+.hud-arrow { width: 30px; height: 30px; font-size: 20px; line-height: 1; padding: 0 0 3px; }
+.hud-theme { min-width: 152px; text-align: center; }
+.hud-name { font-size: 14px; font-weight: 600; letter-spacing: 0.01em; }
+.hud-meta { font-size: 10.5px; opacity: 0.55; letter-spacing: 0.06em; text-transform: uppercase; }
+/* Hovering the theme name opens the full list, so you can jump straight to a
+   theme instead of arrowing through 33 of them. Chrome stays neutral dark like
+   the rest of the HUD; the per-theme swatches carry the colour. */
+.hud-theme-wrap { position: relative; }
+
+.picker {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  width: 272px;
+  padding-bottom: 10px;      /* bridges the gap so hover is continuous */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.14s ease, transform 0.14s ease;
+}
+.hud-theme-wrap:hover .picker,
+.picker:hover {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.picker-head {
+  padding: 9px 12px 7px;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  background: var(--glass-solid);
+  border: 1px solid var(--glass-line);
+  border-bottom: 0;
+  border-radius: 10px 10px 0 0;
+}
+.picker-list {
+  max-height: 336px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 4px;
+  background: var(--glass-solid);
+  border: 1px solid var(--glass-line);
+  border-top: 0;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
+}
+.picker-list::-webkit-scrollbar { width: 8px; }
+.picker-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 4px;
+}
+
+.picker-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+.picker-item:hover { background: rgba(255, 255, 255, 0.14); }
+.picker-item.on { background: rgba(255, 255, 255, 0.1); }
+.picker-dots { display: flex; gap: 2px; flex: 0 0 auto; }
+.picker-dots i {
+  width: 8px;
+  height: 16px;
+  border-radius: 2px;
+  display: block;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+.picker-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.picker-tag { font-size: 10px; opacity: 0.55; flex: 0 0 auto; }
+.picker-item.current .picker-tag { opacity: 0.9; color: #8fdca5; }
+
+.hud-swatches { display: flex; gap: 3px; }
+.hud-swatches i {
+  width: 11px;
+  height: 20px;
+  border-radius: 2px;
+  display: block;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+.hud-apply { padding: 7px 14px; font-size: 12.5px; font-weight: 600; }
+.hud-apply.is-current {
+  background: rgba(120, 220, 150, 0.22);
+  border-color: rgba(120, 220, 150, 0.4);
+}
+.hud-icon { width: 30px; height: 30px; font-size: 13px; padding: 0; }
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 74px;
+  transform: translate(-50%, 10px);
+  z-index: 41;
+  padding: 9px 16px;
+  border-radius: 8px;
+  background: var(--glass);
+  border: 1px solid var(--glass-line);
+  backdrop-filter: blur(18px);
+  font-size: 13px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+.toast.bad { border-color: rgba(255, 120, 120, 0.5); }
+
+/* ── context menu ────────────────────────────────────────────────────── */
+
+.menu {
+  position: fixed;
+  z-index: 50;
+  min-width: 210px;
+  padding: 6px;
+  border-radius: 10px;
+  background: var(--glass);
+  border: 1px solid var(--glass-line);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
+  font-size: 13px;
+}
+.menu-title {
+  padding: 5px 10px 8px;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.5;
+}
+.menu-items { display: flex; flex-direction: column; }
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #fff;
+}
+.menu-item:hover { background: rgba(255, 255, 255, 0.14); }
+.menu-item.on { background: rgba(255, 255, 255, 0.09); }
+.menu-item .glyph { width: 16px; text-align: center; opacity: 0.75; font-family: var(--mono); }
+.menu-item .tick { margin-left: auto; opacity: 0.7; }
+.menu-sep { height: 1px; margin: 5px 8px; background: var(--glass-line); }
+
+/* ── help ────────────────────────────────────────────────────────────── */
+
+.shortcuts {
+  position: fixed;
+  z-index: 60;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(440px, 90vw);
+  padding: 22px 26px;
+  border-radius: 14px;
+  background: var(--glass);
+  border: 1px solid var(--glass-line);
+  backdrop-filter: blur(22px);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.6);
+}
+.shortcuts h2 { margin: 0 0 14px; font-size: 15px; letter-spacing: 0.02em; }
+.shortcuts dl {
+  margin: 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 16px;
+  font-size: 13px;
+}
+.shortcuts dt { font-family: var(--mono); opacity: 0.95; white-space: nowrap; }
+.shortcuts dd { margin: 0; opacity: 0.65; }
+.shortcuts-foot { margin: 16px 0 0; font-size: 11.5px; opacity: 0.45; }
+
+/* ── narrow viewports (xl and below) ─────────────────────────────────── */
+
+@media (max-width: 1280px) {
+  .vs-side { display: none; }
+  .vs-main { flex: 1; border-left: 0; }
+  .vs-mini { display: none; }
+  .vs-status { gap: 0.9em; }
+  .vs-status .right > :nth-child(-n + 3) { display: none; }
+
+  .app-fastfetch {
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.9em;
+  }
+  .ff-info { flex: 0 0 auto; width: 100%; gap: 0.7em; }
+
+  .hud { gap: 10px; padding: 7px 11px; }
+  .hud-theme { min-width: 128px; }
+  .hud-apply { padding: 6px 11px; font-size: 12px; }
+}
+
+@media (max-width: 980px) {
+  .hud-swatches { display: none; }
+  .hud-arrow { width: 26px; height: 26px; font-size: 17px; }
+}
+
+/* fastfetch stacks as soon as its own panel is too narrow for two columns */
+@container (max-width: 680px) {
+  .app-fastfetch {
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.8em;
+  }
+  .ff-art { width: 18em; }
+  .ff-hardware { display: none; }
+  .ff-info { flex: 0 0 auto; width: 100%; }
+}
+
+/* ── narrow panels ───────────────────────────────────────────────────── */
+
+/* With text at a fixed size, a small window shows less rather than shrinking.
+   These drop the pane and the column that matter least, the way you would
+   size a real btop or eza to a narrow terminal. */
+@container (max-width: 620px) {
+  .app-btop .btop-proc { display: none; }
+}
+
+@container (max-width: 520px) {
+  .app-ls .ls-date { display: none; }
+}
+
+/* Vertical room is the binding constraint for these two, so they key off
+   height rather than width. */
+@container (max-height: 430px) {
+  .app-btop .btop-disks { display: none; }
+  .app-fastfetch .ff-hardware,
+  .app-fastfetch .ff-uptime,
+  .app-fastfetch .ff-swatches { display: none; }
+  .app-fastfetch .ff-art { width: 13em; }
+}
