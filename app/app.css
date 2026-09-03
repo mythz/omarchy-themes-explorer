@@ -722,6 +722,10 @@ body[data-mode="light"] {
 .app-vscode {
   /* editorGroup.border is `muted` at 25%; every seam in the chrome uses it. */
   --vs-border: color-mix(in srgb, var(--muted) 25%, transparent);
+  /* VS Code's default editor.fontFamily on Linux. Nothing here ships Droid
+     Sans Mono, so in practice this resolves through to the generic monospace
+     -- which is the point of naming it rather than the Nerd Font stack. */
+  font-family: 'Droid Sans Mono', monospace;
   font-size: var(--ui-fs);
   display: flex;
   flex-direction: column;
@@ -731,7 +735,6 @@ body[data-mode="light"] {
 
 .vs-title {
   flex: 0 0 auto;
-  font-family: var(--mono);
   display: flex;
   align-items: center;
   gap: 1em;
@@ -804,7 +807,6 @@ body[data-mode="light"] {
   padding: 0.4em 0 0;
   overflow: hidden;
   color: var(--fg);
-  font-family: var(--mono);
   display: flex;
   flex-direction: column;
 }
@@ -918,7 +920,7 @@ body[data-mode="light"] {
   border-top: 1px solid var(--vs-border);
   border-left: 1px solid var(--vs-border);
 }
-.vs-tabs { display: flex; background: var(--bg); flex: 0 0 auto; font-family: var(--mono); }
+.vs-tabs { display: flex; background: var(--bg); flex: 0 0 auto; }
 .vs-tab {
   display: flex;
   align-items: center;
@@ -946,7 +948,6 @@ body[data-mode="light"] {
 .vs-crumbs {
   padding: 0.25em 1.2em;
   color: var(--muted);
-  font-family: var(--mono);
   font-size: 0.9em;
   flex: 0 0 auto;
 }
@@ -955,7 +956,6 @@ body[data-mode="light"] {
   min-height: 0;
   display: flex;
   overflow: hidden;
-  font-family: var(--mono);
   white-space: pre;
   line-height: 1.45;
 }
@@ -991,7 +991,6 @@ body[data-mode="light"] {
   color: var(--fg);
   border-top: 1px solid color-mix(in srgb, var(--muted) 25%, transparent);
   font-size: 0.9em;
-  font-family: var(--mono);
   white-space: nowrap;
   overflow: hidden;
 }
