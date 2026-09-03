@@ -763,6 +763,12 @@ html, body {
 
 /* ── hud ─────────────────────────────────────────────────────────────── */
 
+.hud,
+.picker,
+.menu {
+  user-select: none;
+}
+
 .hud {
   /* Sits inside the top-left panel rather than floating over the middle of
      the desktop: that tile holds the Omarchy wordmark and is mostly empty, so
@@ -817,13 +823,18 @@ html, body {
   padding-top: 10px;         /* bridges the gap so hover is continuous */
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.14s ease, transform 0.14s ease;
+  /* The delay is on closing only -- the open rule below zeroes it -- so the
+     lists survive the moment the pointer spends on neither trigger while
+     travelling from the swatches down into them. */
+  transition: opacity 0.14s ease 0.22s, transform 0.14s ease 0.22s;
 }
 .hud-theme-wrap:hover .picker,
+.hud:has(.hud-swatches:hover) .picker,
 .picker:hover {
   opacity: 1;
   pointer-events: auto;
   transform: translateX(-50%) translateY(0);
+  transition-delay: 0s;
 }
 
 /* The extras hang off the right edge instead of joining a flex row, so that
