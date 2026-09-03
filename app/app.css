@@ -799,7 +799,7 @@ html, body {
 }
 .hud button:hover { background: rgba(255, 255, 255, 0.2); }
 
-.hud-arrow { width: 30px; height: 30px; font-size: 20px; line-height: 1; padding: 0 0 3px; }
+.hud-arrow { width: 30px; height: 30px; font-size: 21px; line-height: 1; padding: 0 0 3px; }
 .hud-theme { min-width: 152px; text-align: center; }
 .hud-name { font-size: 14px; font-weight: 600; letter-spacing: 0.01em; }
 .hud-meta { font-size: 10.5px; opacity: 0.55; letter-spacing: 0.06em; text-transform: uppercase; }
@@ -906,6 +906,9 @@ html, body {
 /* currentColor, so the icon picks up the same white the text buttons use --
    including the dimmed state when a theme has only one background. */
 .hud-icon svg { width: 16px; height: 16px; }
+/* The ✕ reads a size smaller than the ? at the same font-size, so it is nudged
+   up to sit level with it rather than inheriting .hud-icon unchanged. */
+.hud-close { font-size: 14px; }
 .hud-icon:disabled { opacity: 0.4; cursor: default; }
 .hud-icon:disabled:hover { background: rgba(255, 255, 255, 0.08); }
 
