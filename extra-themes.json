@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-03T16:02:08Z",
+  "generated": "2026-09-03T16:09:34Z",
   "source": "https://learn.omacom.io/2/the-omarchy-manual/90/extra-themes",
   "count": 115,
   "themes": [
@@ -27,7 +27,7 @@
         "div_line": "#a60234"
       },
       "iconTheme": "Yaru-magenta",
-      "folderColor": "#ad56ae",
+      "folderColor": "#bc65bd",
       "colors": {
         "background": "#0e091d",
         "dark_background": "#0d081a",
@@ -103,7 +103,7 @@
         "upload_mid": "#c83730"
       },
       "iconTheme": "Yaru-purple",
-      "folderColor": "#7c69cf",
+      "folderColor": "#8a79dc",
       "colors": {
         "background": "#000000",
         "dark_background": "#000000",
@@ -176,7 +176,7 @@
         "upload_mid": "#b44a4a"
       },
       "iconTheme": "Yaru-red",
-      "folderColor": "#cc445a",
+      "folderColor": "#dd5169",
       "colors": {
         "background": "#1b1112",
         "dark_background": "#180f10",
@@ -229,7 +229,7 @@
       "borders": {},
       "btop": {},
       "iconTheme": "Yaru-blue",
-      "folderColor": "#1d75da",
+      "folderColor": "#2686e6",
       "colors": {
         "background": "#111422",
         "dark_background": "#0d101b",
@@ -304,7 +304,7 @@
         "upload_mid": "#f4a5ff"
       },
       "iconTheme": "Yaru-magenta",
-      "folderColor": "#ad56ae",
+      "folderColor": "#bc65bd",
       "colors": {
         "background": "#1a0d2e",
         "dark_background": "#170c29",
@@ -380,7 +380,7 @@
         "upload_mid": "#da7a6f"
       },
       "iconTheme": "Yaru-red",
-      "folderColor": "#cc445a",
+      "folderColor": "#dd5169",
       "colors": {
         "background": "#181c1f",
         "dark_background": "#16191c",
@@ -503,7 +503,7 @@
         "upload_mid": "#b0c5b9"
       },
       "iconTheme": "Yaru-wartybrown",
-      "folderColor": "#927458",
+      "folderColor": "#a08367",
       "colors": {
         "background": "#22221b",
         "dark_background": "#1f1f18",
@@ -555,7 +555,7 @@
       "borders": {},
       "btop": {},
       "iconTheme": "Yaru-magenta",
-      "folderColor": "#ad56ae",
+      "folderColor": "#bc65bd",
       "colors": {
         "background": "#282a36",
         "dark_background": "#1e2029",
@@ -626,7 +626,7 @@
         "cpu_end": "#e65c5c"
       },
       "iconTheme": "Yaru-olive",
-      "folderColor": "#58861e",
+      "folderColor": "#669427",
       "colors": {
         "background": "#000000",
         "dark_background": "#000000",
@@ -703,7 +703,7 @@
         "temp_start": "#66d9ff"
       },
       "iconTheme": "Yaru-blue",
-      "folderColor": "#1d75da",
+      "folderColor": "#2686e6",
       "colors": {
         "background": "#0a0f1a",
         "dark_background": "#090e17",
@@ -773,7 +773,7 @@
         "upload_mid": "#62605f"
       },
       "iconTheme": "Yaru-wartybrown",
-      "folderColor": "#927458",
+      "folderColor": "#a08367",
       "colors": {
         "background": "#1b1d1e",
         "dark_background": "#181a1b",
@@ -856,7 +856,7 @@
         "upload_mid": "#c2bbb0"
       },
       "iconTheme": "Yaru-yellow",
-      "folderColor": "#a36d1d",
+      "folderColor": "#b17d26",
       "colors": {
         "background": "#121212",
         "dark_background": "#101010",
@@ -927,7 +927,7 @@
         "proc_box": "#e7a46f"
       },
       "iconTheme": "Yaru-blue-dark",
-      "folderColor": "#4c9bf4",
+      "folderColor": "#59a9ff",
       "colors": {
         "background": "#101318",
         "dark_background": "#0e1116",
@@ -1002,7 +1002,7 @@
         "upload_mid": "#e39c45"
       },
       "iconTheme": "Yaru-magenta",
-      "folderColor": "#ad56ae",
+      "folderColor": "#bc65bd",
       "colors": {
         "background": "#1a1515",
         "dark_background": "#1a1515",
@@ -1173,7 +1173,7 @@
         "upload_mid": "#a3850e"
       },
       "iconTheme": "Yaru-yellow",
-      "folderColor": "#a36d1d",
+      "folderColor": "#b17d26",
       "colors": {
         "background": "#0d0d0d",
         "dark_background": "#0c0c0c",
@@ -1253,7 +1253,7 @@
         "upload_mid": "#38ddcd"
       },
       "iconTheme": "Yaru-sage",
-      "folderColor": "#6e7e71",
+      "folderColor": "#7c8c7f",
       "colors": {
         "background": "#0a0a0a",
         "dark_background": "#090909",
@@ -1332,7 +1332,7 @@
         "upload_mid": "#be95ff"
       },
       "iconTheme": "Yaru-blue",
-      "folderColor": "#1d75da",
+      "folderColor": "#2686e6",
       "colors": {
         "background": "#161616",
         "dark_background": "#141414",
@@ -1410,7 +1410,7 @@
         "temp_start": "#6b8cae"
       },
       "iconTheme": "Yaru-blue-dark",
-      "folderColor": "#4c9bf4",
+      "folderColor": "#59a9ff",
       "colors": {
         "background": "#1c2128",
         "dark_background": "#191e24",
@@ -1485,7 +1485,7 @@
         "upload_mid": "#81c8be"
       },
       "iconTheme": "Yaru-purple",
-      "folderColor": "#7c69cf",
+      "folderColor": "#8a79dc",
       "colors": {
         "background": "#010101",
         "dark_background": "#010101",
@@ -1563,7 +1563,7 @@
         "upload_mid": "#b1e95f"
       },
       "iconTheme": "Yaru-olive",
-      "folderColor": "#58861e",
+      "folderColor": "#669427",
       "colors": {
         "background": "#000000",
         "dark_background": "#000000",
@@ -1634,7 +1634,7 @@
         "upload_mid": "#dce0e6"
       },
       "iconTheme": "Yaru-red",
-      "folderColor": "#cc445a",
+      "folderColor": "#dd5169",
       "colors": {
         "background": "#181a1f",
         "dark_background": "#16171c",
@@ -1710,7 +1710,7 @@
         "upload_mid": "#ff9d00"
       },
       "iconTheme": "Yaru-yellow",
-      "folderColor": "#a36d1d",
+      "folderColor": "#b17d26",
       "colors": {
         "background": "#122738",
         "dark_background": "#102332",
@@ -1782,7 +1782,7 @@
         "upload_mid": "#babbbb"
       },
       "iconTheme": "Yaru-red",
-      "folderColor": "#cc445a",
+      "folderColor": "#dd5169",
       "colors": {
         "background": "#040303",
         "dark_background": "#040303",
@@ -1858,7 +1858,7 @@
         "upload_mid": "#ff938a"
       },
       "iconTheme": "Yaru-dark",
-      "folderColor": "#f26f3a",
+      "folderColor": "#ff7f45",
       "colors": {
         "background": "#2b2b2b",
         "dark_background": "#272727",
@@ -1937,7 +1937,7 @@
         "upload_mid": "#ff4500"
       },
       "iconTheme": "Yaru-sage",
-      "folderColor": "#6e7e71",
+      "folderColor": "#7c8c7f",
       "colors": {
         "background": "#0f0f0f",
         "dark_background": "#0e0e0e",
@@ -2016,7 +2016,7 @@
         "upload_mid": "#819890"
       },
       "iconTheme": "Yaru-sage",
-      "folderColor": "#6e7e71",
+      "folderColor": "#7c8c7f",
       "colors": {
         "background": "#131516",
         "dark_background": "#111314",
@@ -2092,7 +2092,7 @@
         "upload_mid": "#d87c4a"
       },
       "iconTheme": "Yaru-red",
-      "folderColor": "#cc445a",
+      "folderColor": "#dd5169",
       "colors": {
         "background": "#121212",
         "dark_background": "#101010",
@@ -2170,7 +2170,7 @@
         "upload_mid": "#9370db"
       },
       "iconTheme": "Yaru-blue",
-      "folderColor": "#1d75da",
+      "folderColor": "#2686e6",
       "colors": {
         "background": "#101428",
         "dark_background": "#0e1224",
@@ -2250,7 +2250,7 @@
         "upload_mid": "#ff79c6"
       },
       "iconTheme": "Yaru-red",
-      "folderColor": "#cc445a",
+      "folderColor": "#dd5169",
       "colors": {
         "background": "#282a36",
         "dark_background": "#21222c",
@@ -2323,7 +2323,7 @@
         "upload_mid": "#ec6a88"
       },
       "iconTheme": "Yaru-magenta",
-      "folderColor": "#ad56ae",
+      "folderColor": "#bc65bd",
       "colors": {
         "background": "#1c1e26",
         "dark_background": "#191b22",
@@ -2384,7 +2384,7 @@
       "borders": {},
       "btop": {},
       "iconTheme": "Yaru-sage",
-      "folderColor": "#6e7e71",
+      "folderColor": "#7c8c7f",
       "colors": {
         "background": "#232a2e",
         "dark_background": "#202629",
@@ -2439,7 +2439,7 @@
       },
       "btop": {},
       "iconTheme": "Yaru-sage",
-      "folderColor": "#6e7e71",
+      "folderColor": "#7c8c7f",
       "colors": {
         "background": "#000000",
         "dark_background": "#000000",
@@ -2505,7 +2505,7 @@
       "borders": {},
       "btop": {},
       "iconTheme": "Yaru-red",
-      "folderColor": "#cc445a",
+      "folderColor": "#dd5169",
       "colors": {
         "background": "#0a1220",
         "dark_background": "#080e18",
@@ -2578,7 +2578,7 @@
         "upload_mid": "#5ab7d5"
       },
       "iconTheme": "Yaru-blue",
-      "folderColor": "#1d75da",
+      "folderColor": "#2686e6",
       "colors": {
         "background": "#0a0a0d",
         "dark_background": "#09090c",
@@ -2651,7 +2651,7 @@
         "upload_mid": "#ff79c6"
       },
       "iconTheme": "Yaru-purple",
-      "folderColor": "#7c69cf",
+      "folderColor": "#8a79dc",
       "colors": {
         "background": "#282a36",
         "dark_background": "#242631",
@@ -2730,7 +2730,7 @@
         "upload_mid": "#3aa99f"
       },
       "iconTheme": "Yaru-blue",
-      "folderColor": "#1d75da",
+      "folderColor": "#2686e6",
       "colors": {
         "background": "#100f0f",
         "dark_background": "#0e0e0e",
@@ -2804,7 +2804,7 @@
         "upload_mid": "#6bbf7a"
       },
       "iconTheme": "Yaru-olive",
-      "folderColor": "#58861e",
+      "folderColor": "#669427",
       "colors": {
         "background": "#0f1a14",
         "dark_background": "#0e1712",
@@ -2865,7 +2865,7 @@
       "borders": {},
       "btop": {},
       "iconTheme": "Yaru-blue",
-      "folderColor": "#1d75da",
+      "folderColor": "#2686e6",
       "colors": {
         "background": "#0a0f1c",
         "dark_background": "#070b14",
@@ -2919,7 +2919,7 @@
       "borders": {},
       "btop": {},
       "iconTheme": "Yaru-magenta",
-      "folderColor": "#ad56ae",
+      "folderColor": "#bc65bd",
       "colors": {
         "background": "#0a1428",
         "dark_background": "#080f1e",
@@ -2992,7 +2992,7 @@
         "upload_mid": "#7c93dd"
       },
       "iconTheme": "Yaru-magenta",
-      "folderColor": "#ad56ae",
+      "folderColor": "#bc65bd",
       "colors": {
         "background": "#070506",
         "dark_background": "#060405",
@@ -3066,7 +3066,7 @@
         "upload_mid": "#dbb42c"
       },
       "iconTheme": "Yaru-yellow",
-      "folderColor": "#a36d1d",
+      "folderColor": "#b17d26",
       "colors": {
         "background": "#121212",
         "dark_background": "#101010",
@@ -3138,7 +3138,7 @@
         "upload_mid": "#c3a983"
       },
       "iconTheme": "Yaru-wartybrown",
-      "folderColor": "#927458",
+      "folderColor": "#a08367",
       "colors": {
         "background": "#0f0b05",
         "dark_background": "#0e0a04",
@@ -3213,7 +3213,7 @@
         "upload_mid": "#88a57d"
       },
       "iconTheme": "Yaru-sage",
-      "folderColor": "#6e7e71",
+      "folderColor": "#7c8c7f",
       "colors": {
         "background": "#171717",
         "dark_background": "#151515",
@@ -3287,7 +3287,7 @@
         "cpu_end": "#76ff03"
       },
       "iconTheme": "Yaru-olive",
-      "folderColor": "#58861e",
+      "folderColor": "#669427",
       "colors": {
         "background": "#1d271f",
         "dark_background": "#1a231c",
@@ -3363,7 +3363,7 @@
         "upload_mid": "#3d727d"
       },
       "iconTheme": "Yaru-sage",
-      "folderColor": "#6e7e71",
+      "folderColor": "#7c8c7f",
       "colors": {
         "background": "#dfe4c4",
         "dark_background": "#d4d9ba",
@@ -3442,7 +3442,7 @@
         "upload_mid": "#ff7783"
       },
       "iconTheme": "Yaru-yellow",
-      "folderColor": "#a36d1d",
+      "folderColor": "#b17d26",
       "colors": {
         "background": "#1b1b1b",
         "dark_background": "#181818",
@@ -3497,7 +3497,7 @@
       "borders": {},
       "btop": {},
       "iconTheme": "Yaru-red",
-      "folderColor": "#cc445a",
+      "folderColor": "#dd5169",
       "colors": {
         "background": "#222222",
         "dark_background": "#1f1f1f",
@@ -3587,7 +3587,7 @@
         "upload_mid": "#f7d383"
       },
       "iconTheme": "Yaru-yellow-dark",
-      "folderColor": "#c88e1d",
+      "folderColor": "#d49c26",
       "colors": {
         "background": "#1c1c1c",
         "dark_background": "#191919",
@@ -3658,7 +3658,7 @@
         "upload_mid": "#919ab7"
       },
       "iconTheme": "Yaru-magenta",
-      "folderColor": "#ad56ae",
+      "folderColor": "#bc65bd",
       "colors": {
         "background": "#13131d",
         "dark_background": "#11111a",
@@ -3736,7 +3736,7 @@
         "upload_mid": "#c4d8e2"
       },
       "iconTheme": "Yaru",
-      "folderColor": "#c94d21",
+      "folderColor": "#da5b2a",
       "colors": {
         "background": "#0c0b0c",
         "dark_background": "#0b0a0b",
@@ -3810,7 +3810,7 @@
         "upload_mid": "#a1efe4"
       },
       "iconTheme": "Yaru-prussiangreen",
-      "folderColor": "#428483",
+      "folderColor": "#4e9291",
       "colors": {
         "background": "#050b0d",
         "dark_background": "#45e6ee",
@@ -3890,7 +3890,7 @@
         "upload_mid": "#7b826d"
       },
       "iconTheme": "Yaru-wartybrown",
-      "folderColor": "#927458",
+      "folderColor": "#a08367",
       "colors": {
         "background": "#ecd3a1",
         "dark_background": "#e0c899",
@@ -3966,7 +3966,7 @@
         "upload_mid": "#c45a3f"
       },
       "iconTheme": "Yaru-dark",
-      "folderColor": "#f26f3a",
+      "folderColor": "#ff7f45",
       "colors": {
         "background": "#000000",
         "dark_background": "#000000",
@@ -4041,7 +4041,7 @@
         "upload_mid": "#c2a571"
       },
       "iconTheme": "Yaru-sage",
-      "folderColor": "#6e7e71",
+      "folderColor": "#7c8c7f",
       "colors": {
         "background": "#1c1b19",
         "dark_background": "#191816",
@@ -4113,7 +4113,7 @@
         "upload_mid": "#c9a554"
       },
       "iconTheme": "Yaru-wartybrown",
-      "folderColor": "#927458",
+      "folderColor": "#a08367",
       "colors": {
         "background": "#222222",
         "dark_background": "#1f1f1f",
@@ -4193,7 +4193,7 @@
         "upload_mid": "#f59e0b"
       },
       "iconTheme": "Yaru-prussiangreen",
-      "folderColor": "#428483",
+      "folderColor": "#4e9291",
       "colors": {
         "background": "#000000",
         "dark_background": "#0d0d0d",
@@ -4269,7 +4269,7 @@
         "upload_mid": "#6b8295"
       },
       "iconTheme": "Yaru-sage",
-      "folderColor": "#6e7e71",
+      "folderColor": "#7c8c7f",
       "colors": {
         "background": "#f4f1e8",
         "dark_background": "#e8e5dc",
@@ -4393,7 +4393,7 @@
       "borders": {},
       "btop": {},
       "iconTheme": "Yaru-magenta",
-      "folderColor": "#ad56ae",
+      "folderColor": "#bc65bd",
       "colors": {
         "background": "#0a1220",
         "dark_background": "#080e18",
@@ -4466,7 +4466,7 @@
         "upload_mid": "#6a85ff"
       },
       "iconTheme": "Yaru-purple",
-      "folderColor": "#7c69cf",
+      "folderColor": "#8a79dc",
       "colors": {
         "background": "#181c22",
         "dark_background": "#16191f",
@@ -4537,7 +4537,7 @@
         "proc_box": "#eed59a"
       },
       "iconTheme": "Yaru-blue",
-      "folderColor": "#1d75da",
+      "folderColor": "#2686e6",
       "colors": {
         "background": "#0f1b22",
         "dark_background": "#0e181f",
@@ -4680,7 +4680,7 @@
         "upload_mid": "#00bfff"
       },
       "iconTheme": "Yaru-blue",
-      "folderColor": "#1d75da",
+      "folderColor": "#2686e6",
       "colors": {
         "background": "#000000",
         "dark_background": "#000000",
@@ -4908,7 +4908,7 @@
         "upload_mid": "#8361ff"
       },
       "iconTheme": "Yaru-magenta",
-      "folderColor": "#ad56ae",
+      "folderColor": "#bc65bd",
       "colors": {
         "background": "#130c2b",
         "dark_background": "#110b27",
@@ -4969,7 +4969,7 @@
       "borders": {},
       "btop": {},
       "iconTheme": "Yaru-blue-dark",
-      "folderColor": "#4c9bf4",
+      "folderColor": "#59a9ff",
       "colors": {
         "background": "#282c34",
         "dark_background": "#21252b",
@@ -5049,7 +5049,7 @@
         "upload_mid": "#3ddbd9"
       },
       "iconTheme": "Yaru-blue",
-      "folderColor": "#1d75da",
+      "folderColor": "#2686e6",
       "colors": {
         "background": "#161616",
         "dark_background": "#141414",
@@ -5165,7 +5165,7 @@
       "borders": {},
       "btop": {},
       "iconTheme": "Yaru-yellow",
-      "folderColor": "#a36d1d",
+      "folderColor": "#b17d26",
       "colors": {
         "background": "#171a18",
         "dark_background": "#121513",
@@ -5292,7 +5292,7 @@
       "borders": {},
       "btop": {},
       "iconTheme": "Yaru-red",
-      "folderColor": "#cc445a",
+      "folderColor": "#dd5169",
       "colors": {
         "background": "#0a0314",
         "dark_background": "#08020f",
@@ -5369,7 +5369,7 @@
         "upload_mid": "#b895dd"
       },
       "iconTheme": "Yaru-purple",
-      "folderColor": "#7c69cf",
+      "folderColor": "#8a79dc",
       "colors": {
         "background": "#020007",
         "dark_background": "#020006",
@@ -5446,7 +5446,7 @@
         "upload_mid": "#ca2edc"
       },
       "iconTheme": "Yaru-purple",
-      "folderColor": "#7c69cf",
+      "folderColor": "#8a79dc",
       "colors": {
         "background": "#121212",
         "dark_background": "#101010",
@@ -5526,7 +5526,7 @@
         "upload_mid": "#8c92a3"
       },
       "iconTheme": "Yaru-magenta",
-      "folderColor": "#ad56ae",
+      "folderColor": "#bc65bd",
       "colors": {
         "background": "#1e1e2e",
         "dark_background": "#1b1b29",
@@ -5598,7 +5598,7 @@
         "cpu_end": "#ffeaf2"
       },
       "iconTheme": "Yaru-red",
-      "folderColor": "#cc445a",
+      "folderColor": "#dd5169",
       "colors": {
         "background": "#191414",
         "dark_background": "#161212",
@@ -5672,7 +5672,7 @@
         "upload_mid": "#e97b3c"
       },
       "iconTheme": "Yaru-wartybrown",
-      "folderColor": "#927458",
+      "folderColor": "#a08367",
       "colors": {
         "background": "#00172e",
         "dark_background": "#001529",
@@ -5840,7 +5840,7 @@
         "upload_mid": "#6a825e"
       },
       "iconTheme": "Yaru-sage",
-      "folderColor": "#6e7e71",
+      "folderColor": "#7c8c7f",
       "colors": {
         "background": "#fdf6ee",
         "dark_background": "#f0eae2",
@@ -5912,7 +5912,7 @@
         "upload_mid": "#36f9f6"
       },
       "iconTheme": "Yaru-purple",
-      "folderColor": "#7c69cf",
+      "folderColor": "#8a79dc",
       "colors": {
         "background": "#000000",
         "dark_background": "#000000",
@@ -5986,7 +5986,7 @@
         "upload_mid": "#eb6f92"
       },
       "iconTheme": "Yaru-blue",
-      "folderColor": "#1d75da",
+      "folderColor": "#2686e6",
       "colors": {
         "background": "#191724",
         "dark_background": "#161520",
@@ -6060,7 +6060,7 @@
         "upload_mid": "#b85540"
       },
       "iconTheme": "Yaru-magenta",
-      "folderColor": "#ad56ae",
+      "folderColor": "#bc65bd",
       "colors": {
         "background": "#f5e6d3",
         "dark_background": "#e9dac8",
@@ -6138,7 +6138,7 @@
         "upload_mid": "#717c7c"
       },
       "iconTheme": "Yaru-sage-dark",
-      "folderColor": "#8b9f8d",
+      "folderColor": "#98ac9a",
       "colors": {
         "background": "#050505",
         "dark_background": "#040404",
@@ -6215,7 +6215,7 @@
         "upload_mid": "#b2fff3"
       },
       "iconTheme": "Yaru-purple",
-      "folderColor": "#7c69cf",
+      "folderColor": "#8a79dc",
       "colors": {
         "background": "#05080a",
         "dark_background": "#040709",
@@ -6271,7 +6271,7 @@
       "borders": {},
       "btop": {},
       "iconTheme": "Yaru-red",
-      "folderColor": "#cc445a",
+      "folderColor": "#dd5169",
       "colors": {
         "background": "#0d0509",
         "dark_background": "#060204",
@@ -6346,7 +6346,7 @@
         "upload_mid": "#f23888"
       },
       "iconTheme": "Yaru-magenta",
-      "folderColor": "#ad56ae",
+      "folderColor": "#bc65bd",
       "colors": {
         "background": "#0b0d11",
         "dark_background": "#0a0c0f",
@@ -6425,7 +6425,7 @@
         "upload_mid": "#819fee"
       },
       "iconTheme": "Yaru-yellow-dark",
-      "folderColor": "#c88e1d",
+      "folderColor": "#d49c26",
       "colors": {
         "background": "#060d1f",
         "dark_background": "#050c1c",
@@ -6502,7 +6502,7 @@
         "upload_mid": "#ff6600"
       },
       "iconTheme": "Yaru",
-      "folderColor": "#c94d21",
+      "folderColor": "#da5b2a",
       "colors": {
         "background": "#00110b",
         "dark_background": "#000f0a",
@@ -6936,7 +6936,7 @@
         "upload_mid": "#9fa5a9"
       },
       "iconTheme": "Yaru-sage-dark",
-      "folderColor": "#8b9f8d",
+      "folderColor": "#98ac9a",
       "colors": {
         "background": "#101315",
         "dark_background": "#0e1113",
@@ -6996,7 +6996,7 @@
       },
       "btop": {},
       "iconTheme": "Yaru-wartybrown",
-      "folderColor": "#927458",
+      "folderColor": "#a08367",
       "colors": {
         "background": "#1c0e00",
         "dark_background": "#190d00",
@@ -7070,7 +7070,7 @@
         "upload_mid": "#fce7b0"
       },
       "iconTheme": "Yaru-yellow",
-      "folderColor": "#a36d1d",
+      "folderColor": "#b17d26",
       "colors": {
         "background": "#070605",
         "dark_background": "#060504",
@@ -7143,7 +7143,7 @@
         "upload_mid": "#ff66f6"
       },
       "iconTheme": "Yaru-magenta",
-      "folderColor": "#ad56ae",
+      "folderColor": "#bc65bd",
       "colors": {
         "background": "#0f0f19",
         "dark_background": "#0e0e16",
@@ -7217,7 +7217,7 @@
         "upload_mid": "#f59e0b"
       },
       "iconTheme": "Yaru-olive",
-      "folderColor": "#58861e",
+      "folderColor": "#669427",
       "colors": {
         "background": "#214130",
         "dark_background": "#1e3a2b",
@@ -7364,7 +7364,7 @@
         "upload_mid": "#4ade7f"
       },
       "iconTheme": "Yaru-sage",
-      "folderColor": "#6e7e71",
+      "folderColor": "#7c8c7f",
       "colors": {
         "background": "#121111",
         "dark_background": "#100f0f",
@@ -7462,7 +7462,7 @@
         "upload_mid": "#363a34"
       },
       "iconTheme": "Yaru-sage",
-      "folderColor": "#6e7e71",
+      "folderColor": "#7c8c7f",
       "colors": {
         "background": "#d0d0c8",
         "dark_background": "#c6c6be",
@@ -7537,7 +7537,7 @@
         "upload_mid": "#e0af68"
       },
       "iconTheme": "Yaru-magenta",
-      "folderColor": "#ad56ae",
+      "folderColor": "#bc65bd",
       "colors": {
         "background": "#000000",
         "dark_background": "#000000",
@@ -7610,7 +7610,7 @@
         "upload_mid": "#706b82"
       },
       "iconTheme": "Yaru-wartybrown",
-      "folderColor": "#927458",
+      "folderColor": "#a08367",
       "colors": {
         "background": "#1e2125",
         "dark_background": "#1b1e21",
@@ -7682,7 +7682,7 @@
         "upload_mid": "#d9822b"
       },
       "iconTheme": "Yaru-blue",
-      "folderColor": "#1d75da",
+      "folderColor": "#2686e6",
       "colors": {
         "background": "#0a192f",
         "dark_background": "#081226",
@@ -7760,7 +7760,7 @@
         "upload_mid": "#e2687c"
       },
       "iconTheme": "Yaru-red",
-      "folderColor": "#cc445a",
+      "folderColor": "#dd5169",
       "colors": {
         "background": "#0a101f",
         "dark_background": "#090e1c",
@@ -7833,7 +7833,7 @@
         "upload_mid": "#726947"
       },
       "iconTheme": "Yaru-yellow",
-      "folderColor": "#a36d1d",
+      "folderColor": "#b17d26",
       "colors": {
         "background": "#f5f2e9",
         "dark_background": "#b8b6af",
@@ -7898,7 +7898,7 @@
         "proc_box": "#e6b99d"
       },
       "iconTheme": "Yaru",
-      "folderColor": "#c94d21",
+      "folderColor": "#da5b2a",
       "colors": {
         "background": "#101010",
         "dark_background": "#0e0e0e",
@@ -7972,7 +7972,7 @@
         "upload_mid": "#8b7f2e"
       },
       "iconTheme": "Yaru-yellow",
-      "folderColor": "#a36d1d",
+      "folderColor": "#b17d26",
       "colors": {
         "background": "#121212",
         "dark_background": "#101010",
@@ -8046,7 +8046,7 @@
         "upload_mid": "#b35c3a"
       },
       "iconTheme": "Yaru-purple",
-      "folderColor": "#7c69cf",
+      "folderColor": "#8a79dc",
       "colors": {
         "background": "#05010c",
         "dark_background": "#04010b",
@@ -8118,7 +8118,7 @@
         "upload_mid": "#9eb8b2"
       },
       "iconTheme": "Yaru-yellow",
-      "folderColor": "#a36d1d",
+      "folderColor": "#b17d26",
       "colors": {
         "background": "#292025",
         "dark_background": "#251d21",
@@ -8196,7 +8196,7 @@
         "temp_start": "#ffaa00"
       },
       "iconTheme": "Yaru-red-dark",
-      "folderColor": "#f2697c",
+      "folderColor": "#ff798a",
       "colors": {
         "background": "#0a0a0a",
         "dark_background": "#090909",
@@ -8269,7 +8269,7 @@
         "upload_mid": "#2e311a"
       },
       "iconTheme": "Yaru-yellow",
-      "folderColor": "#a36d1d",
+      "folderColor": "#b17d26",
       "colors": {
         "background": "#dedbc8",
         "dark_background": "#d3d0be",
@@ -8343,7 +8343,7 @@
         "upload_mid": "#0078d4"
       },
       "iconTheme": "Yaru-magenta",
-      "folderColor": "#ad56ae",
+      "folderColor": "#bc65bd",
       "colors": {
         "background": "#181818",
         "dark_background": "#161616",

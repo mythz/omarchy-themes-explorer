@@ -386,6 +386,37 @@ html, body {
 
 /* ── nautilus ────────────────────────────────────────────────────────── */
 
+/* Nautilus does not wear the theme. omarchy-theme-set-gnome only switches GTK
+   between stock Adwaita and Adwaita-dark on the theme's mode and points the
+   icon theme at its icons.theme -- a theme's own gtk.css is never staged into
+   ~/.config/gtk-4.0. So the window is painted in Adwaita's colours and only
+   the folders follow the theme, which is exactly what the real one looks like:
+   neutral grey chrome with magenta folders under omacon.
+   Values are libadwaita's named colours; measured against a real window they
+   land within a couple of units, the rest being Hyprland's window opacity. */
+body[data-mode="dark"] {
+  --ad-window: #242424;
+  --ad-view: #1e1e1e;
+  --ad-sidebar: #303030;
+  --ad-header: #2e2e2e;
+  --ad-fg: #ffffff;
+  --ad-dim: rgba(255, 255, 255, 0.55);
+  --ad-border: rgba(255, 255, 255, 0.1);
+  --ad-overlay: rgba(255, 255, 255, 0.13);
+  --ad-hover: rgba(255, 255, 255, 0.06);
+}
+body[data-mode="light"] {
+  --ad-window: #fafafa;
+  --ad-view: #ffffff;
+  --ad-sidebar: #ebebeb;
+  --ad-header: #ffffff;
+  --ad-fg: rgba(0, 0, 0, 0.87);
+  --ad-dim: rgba(0, 0, 0, 0.55);
+  --ad-border: rgba(0, 0, 0, 0.12);
+  --ad-overlay: rgba(0, 0, 0, 0.1);
+  --ad-hover: rgba(0, 0, 0, 0.05);
+}
+
 /* Fixed metrics, measured off a real Nautilus window: a 72px icon, 14px
    labels, a 225px sidebar and a 56px headerbar. Nothing here scales with the
    panel -- a bigger window simply fits more columns and rows, which is how the
@@ -395,8 +426,8 @@ html, body {
   font-size: 15px;
   white-space: normal;
   display: flex;
-  background: var(--bg);
-  color: var(--fg);
+  background: var(--ad-window);
+  color: var(--ad-fg);
 }
 
 /* Adwaita icons: symbolic ones inherit colour, the folder and document take
@@ -422,12 +453,12 @@ html, body {
   width: 32px;
   height: 32px;
   border-radius: 8px;
-  color: var(--fg);
+  color: var(--ad-fg);
   flex: 0 0 auto;
 }
 .nt-btn.round {
   border-radius: 50%;
-  background: var(--lighter-bg);
+  background: var(--ad-overlay);
   margin-left: 2px;
 }
 
@@ -437,7 +468,7 @@ html, body {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  background: var(--bg-dark);
+  background: var(--ad-sidebar);
   padding-bottom: 8px;
   overflow: hidden;
 }
@@ -463,13 +494,19 @@ html, body {
   flex: 0 0 auto;
 }
 .nt-place span { overflow: hidden; text-overflow: ellipsis; }
-.nt-place .ico { color: var(--fg-dark); }
-.nt-place.on { background: var(--lighter-bg); }
-.nt-place.on .ico { color: var(--fg-bright); }
-.nt-sep { height: 1px; margin: 8px 10px; background: var(--lighter-bg); flex: 0 0 auto; }
+.nt-place .ico { color: var(--ad-dim); }
+.nt-place.on { background: var(--ad-overlay); }
+.nt-place.on .ico { color: var(--ad-fg); }
+.nt-sep { height: 1px; margin: 8px 10px; background: var(--ad-border); flex: 0 0 auto; }
 
-/* main pane */
-.nt-main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+/* main pane: the header keeps the window colour, the file grid is a view */
+.nt-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--ad-view);
+}
 .nt-head {
   height: 56px;
   display: flex;
@@ -477,6 +514,7 @@ html, body {
   gap: 3px;
   padding: 0 10px;
   flex: 0 0 auto;
+  background: var(--ad-header);
 }
 .nt-path {
   flex: 1;
@@ -488,8 +526,8 @@ html, body {
   padding: 0 12px;
   margin: 0 5px;
   border-radius: 10px;
-  background: var(--lighter-bg);
-  border: 1px solid color-mix(in srgb, var(--fg) 12%, transparent);
+  background: var(--ad-hover);
+  border: 1px solid var(--ad-border);
 }
 .nt-path span {
   flex: 1;
@@ -523,7 +561,7 @@ html, body {
   line-height: 1.3;
   overflow-wrap: anywhere;
 }
-.nt-item.on { background: var(--lighter-bg); }
+.nt-item.on { background: var(--ad-overlay); }
 
 .nt-foot {
   height: 50px;
@@ -532,6 +570,7 @@ html, body {
   gap: 3px;
   padding: 0 10px;
   flex: 0 0 auto;
+  background: var(--ad-header);
 }
 
 .only-narrow { display: none; }

@@ -204,31 +204,31 @@ def rounding_for(theme_dir):
 
 
 # A theme names a Yaru icon variant in icons.theme, which is what actually
-# recolours folders in the file manager. These are the folder body colours
-# sampled from each variant's 256x256/places/folder.png (see
-# tools/build-icons.py's sibling note in the README); anything unrecognised
-# falls back to the theme's accent.
+# recolours folders in the file manager. These are each variant's folder body
+# colour, taken as the most common opaque pixel of its
+# 256x256/places/folder.png -- the flat front face, which is what the eye reads
+# as "the folder colour". Anything unrecognised falls back to the accent.
 FOLDER_COLORS = {
-    "Yaru": "#c94d21",
-    "Yaru-dark": "#f26f3a",
-    "Yaru-blue": "#1d75da",
-    "Yaru-blue-dark": "#4c9bf4",
-    "Yaru-magenta": "#ad56ae",
-    "Yaru-magenta-dark": "#d374d2",
-    "Yaru-olive": "#58861e",
-    "Yaru-olive-dark": "#72a844",
-    "Yaru-prussiangreen": "#428483",
-    "Yaru-prussiangreen-dark": "#5ea5a2",
-    "Yaru-purple": "#7c69cf",
-    "Yaru-purple-dark": "#998cf3",
-    "Yaru-red": "#cc445a",
-    "Yaru-red-dark": "#f2697c",
-    "Yaru-sage": "#6e7e71",
-    "Yaru-sage-dark": "#8b9f8d",
-    "Yaru-wartybrown": "#927458",
-    "Yaru-wartybrown-dark": "#b39572",
-    "Yaru-yellow": "#a36d1d",
-    "Yaru-yellow-dark": "#c88e1d",
+    "Yaru": "#da5b2a",
+    "Yaru-dark": "#ff7f45",
+    "Yaru-blue": "#2686e6",
+    "Yaru-blue-dark": "#59a9ff",
+    "Yaru-magenta": "#bc65bd",
+    "Yaru-magenta-dark": "#df85de",
+    "Yaru-olive": "#669427",
+    "Yaru-olive-dark": "#80b550",
+    "Yaru-prussiangreen": "#4e9291",
+    "Yaru-prussiangreen-dark": "#6db2af",
+    "Yaru-purple": "#8a79dc",
+    "Yaru-purple-dark": "#a69afe",
+    "Yaru-red": "#dd5169",
+    "Yaru-red-dark": "#ff798a",
+    "Yaru-sage": "#7c8c7f",
+    "Yaru-sage-dark": "#98ac9a",
+    "Yaru-wartybrown": "#a08367",
+    "Yaru-wartybrown-dark": "#bfa280",
+    "Yaru-yellow": "#b17d26",
+    "Yaru-yellow-dark": "#d49c26",
 }
 
 
