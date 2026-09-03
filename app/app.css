@@ -835,7 +835,9 @@ html, body {
   background: var(--glass-solid);
   border: 1px solid var(--glass-line);
   border-bottom: 0;
-  border-radius: 10px 10px 0 0;
+  /* Same corner as the HUD it hangs off, which is the same corner the theme
+     gives its windows: square on Omarchy's default rounding of 0. */
+  border-radius: var(--radius) var(--radius) 0 0;
 }
 .picker-list {
   max-height: 336px;
@@ -845,7 +847,7 @@ html, body {
   background: var(--glass-solid);
   border: 1px solid var(--glass-line);
   border-top: 0;
-  border-radius: 0 0 10px 10px;
+  border-radius: 0 0 var(--radius) var(--radius);
   box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
 }
 .picker-list::-webkit-scrollbar { width: 8px; }
