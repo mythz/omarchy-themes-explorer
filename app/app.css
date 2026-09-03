@@ -894,7 +894,20 @@ html, body {
   background: rgba(120, 220, 150, 0.22);
   border-color: rgba(120, 220, 150, 0.4);
 }
-.hud-icon { width: 30px; height: 30px; font-size: 13px; padding: 0; }
+.hud-icon {
+  width: 30px;
+  height: 30px;
+  font-size: 13px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+/* currentColor, so the icon picks up the same white the text buttons use --
+   including the dimmed state when a theme has only one background. */
+.hud-icon svg { width: 16px; height: 16px; }
+.hud-icon:disabled { opacity: 0.4; cursor: default; }
+.hud-icon:disabled:hover { background: rgba(255, 255, 255, 0.08); }
 
 .toast {
   position: fixed;
