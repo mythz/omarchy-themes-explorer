@@ -264,6 +264,10 @@
 
   const BOOLS = new RegExp("\\b(true|false|null|undefined)\\b");
 
+  /* Globals are @variable.builtin, not plain variables -- nvim paints `window`
+     in the red slot, and VS Code's variable.language agrees. */
+  const BUILTINS = new RegExp("\\b(window|document|console|globalThis|navigator|process|self)\\b");
+
   /* storage.type.primitive and support.type, which the template paints in the
      plain foreground -- unlike the named types below it. */
   const PRIMITIVES = new RegExp(
@@ -280,22 +284,27 @@
     "(\\/\\/.*$)|" + //  1 line comment
       "(`[^`]*`|'[^']*'|\"[^\"]*\")|" + //  2 string
       "(\\b0x[0-9a-fA-F]+\\b|\\b\\d+(?:\\.\\d+)?\\b)|" + //  3 number
-      "(" + IMPORTS.source + ")|" + //  4 import keyword
-      "(" + BOOLS.source + ")|" + //  6 boolean / null
-      "(" + KEYWORDS.source + ")|" + //  8 keyword
-      "(" + PRIMITIVES.source + ")|" + // 10 primitive type
-      "(" + TYPES.source + ")|" + // 12 named type
-      "([A-Za-z_$][\\w$]*)(?=\\s*\\()|" + // 14 call
+      // Ahead of the keyword list, so `new` keeps its keyword colour while the
+      // name beside it is a constructor -- a scope of its own in both editors.
+      "\\b(new)(\\s+)([A-Za-z_$][\\w$]*)|" + //  4 new, 5 gap, 6 constructor
+      "(" + IMPORTS.source + ")|" + //  7 import keyword
+      "(" + BOOLS.source + ")|" + //  9 boolean / null
+      "(" + BUILTINS.source + ")|" + // 11 global object
+      "(" + KEYWORDS.source + ")|" + // 13 keyword
+      "(" + PRIMITIVES.source + ")|" + // 15 primitive type
+      "(" + TYPES.source + ")|" + // 17 named type
+      "([A-Za-z_$][\\w$]*)(?=\\s*\\()|" + // 19 call
       // A dotted name is an accessor plus either a method call or a property,
       // and the theme colours those two differently -- so the call form has to
       // be tried first or every `.map(` comes out as a property.
-      "(\\.)([A-Za-z_$][\\w$]*)(?=\\s*\\()|" + // 15 accessor, 16 method
-      "(\\.)([A-Za-z_$][\\w$]*)|" + // 17 accessor, 18 property
-      // `name:` -- an object literal key or an interface member. Its own scope
-      // (meta.object-literal.key), and themes do give it its own colour.
-      "([A-Za-z_$][\\w$]*)(?=\\s*:)|" + // 19 object key
-      "(=>|===|!==|==|!=|<=|>=|\\?\\?|\\|\\||&&|\\.\\.\\.|[=<>!&|+\\-*/?%]+)|" + // 20 operator
-      "([{}()\\[\\];,.:]+)", // 21 punctuation
+      "(\\.)([A-Za-z_$][\\w$]*)(?=\\s*\\()|" + // 20 accessor, 21 method
+      "(\\.)([A-Za-z_$][\\w$]*)|" + // 22 accessor, 23 property
+      // `name:` is a parameter inside a signature and an object key inside
+      // braces -- different scopes, and themes colour them differently, so the
+      // paren depth decides which.
+      "([A-Za-z_$][\\w$]*)(?=\\s*:)|" + // 24 key or parameter
+      "(=>|===|!==|==|!=|<=|>=|\\?\\?|\\|\\||&&|\\.\\.\\.|[=<>!&|+\\-*/?%]+)|" + // 25 operator
+      "([{}()\\[\\];,.:]+)", // 26 punctuation
     "g"
   );
 
@@ -348,18 +357,38 @@
     let m;
     while ((m = TOKEN.exec(line))) {
       out += esc(line.slice(last, m.index));
-      if (m[15] || m[17]) {
+      if (m[4]) {
+        out +=
+          '<span class="t-key">' + m[4] + "</span>" + m[5] +
+          '<span class="t-ctor">' + esc(m[6]) + "</span>";
+        last = m.index + m[0].length;
+        continue;
+      }
+      if (m[20] || m[22]) {
         /* punctuation.accessor, then the method or the property. */
         out +=
-          '<span class="t-op">.</span><span class="' + (m[15] ? "t-fn" : "t-prop") +
-          '">' + esc(m[16] || m[18]) + "</span>";
+          '<span class="t-op">.</span><span class="' + (m[20] ? "t-fn" : "t-prop") +
+          '">' + esc(m[21] || m[23]) + "</span>";
         last = m.index + m[0].length;
         continue;
       }
       const cls = m[1] ? "t-com" : m[2] ? "t-str" : m[3] ? "t-num"
-        : m[4] ? "t-imp" : m[6] ? "t-bool" : m[8] ? "t-key"
-        : m[10] ? "t-prim" : m[12] ? "t-typ" : m[14] ? "t-fn"
-        : m[19] ? "t-objkey" : m[20] ? "t-op" : "t-pun";
+        : m[7] ? "t-imp" : m[9] ? "t-bool" : m[11] ? "t-builtin" : m[13] ? "t-key"
+        : m[15] ? "t-prim" : m[17] ? "t-typ" : m[19] ? "t-fn"
+        : m[24]
+        ? (state.stack[state.stack.length - 1] === "(" ? "t-param" : "t-objkey")
+        : m[25] ? "t-op" : "t-pun";
+      if (m[26]) {
+        /* Which bracket we are directly inside decides it: `name:` is an
+           argument in a signature but a key in the object literal passed to
+           one, and a depth count alone cannot tell those apart -- every key in
+           `importKey({ name: ... })` sits at paren depth 1. Kept on `state`, so
+           a signature that wraps across lines still reads correctly. */
+        for (const ch of m[26]) {
+          if (ch === "(" || ch === "[" || ch === "{") state.stack.push(ch);
+          else if (ch === ")" || ch === "]" || ch === "}") state.stack.pop();
+        }
+      }
       out += '<span class="' + cls + '">' + esc(m[0]) + "</span>";
       last = m.index + m[0].length;
     }
@@ -367,7 +396,7 @@
   }
 
   function highlightAll(lines) {
-    const state = { block: false };
+    const state = { block: false, stack: [] };
     return lines.map((l) => highlightLine(l, state));
   }
 

@@ -672,6 +672,9 @@ body[data-mode="light"] {
 .t-objkey { color: var(--tk-objkey, var(--tk-var)); }
 .t-doctype { color: var(--tk-doctype, var(--tk-typ)); font-style: italic; }
 .t-docname { color: var(--tk-docname, var(--tk-var)); font-style: italic; }
+.t-builtin { color: var(--tk-builtin, var(--tk-var)); }
+.t-ctor { color: var(--tk-ctor, var(--tk-typ)); }
+.t-param { color: var(--tk-param, var(--tk-var)); }
 .t-op   { color: var(--tk-op); }
 .t-pun  { color: var(--tk-pun); }
 .t-cls  { color: var(--tk-typ); }
@@ -699,6 +702,9 @@ body[data-mode="light"] {
   --tk-tag: var(--tk-key);
   --tk-doctype: var(--vs-prim, var(--br-cyan));
   --tk-docname: var(--yellow);
+  --tk-builtin: var(--vs-builtin, var(--red));
+  --tk-ctor: var(--tk-key);
+  --tk-param: var(--vs-param, var(--yellow));
   --tk-typ: var(--vs-prim, var(--br-cyan));
   --tk-prim: var(--vs-prim, var(--br-cyan));
   --tk-var: var(--fg-bright);
@@ -724,6 +730,9 @@ body[data-mode="light"] {
   --tk-tag: var(--vs-docTag, var(--tk-key));
   --tk-doctype: var(--vs-docType, var(--tk-var));
   --tk-docname: var(--vs-docName, var(--tk-var));
+  --tk-builtin: var(--vs-builtin, var(--fg));
+  --tk-ctor: var(--vs-ctor, var(--yellow));
+  --tk-param: var(--vs-param, var(--cyan));
   --tk-typ: var(--vs-typ, var(--yellow));
   --tk-prim: var(--vs-prim, var(--fg));
   --tk-var: var(--vs-var, var(--fg));

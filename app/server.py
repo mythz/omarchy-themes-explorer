@@ -518,6 +518,9 @@ SYNTAX_SCOPES = {
     "docTag": "storage.type.class.jsdoc",
     "docType": "entity.name.type.instance.jsdoc",
     "docName": "variable.other.jsdoc",
+    "builtin": "variable.language",
+    "ctor": "support.class",
+    "param": "variable.parameter",
     "cst": "variable.other.constant",
     "bool": "constant.language.boolean",
 }
@@ -568,6 +571,9 @@ SYNTAX_TEMPLATE = {
     "docTag": "bright_magenta",  # @param / @returns
     "docType": "yellow",         # the {type} beside it
     "docName": "foreground",     # the name after the type
+    "builtin": "foreground",     # variable.language -- window, this
+    "ctor": "yellow",            # support.class -- the name after `new`
+    "param": "cyan",             # variable.parameter
     "cst": "bright_yellow",      # variable.other.constant
     "bool": "orange",            # constant.language.boolean
 }

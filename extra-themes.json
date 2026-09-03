@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-03T18:51:33Z",
+  "generated": "2026-09-03T19:03:50Z",
   "source": "https://learn.omacom.io/2/the-omarchy-manual/90/extra-themes",
   "count": 115,
   "themes": [
@@ -42,6 +42,9 @@
         "docTag": "#6c032c",
         "docType": "#7cd699",
         "docName": "#14b9b5",
+        "builtin": "#14b9b5",
+        "ctor": "#7cd699",
+        "param": "#ff7f41",
         "cst": "#fd3e6a",
         "bool": "#7cd699",
         "com_italic": true
@@ -141,6 +144,9 @@
         "docTag": "#d0d0ff",
         "docType": "#cc7833",
         "docName": "#ffffff",
+        "builtin": "#ffffff",
+        "ctor": "#cc7833",
+        "param": "#cccc33",
         "cst": "#ffd93d",
         "bool": "#cc7833",
         "com_italic": true
@@ -234,6 +240,9 @@
         "docTag": "#f2a3a3",
         "docType": "#d66b6b",
         "docName": "#f2e8e8",
+        "builtin": "#f2e8e8",
+        "ctor": "#d66b6b",
+        "param": "#f48a8a",
         "cst": "#e87f7f",
         "bool": "#d66b6b",
         "com_italic": true
@@ -329,6 +338,9 @@
         "docTag": "#ffaff9",
         "docType": "#eacd61",
         "docName": "#bcc1dc",
+        "builtin": "#bcc1dc",
+        "ctor": "#eacd61",
+        "param": "#22ecdb",
         "cst": "#ffe17a",
         "bool": "#e9954f",
         "com_italic": true
@@ -425,6 +437,9 @@
         "docTag": "#ffc8ff",
         "docType": "#f9f871",
         "docName": "#d4a5ff",
+        "builtin": "#d4a5ff",
+        "ctor": "#f9f871",
+        "param": "#5ffbf1",
         "cst": "#fbf9a5",
         "bool": "#f9f871",
         "com_italic": true
@@ -521,6 +536,9 @@
         "docTag": "#c4bcbb",
         "docType": "#bb6d6c",
         "docName": "#fdf9f8",
+        "builtin": "#fdf9f8",
+        "ctor": "#bb6d6c",
+        "param": "#da7a6f",
         "cst": "#d7adad",
         "bool": "#bb6d6c",
         "com_italic": true
@@ -615,6 +633,9 @@
         "docTag": "#8a8a8a",
         "docType": "#9e9e9e",
         "docName": "#e0e0e0",
+        "builtin": "#e0e0e0",
+        "ctor": "#9e9e9e",
+        "param": "#767676",
         "cst": "#b2b2b2",
         "bool": "#949494",
         "com_italic": true
@@ -709,6 +730,9 @@
         "docTag": "#b48495",
         "docType": "#a5980d",
         "docName": "#dcd9d6",
+        "builtin": "#dcd9d6",
+        "ctor": "#a5980d",
+        "param": "#5b9d48",
         "cst": "#c2b53c",
         "bool": "#a5980d",
         "com_italic": true
@@ -803,6 +827,9 @@
         "docTag": "#ffc8dd",
         "docType": "#cbc3e3",
         "docName": "#f8f8f2",
+        "builtin": "#f8f8f2",
+        "ctor": "#cbc3e3",
+        "param": "#8be9fd",
         "cst": "#cbc3e3",
         "bool": "#ffb86c",
         "com_italic": true
@@ -895,6 +922,9 @@
         "docTag": "#e680e6",
         "docType": "#ffcc66",
         "docName": "#e6e6e6",
+        "builtin": "#e6e6e6",
+        "ctor": "#ffcc66",
+        "param": "#66cccc",
         "cst": "#ffdd80",
         "bool": "#ffcc66",
         "com_italic": true
@@ -992,6 +1022,9 @@
         "docTag": "#66b2ff",
         "docType": "#33ccff",
         "docName": "#a8dfff",
+        "builtin": "#a8dfff",
+        "ctor": "#33ccff",
+        "param": "#66e0ff",
         "cst": "#66ddff",
         "bool": "#33ccff",
         "com_italic": true
@@ -1086,6 +1119,10 @@
         "docTag": "#9a999d",
         "docType": "#f3fd21",
         "docName": "#a7a8a3",
+        "builtin": "#a7a8a3",
+        "ctor": "#f3fd21",
+        "param": "#615f5e",
+        "param_italic": true,
         "cst": "#feed6c",
         "bool": "#f3fd21"
       },
@@ -1191,6 +1228,9 @@
         "docTag": "#b3adad",
         "docType": "#c6c4b0",
         "docName": "#a4a4a4",
+        "builtin": "#a4a4a4",
+        "ctor": "#c6c4b0",
+        "param": "#c2bbb0",
         "cst": "#8f4445",
         "bool": "#c6c4b0",
         "com_italic": true
@@ -1282,6 +1322,9 @@
         "docTag": "#a3ada7",
         "docType": "#e7a46f",
         "docName": "#eaeff5",
+        "builtin": "#eaeff5",
+        "ctor": "#e7a46f",
+        "param": "#809d9e",
         "cst": "#e0a568",
         "bool": "#e7a46f",
         "com_italic": true
@@ -1380,6 +1423,9 @@
         "docTag": "#7b3d79",
         "docType": "#959a6b",
         "docName": "#dcc9bc",
+        "builtin": "#dcc9bc",
+        "ctor": "#959a6b",
+        "param": "#756d94",
         "cst": "#959a6b",
         "bool": "#e39c45",
         "com_italic": true
@@ -1483,6 +1529,9 @@
         "docTag": "#747474",
         "docType": "#b9b9b9",
         "docName": "#ffffff",
+        "builtin": "#ffffff",
+        "ctor": "#b9b9b9",
+        "param": "#585858",
         "cst": "#b9b9b9",
         "bool": "#b9b9b9",
         "com_italic": true
@@ -1591,6 +1640,9 @@
         "docTag": "#bfa75d",
         "docType": "#4d574e",
         "docName": "#ebdbb2",
+        "builtin": "#ebdbb2",
+        "ctor": "#4d574e",
+        "param": "#7a6a2c",
         "cst": "#4d574e",
         "bool": "#4d574e",
         "com_italic": true
@@ -1692,6 +1744,9 @@
         "docTag": "#485362",
         "docType": "#a9d1d7",
         "docName": "#c8dcdc",
+        "builtin": "#c8dcdc",
+        "ctor": "#a9d1d7",
+        "param": "#5a676b",
         "cst": "#a9d1d7",
         "bool": "#a9d1d7",
         "com_italic": true
@@ -1791,6 +1846,9 @@
         "docTag": "#e0e27b",
         "docType": "#25be6a",
         "docName": "#f2f4f8",
+        "builtin": "#f2f4f8",
+        "ctor": "#25be6a",
+        "param": "#08bdba",
         "cst": "#25be6a",
         "bool": "#25be6a",
         "com_italic": true
@@ -1889,6 +1947,9 @@
         "docTag": "#b4a3ba",
         "docType": "#d4af37",
         "docName": "#e8e6e3",
+        "builtin": "#e8e6e3",
+        "ctor": "#d4af37",
+        "param": "#7ec8c8",
         "cst": "#f4e4bc",
         "bool": "#d4af37",
         "com_italic": true
@@ -1984,6 +2045,9 @@
         "docTag": "#f5c2e7",
         "docType": "#f9e2af",
         "docName": "#cdd6f4",
+        "builtin": "#cdd6f4",
+        "ctor": "#f9e2af",
+        "param": "#94e2d5",
         "cst": "#f9e2af",
         "bool": "#f9e2af",
         "com_italic": true
@@ -2082,6 +2146,9 @@
         "docTag": "#b1e563",
         "docType": "#8dee0b",
         "docName": "#929292",
+        "builtin": "#929292",
+        "ctor": "#8dee0b",
+        "param": "#b1e95f",
         "cst": "#98d450",
         "bool": "#8dee0b",
         "com_italic": true
@@ -2177,6 +2244,10 @@
         "docTag": "#f5f7f9",
         "docType": "#9e1a1a",
         "docName": "#b9bec6",
+        "builtin": "#b9bec6",
+        "ctor": "#9e1a1a",
+        "param": "#8f949c",
+        "param_italic": true,
         "cst": "#f04a4a",
         "bool": "#cc1f1f"
       },
@@ -2275,6 +2346,9 @@
         "docTag": "#fb94ff",
         "docType": "#ffc600",
         "docName": "#ffffff",
+        "builtin": "#ffffff",
+        "ctor": "#ffc600",
+        "param": "#80fcff",
         "cst": "#ffc600",
         "bool": "#ffc600",
         "com_italic": true
@@ -2370,6 +2444,9 @@
         "docTag": "#ffc2c7",
         "docType": "#fef348",
         "docName": "#ffffff",
+        "builtin": "#ffffff",
+        "ctor": "#fef348",
+        "param": "#babbbb",
         "cst": "#fff9a3",
         "bool": "#fef348",
         "com_italic": true
@@ -2466,6 +2543,9 @@
         "docTag": "#b08cbc",
         "docType": "#cc7832",
         "docName": "#a9b7c6",
+        "builtin": "#a9b7c6",
+        "ctor": "#cc7832",
+        "param": "#39b2ac",
         "cst": "#ffd760",
         "bool": "#cc7832",
         "com_italic": true
@@ -2566,6 +2646,9 @@
         "docTag": "#655e56",
         "docType": "#e24c00",
         "docName": "#e0d4c2",
+        "builtin": "#e0d4c2",
+        "ctor": "#e24c00",
+        "param": "#7a7d80",
         "cst": "#e24c00",
         "bool": "#e24c00",
         "com_italic": true
@@ -2665,6 +2748,9 @@
         "docTag": "#72856c",
         "docType": "#f4e276",
         "docName": "#f8ebe3",
+        "builtin": "#f8ebe3",
+        "ctor": "#f4e276",
+        "param": "#6d877d",
         "cst": "#f4e276",
         "bool": "#f4e276",
         "com_italic": true
@@ -2761,6 +2847,9 @@
         "docTag": "#a7a7a7",
         "docType": "#f0be66",
         "docName": "#f5f5f5",
+        "builtin": "#f5f5f5",
+        "ctor": "#f0be66",
+        "param": "#b4b4b4",
         "cst": "#f0be66",
         "bool": "#f0be66",
         "com_italic": true
@@ -2859,6 +2948,9 @@
         "docTag": "#ff92df",
         "docType": "#f1fa8c",
         "docName": "#f2f4f8",
+        "builtin": "#f2f4f8",
+        "ctor": "#f1fa8c",
+        "param": "#8be9fd",
         "cst": "#ffffa5",
         "bool": "#f1fa8c",
         "com_italic": true
@@ -2959,6 +3051,9 @@
         "docTag": "#ff92df",
         "docType": "#f1fa8c",
         "docName": "#f8f8f2",
+        "builtin": "#f8f8f2",
+        "ctor": "#f1fa8c",
+        "param": "#8be9fd",
         "cst": "#ffffa5",
         "bool": "#ffb86c",
         "com_italic": true
@@ -3055,6 +3150,9 @@
         "docTag": "#f075b5",
         "docType": "#fac29a",
         "docName": "#cbced0",
+        "builtin": "#cbced0",
+        "ctor": "#fac29a",
+        "param": "#59e1e3",
         "cst": "#fbc3a7",
         "bool": "#fab795",
         "com_italic": true
@@ -3158,6 +3256,9 @@
         "docTag": "#f5d098",
         "docType": "#f5d098",
         "docName": "#adc9bc",
+        "builtin": "#adc9bc",
+        "ctor": "#f5d098",
+        "param": "#b3e6db",
         "cst": "#f5d098",
         "bool": "#f5d098",
         "com_italic": true
@@ -3252,6 +3353,9 @@
         "docTag": "#8a8a8a",
         "docType": "#9e9e9e",
         "docName": "#e7e9ea",
+        "builtin": "#e7e9ea",
+        "ctor": "#9e9e9e",
+        "param": "#767676",
         "cst": "#b2b2b2",
         "bool": "#9e9e9e",
         "com_italic": true
@@ -3360,6 +3464,9 @@
         "docTag": "#f0a19a",
         "docType": "#b8b5a2",
         "docName": "#f0f2f5",
+        "builtin": "#f0f2f5",
+        "ctor": "#b8b5a2",
+        "param": "#d0cac7",
         "cst": "#c8c3b8",
         "bool": "#cc907d",
         "com_italic": true
@@ -3457,6 +3564,10 @@
         "docTag": "#70717e",
         "docType": "#ffb0b5",
         "docName": "#f2ffff",
+        "builtin": "#f2ffff",
+        "ctor": "#ffb0b5",
+        "param": "#5ab7d5",
+        "param_italic": true,
         "cst": "#ffbfc3",
         "bool": "#cd8186"
       },
@@ -3550,6 +3661,9 @@
         "docTag": "#ff92df",
         "docType": "#f1fa8c",
         "docName": "#f8f8f2",
+        "builtin": "#f8f8f2",
+        "ctor": "#f1fa8c",
+        "param": "#8be9fd",
         "cst": "#ffffa5",
         "bool": "#f1fa8c",
         "com_italic": true
@@ -3652,6 +3766,9 @@
         "docTag": "#ce5d97",
         "docType": "#ad8301",
         "docName": "#cecdc3",
+        "builtin": "#cecdc3",
+        "ctor": "#ad8301",
+        "param": "#24837b",
         "cst": "#d0a215",
         "bool": "#ad8301",
         "com_italic": true
@@ -3746,6 +3863,9 @@
         "docTag": "#d19a66",
         "docType": "#d7ba7d",
         "docName": "#a8e6a1",
+        "builtin": "#a8e6a1",
+        "ctor": "#d7ba7d",
+        "param": "#56b6c2",
         "cst": "#e5c07b",
         "bool": "#d7ba7d",
         "com_italic": true
@@ -3849,6 +3969,9 @@
         "docTag": "#a8b9c6",
         "docType": "#9fadb8",
         "docName": "#d4d5d9",
+        "builtin": "#d4d5d9",
+        "ctor": "#9fadb8",
+        "param": "#b8c7d0",
         "cst": "#9fadb8",
         "bool": "#92a3b2",
         "com_italic": true
@@ -3945,6 +4068,9 @@
         "docTag": "#ff40a3",
         "docType": "#5076b2",
         "docName": "#f0f8ff",
+        "builtin": "#f0f8ff",
+        "ctor": "#5076b2",
+        "param": "#f0f8ff",
         "cst": "#6a90d2",
         "bool": "#ff7ab8",
         "com_italic": true
@@ -4041,6 +4167,9 @@
         "docTag": "#eddaee",
         "docType": "#e095b5",
         "docName": "#ffffff",
+        "builtin": "#ffffff",
+        "ctor": "#e095b5",
+        "param": "#7c93dd",
         "cst": "#f6dbe6",
         "bool": "#e095b5",
         "com_italic": true
@@ -4136,6 +4265,9 @@
         "docTag": "#c9a227",
         "docType": "#fad643",
         "docName": "#d9d9d9",
+        "builtin": "#d9d9d9",
+        "ctor": "#fad643",
+        "param": "#805b10",
         "cst": "#ffee69",
         "bool": "#fad643",
         "com_italic": true
@@ -4231,6 +4363,9 @@
         "docTag": "#a88c62",
         "docType": "#dec8a7",
         "docName": "#c3a983",
+        "builtin": "#c3a983",
+        "ctor": "#dec8a7",
+        "param": "#dec8a7",
         "cst": "#dec8a7",
         "bool": "#dec8a7",
         "com_italic": true
@@ -4326,6 +4461,9 @@
         "docTag": "#f56e0f",
         "docType": "#757864",
         "docName": "#ccd0cf",
+        "builtin": "#ccd0cf",
+        "ctor": "#757864",
+        "param": "#7b837b",
         "cst": "#757864",
         "bool": "#757864",
         "com_italic": true
@@ -4420,6 +4558,9 @@
         "docTag": "#dea07e",
         "docType": "#d29c5a",
         "docName": "#e4d8b4",
+        "builtin": "#e4d8b4",
+        "ctor": "#d29c5a",
+        "param": "#89d9d0",
         "cst": "#dbb07b",
         "bool": "#d29c5a",
         "com_italic": true
@@ -4516,6 +4657,9 @@
         "docTag": "#8a5b81",
         "docType": "#dc8164",
         "docName": "#1c2d28",
+        "builtin": "#1c2d28",
+        "ctor": "#dc8164",
+        "param": "#3d727d",
         "cst": "#dc8164",
         "bool": "#dc8164",
         "com_italic": true
@@ -4616,6 +4760,9 @@
         "docTag": "#9ba2a6",
         "docType": "#a99b7a",
         "docName": "#efebdc",
+        "builtin": "#efebdc",
+        "ctor": "#a99b7a",
+        "param": "#6d6d6d",
         "cst": "#a99b7a",
         "bool": "#a99b7a",
         "com_italic": true
@@ -4713,6 +4860,9 @@
         "docTag": "#747474",
         "docType": "#a0a0a0",
         "docName": "#ffffff",
+        "builtin": "#ffffff",
+        "ctor": "#a0a0a0",
+        "param": "#868686",
         "cst": "#a0a0a0",
         "bool": "#a0a0a0",
         "com_italic": true
@@ -4823,6 +4973,9 @@
         "docTag": "#e99867",
         "docType": "#f7d383",
         "docName": "#e0e0e0",
+        "builtin": "#e0e0e0",
+        "ctor": "#f7d383",
+        "param": "#e99867",
         "cst": "#ffe39a",
         "bool": "#f7d383",
         "com_italic": true
@@ -4917,6 +5070,9 @@
         "docTag": "#bfadbf",
         "docType": "#d18ba2",
         "docName": "#c8c8c8",
+        "builtin": "#c8c8c8",
+        "ctor": "#d18ba2",
+        "param": "#919ab7",
         "cst": "#e3aebf",
         "bool": "#d18ba2",
         "com_italic": true
@@ -5016,6 +5172,9 @@
         "docTag": "#c4d8e2",
         "docType": "#6b5e73",
         "docName": "#fafcfb",
+        "builtin": "#fafcfb",
+        "ctor": "#6b5e73",
+        "param": "#a5a0b6",
         "cst": "#6b5e73",
         "bool": "#6b5e73",
         "com_italic": true
@@ -5113,6 +5272,9 @@
         "docTag": "#fd1b89",
         "docType": "#ff7f00",
         "docName": "#45e6ee",
+        "builtin": "#45e6ee",
+        "ctor": "#ff7f00",
+        "param": "#0afdf6",
         "cst": "#ff7f00",
         "bool": "#ff7f00",
         "com_italic": true
@@ -5214,6 +5376,9 @@
         "docTag": "#c17c38",
         "docType": "#826e48",
         "docName": "#3c4747",
+        "builtin": "#3c4747",
+        "ctor": "#826e48",
+        "param": "#7b826d",
         "cst": "#b59d71",
         "bool": "#826e48",
         "com_italic": true
@@ -5311,6 +5476,9 @@
         "docTag": "#c45a3f",
         "docType": "#c45a3f",
         "docName": "#d9afa7",
+        "builtin": "#d9afa7",
+        "ctor": "#c45a3f",
+        "param": "#7b534e",
         "cst": "#e07b5f",
         "bool": "#c45a3f",
         "com_italic": true
@@ -5409,6 +5577,9 @@
         "docTag": "#cbae8e",
         "docType": "#ebdbb2",
         "docName": "#f0e4c5",
+        "builtin": "#f0e4c5",
+        "ctor": "#ebdbb2",
+        "param": "#d4bd99",
         "cst": "#f7df97",
         "bool": "#ebdbb2",
         "com_italic": true
@@ -5505,6 +5676,10 @@
         "docTag": "#bb7744",
         "docType": "#b36d43",
         "docName": "#c2c2b0",
+        "builtin": "#c2c2b0",
+        "ctor": "#b36d43",
+        "param": "#c9a554",
+        "param_italic": true,
         "cst": "#b36d43",
         "bool": "#b36d43"
       },
@@ -5605,6 +5780,9 @@
         "docTag": "#d9b9d9",
         "docType": "#ffc107",
         "docName": "#efefef",
+        "builtin": "#efefef",
+        "ctor": "#ffc107",
+        "param": "#88aabb",
         "cst": "#f59e0b",
         "bool": "#f59e0b",
         "com_italic": true
@@ -5701,6 +5879,9 @@
         "docTag": "#b892a5",
         "docType": "#d4a574",
         "docName": "#5c6a53",
+        "builtin": "#5c6a53",
+        "ctor": "#d4a574",
+        "param": "#6fa695",
         "cst": "#e6bb8a",
         "bool": "#d4a574",
         "com_italic": true
@@ -5794,6 +5975,9 @@
         "docTag": "#ffffff",
         "docType": "#d4d4d4",
         "docName": "#d4d4d4",
+        "builtin": "#d4d4d4",
+        "ctor": "#d4d4d4",
+        "param": "#d4d4d4",
         "cst": "#ffffff",
         "bool": "#d4d4d4",
         "com_italic": true
@@ -5888,6 +6072,9 @@
         "docTag": "#aba0f2",
         "docType": "#f2c063",
         "docName": "#f0f2f5",
+        "builtin": "#f0f2f5",
+        "ctor": "#f2c063",
+        "param": "#f28b66",
         "cst": "#f2c063",
         "bool": "#f28b66",
         "com_italic": true
@@ -5982,6 +6169,9 @@
         "docTag": "#d1b3ff",
         "docType": "#82eeff",
         "docName": "#e0e6ed",
+        "builtin": "#e0e6ed",
+        "ctor": "#82eeff",
+        "param": "#c9aff0",
         "cst": "#b388eb",
         "bool": "#82eeff",
         "com_italic": true
@@ -6073,6 +6263,9 @@
         "docTag": "#58afd8",
         "docType": "#eed59a",
         "docName": "#e6f1f4",
+        "builtin": "#e6f1f4",
+        "ctor": "#eed59a",
+        "param": "#3a9fb7",
         "cst": "#f4e2b7",
         "bool": "#eed59a",
         "com_italic": true
@@ -6170,6 +6363,9 @@
         "docTag": "#48b7e7",
         "docType": "#a4d149",
         "docName": "#f4f4f4",
+        "builtin": "#f4f4f4",
+        "ctor": "#a4d149",
+        "param": "#33acde",
         "cst": "#b0db90",
         "bool": "#a4d149",
         "com_italic": true
@@ -6256,6 +6452,9 @@
         "docTag": "#1e90ff",
         "docType": "#1e90ff",
         "docName": "#e0e0e0",
+        "builtin": "#e0e0e0",
+        "ctor": "#1e90ff",
+        "param": "#00bfff",
         "cst": "#1e90ff",
         "bool": "#1e90ff",
         "com_italic": true
@@ -6351,6 +6550,9 @@
         "docTag": "#da0f0f",
         "docType": "#9a9d9a",
         "docName": "#cecfc9",
+        "builtin": "#cecfc9",
+        "ctor": "#9a9d9a",
+        "param": "#9a9d9a",
         "cst": "#cecfc9",
         "bool": "#ba6e68",
         "com_italic": true
@@ -6446,6 +6648,9 @@
         "docTag": "#999999",
         "docType": "#6a6a6a",
         "docName": "#ffffff",
+        "builtin": "#ffffff",
+        "ctor": "#6a6a6a",
+        "param": "#9a9a9a",
         "cst": "#777777",
         "bool": "#6a6a6a",
         "com_italic": true
@@ -6568,6 +6773,10 @@
         "docTag": "#ff80ff",
         "docType": "#ffbcff",
         "docName": "#f5caff",
+        "builtin": "#f5caff",
+        "ctor": "#ffbcff",
+        "param": "#8361ff",
+        "param_italic": true,
         "cst": "#f5caff",
         "bool": "#ffbcff"
       },
@@ -6670,6 +6879,9 @@
         "docTag": "#c678dd",
         "docType": "#e5c07b",
         "docName": "#abb2bf",
+        "builtin": "#abb2bf",
+        "ctor": "#e5c07b",
+        "param": "#56b6c2",
         "cst": "#e5c07b",
         "bool": "#d19a66",
         "com_italic": true
@@ -6770,6 +6982,9 @@
         "docTag": "#ffffff",
         "docType": "#ee5396",
         "docName": "#f2f4f8",
+        "builtin": "#f2f4f8",
+        "ctor": "#ee5396",
+        "param": "#ff7eb6",
         "cst": "#be95ff",
         "bool": "#ee5396",
         "com_italic": true
@@ -6869,6 +7084,9 @@
         "docTag": "#bb9af7",
         "docType": "#e0af68",
         "docName": "#b2b5b3",
+        "builtin": "#b2b5b3",
+        "ctor": "#e0af68",
+        "param": "#4abaaf",
         "cst": "#e0af68",
         "bool": "#e0af68",
         "com_italic": true
@@ -6967,6 +7185,9 @@
         "docTag": "#c8dab8",
         "docType": "#e0d480",
         "docName": "#d4d5d5",
+        "builtin": "#d4d5d5",
+        "ctor": "#e0d480",
+        "param": "#c5e8c5",
         "cst": "#f2e590",
         "bool": "#aec282",
         "com_italic": true
@@ -7062,6 +7283,9 @@
         "docTag": "#d40d40",
         "docType": "#ce0d3c",
         "docName": "#f17e97",
+        "builtin": "#f17e97",
+        "ctor": "#ce0d3c",
+        "param": "#f00f40",
         "cst": "#ce0d3c",
         "bool": "#ce0d3c",
         "com_italic": true
@@ -7156,6 +7380,9 @@
         "docTag": "#d25dff",
         "docType": "#f2e42e",
         "docName": "#e0e6ff",
+        "builtin": "#e0e6ff",
+        "ctor": "#f2e42e",
+        "param": "#3df2f2",
         "cst": "#ffff4d",
         "bool": "#ff7a4d",
         "com_italic": true
@@ -7253,6 +7480,9 @@
         "docTag": "#cdb5e8",
         "docType": "#9845c6",
         "docName": "#ffffff",
+        "builtin": "#ffffff",
+        "ctor": "#9845c6",
+        "param": "#b895dd",
         "cst": "#cb97df",
         "bool": "#9845c6",
         "com_italic": true
@@ -7350,6 +7580,9 @@
         "docTag": "#b683c3",
         "docType": "#ca2edc",
         "docName": "#d7accd",
+        "builtin": "#d7accd",
+        "ctor": "#ca2edc",
+        "param": "#8adb8a",
         "cst": "#ca2edc",
         "bool": "#ca2edc",
         "com_italic": true
@@ -7450,6 +7683,9 @@
         "docTag": "#cba6f7",
         "docType": "#f9e2af",
         "docName": "#cdd6f4",
+        "builtin": "#cdd6f4",
+        "ctor": "#f9e2af",
+        "param": "#94e2d5",
         "cst": "#f9e2af",
         "bool": "#f9e2af",
         "com_italic": true
@@ -7545,6 +7781,9 @@
         "docTag": "#ff5f91",
         "docType": "#ffb3ca",
         "docName": "#ffeaf2",
+        "builtin": "#ffeaf2",
+        "ctor": "#ffb3ca",
+        "param": "#f88ab0",
         "cst": "#ffd1df",
         "bool": "#ffb3ca",
         "com_italic": true
@@ -7643,6 +7882,10 @@
         "docTag": "#65a5a1",
         "docType": "#e97b3c",
         "docName": "#f6dcac",
+        "builtin": "#f6dcac",
+        "ctor": "#e97b3c",
+        "param": "#8cbfb8",
+        "param_italic": true,
         "cst": "#ed9563",
         "bool": "#e97b3c"
       },
@@ -7761,6 +8004,9 @@
         "docTag": "#ffaa00",
         "docType": "#ffd700",
         "docName": "#ffb000",
+        "builtin": "#ffb000",
+        "ctor": "#ffd700",
+        "param": "#cc9900",
         "cst": "#ffdd00",
         "bool": "#ffd700",
         "com_italic": true
@@ -7854,6 +8100,9 @@
         "docTag": "#28463c",
         "docType": "#8a6c3e",
         "docName": "#22211d",
+        "builtin": "#22211d",
+        "ctor": "#8a6c3e",
+        "param": "#3d6b52",
         "cst": "#6b5237",
         "bool": "#8a6c3e",
         "com_italic": true
@@ -7949,6 +8198,9 @@
         "docTag": "#ff7edb",
         "docType": "#f3e70f",
         "docName": "#ffffff",
+        "builtin": "#ffffff",
+        "ctor": "#f3e70f",
+        "param": "#03edf9",
         "cst": "#fede5d",
         "bool": "#f3e70f",
         "com_italic": true
@@ -8046,6 +8298,9 @@
         "docTag": "#c4a7e7",
         "docType": "#f6c177",
         "docName": "#e0def4",
+        "builtin": "#e0def4",
+        "ctor": "#f6c177",
+        "param": "#ebbcba",
         "cst": "#f6c177",
         "bool": "#f6c177",
         "com_italic": true
@@ -8143,6 +8398,9 @@
         "docTag": "#78292e",
         "docType": "#644535",
         "docName": "#35302a",
+        "builtin": "#35302a",
+        "ctor": "#644535",
+        "param": "#713a56",
         "cst": "#694c45",
         "bool": "#644535",
         "com_italic": true
@@ -8242,6 +8500,9 @@
         "docTag": "#c2a46d",
         "docType": "#51605b",
         "docName": "#d6d0c5",
+        "builtin": "#d6d0c5",
+        "ctor": "#51605b",
+        "param": "#717c7c",
         "cst": "#8b9388",
         "bool": "#51605b",
         "com_italic": true
@@ -8340,6 +8601,9 @@
         "docTag": "#dfbaff",
         "docType": "#fff6c3",
         "docName": "#fff6ff",
+        "builtin": "#fff6ff",
+        "ctor": "#fff6c3",
+        "param": "#ffc79b",
         "cst": "#fff6c3",
         "bool": "#fff6c3",
         "com_italic": true
@@ -8438,6 +8702,9 @@
         "docTag": "#e3c5ab",
         "docType": "#d4a882",
         "docName": "#f0eaed",
+        "builtin": "#f0eaed",
+        "ctor": "#d4a882",
+        "param": "#e8c099",
         "cst": "#e6ba94",
         "bool": "#ff8e7c",
         "com_italic": true
@@ -8537,6 +8804,10 @@
         "docTag": "#ffd0dc",
         "docType": "#d7be96",
         "docName": "#f0b7ca",
+        "builtin": "#f0b7ca",
+        "ctor": "#d7be96",
+        "param": "#6f9485",
+        "param_italic": true,
         "cst": "#e6d3b4",
         "bool": "#d7be96"
       },
@@ -8638,6 +8909,9 @@
         "docTag": "#8cc7bf",
         "docType": "#d5edeb",
         "docName": "#e0f7fa",
+        "builtin": "#e0f7fa",
+        "ctor": "#d5edeb",
+        "param": "#fff6d2",
         "cst": "#d7ebe9",
         "bool": "#d5edeb",
         "com_italic": true
@@ -8736,6 +9010,9 @@
         "docTag": "#8fc85c",
         "docType": "#d1ffb0",
         "docName": "#e6f6f0",
+        "builtin": "#e6f6f0",
+        "ctor": "#d1ffb0",
+        "param": "#80d4b5",
         "cst": "#d1ffb0",
         "bool": "#d1ffb0",
         "com_italic": true
@@ -8832,6 +9109,9 @@
         "docTag": "#0a0a0a",
         "docType": "#0a0a0a",
         "docName": "#0a0a0a",
+        "builtin": "#0a0a0a",
+        "ctor": "#0a0a0a",
+        "param": "#0a0a0a",
         "cst": "#0a0a0a",
         "bool": "#0a0a0a",
         "com_italic": true
@@ -8927,6 +9207,9 @@
         "docTag": "#999999",
         "docType": "#a06666",
         "docName": "#ffffff",
+        "builtin": "#ffffff",
+        "ctor": "#a06666",
+        "param": "#aaaaaa",
         "cst": "#a06666",
         "bool": "#a06666",
         "com_italic": true
@@ -9035,6 +9318,9 @@
         "docTag": "#6c71c4",
         "docType": "#b58900",
         "docName": "#839496",
+        "builtin": "#839496",
+        "ctor": "#b58900",
+        "param": "#2aa198",
         "cst": "#657b83",
         "bool": "#b58900",
         "com_italic": true
@@ -9128,6 +9414,9 @@
         "docTag": "#6c71c4",
         "docType": "#b58900",
         "docName": "#586e75",
+        "builtin": "#586e75",
+        "ctor": "#b58900",
+        "param": "#2aa198",
         "cst": "#657b83",
         "bool": "#b58900",
         "com_italic": true
@@ -9221,6 +9510,9 @@
         "docTag": "#d03682",
         "docType": "#b38800",
         "docName": "#6c7c81",
+        "builtin": "#6c7c81",
+        "ctor": "#b38800",
+        "param": "#2aa198",
         "cst": "#b38800",
         "bool": "#b38800",
         "com_italic": true
@@ -9315,6 +9607,9 @@
         "docTag": "#9a9a9a",
         "docType": "#d9dbdc",
         "docName": "#cacccc",
+        "builtin": "#cacccc",
+        "ctor": "#d9dbdc",
+        "param": "#707070",
         "cst": "#c9c2b4",
         "bool": "#d9dbdc",
         "com_italic": true
@@ -9414,6 +9709,9 @@
         "docTag": "#bebffd",
         "docType": "#f9cc6c",
         "docName": "#e7aa5a",
+        "builtin": "#e7aa5a",
+        "ctor": "#f9cc6c",
+        "param": "#bd4924",
         "cst": "#fcd675",
         "bool": "#f9cc6c",
         "com_italic": true
@@ -9509,6 +9807,9 @@
         "docTag": "#fdfbf8",
         "docType": "#b2a295",
         "docName": "#ffffff",
+        "builtin": "#ffffff",
+        "ctor": "#b2a295",
+        "param": "#fce7b0",
         "cst": "#ddd6d0",
         "bool": "#b2a295",
         "com_italic": true
@@ -9602,6 +9903,9 @@
         "docTag": "#ff99ff",
         "docType": "#ffea00",
         "docName": "#ededfe",
+        "builtin": "#ededfe",
+        "ctor": "#ffea00",
+        "param": "#3cffed",
         "cst": "#ffff80",
         "bool": "#ffea00",
         "com_italic": true
@@ -9696,6 +10000,9 @@
         "docTag": "#88a827",
         "docType": "#699020",
         "docName": "#88a827",
+        "builtin": "#88a827",
+        "ctor": "#699020",
+        "param": "#88a827",
         "cst": "#88a827",
         "bool": "#699020",
         "com_italic": true
@@ -9791,6 +10098,9 @@
         "docTag": "#ff7edb",
         "docType": "#f3e70f",
         "docName": "#ffffff",
+        "builtin": "#ffffff",
+        "ctor": "#f3e70f",
+        "param": "#03edf9",
         "cst": "#ffff66",
         "bool": "#f3e70f",
         "com_italic": true
@@ -9884,6 +10194,9 @@
         "docTag": "#c4b5fd",
         "docType": "#d4953b",
         "docName": "#dcfce7",
+        "builtin": "#dcfce7",
+        "ctor": "#d4953b",
+        "param": "#86efab",
         "cst": "#dfb265",
         "bool": "#d4953b",
         "com_italic": true
@@ -10005,6 +10318,9 @@
         "docTag": "#43432b",
         "docType": "#51573b",
         "docName": "#242424",
+        "builtin": "#242424",
+        "ctor": "#51573b",
+        "param": "#6b1f2f",
         "cst": "#51573b",
         "bool": "#51573b",
         "com_italic": true
@@ -10103,6 +10419,9 @@
         "docTag": "#bb9af7",
         "docType": "#e0af68",
         "docName": "#a9b1d6",
+        "builtin": "#a9b1d6",
+        "ctor": "#e0af68",
+        "param": "#449dab",
         "cst": "#ff9e64",
         "bool": "#e0af68",
         "com_italic": true
@@ -10196,6 +10515,9 @@
         "docTag": "#d5b8a7",
         "docType": "#c17a6a",
         "docName": "#f0e9ec",
+        "builtin": "#f0e9ec",
+        "ctor": "#c17a6a",
+        "param": "#706b82",
         "cst": "#dfbab2",
         "bool": "#c17a6a",
         "com_italic": true
@@ -10291,6 +10613,9 @@
         "docTag": "#ff9f1c",
         "docType": "#f2e2a4",
         "docName": "#f2e2a4",
+        "builtin": "#f2e2a4",
+        "ctor": "#f2e2a4",
+        "param": "#9fd3c7",
         "cst": "#f6f1c1",
         "bool": "#ff9f1c",
         "com_italic": true
@@ -10392,6 +10717,9 @@
         "docTag": "#e88595",
         "docType": "#e5af1b",
         "docName": "#ffffff",
+        "builtin": "#ffffff",
+        "ctor": "#e5af1b",
+        "param": "#c24f40",
         "cst": "#f0d17c",
         "bool": "#e5af1b",
         "com_italic": true
@@ -10488,6 +10816,9 @@
         "docTag": "#9e926c",
         "docType": "#6f6645",
         "docName": "#492924",
+        "builtin": "#492924",
+        "ctor": "#6f6645",
+        "param": "#726947",
         "cst": "#938a5e",
         "bool": "#706547",
         "com_italic": true
@@ -10574,6 +10905,9 @@
         "docTag": "#ecaad6",
         "docType": "#e6b99d",
         "docName": "#ffffff",
+        "builtin": "#ffffff",
+        "ctor": "#e6b99d",
+        "param": "#ea83a5",
         "cst": "#ffc799",
         "bool": "#e6b99d",
         "com_italic": true
@@ -10668,6 +11002,9 @@
         "docTag": "#c73838",
         "docType": "#a85511",
         "docName": "#d4d4d4",
+        "builtin": "#d4d4d4",
+        "ctor": "#a85511",
+        "param": "#2f8383",
         "cst": "#e07924",
         "bool": "#a85511",
         "com_italic": true
@@ -10763,6 +11100,9 @@
         "docTag": "#c4aaf0",
         "docType": "#ddccff",
         "docName": "#ffffff",
+        "builtin": "#ffffff",
+        "ctor": "#ddccff",
+        "param": "#a6b8ff",
         "cst": "#d1bff7",
         "bool": "#ddccff",
         "com_italic": true
@@ -10859,6 +11199,10 @@
         "docTag": "#ddb0b8",
         "docType": "#c8964b",
         "docName": "#fff4d8",
+        "builtin": "#fff4d8",
+        "ctor": "#c8964b",
+        "param": "#9eb8b2",
+        "param_italic": true,
         "cst": "#e4c56d",
         "bool": "#c8964b"
       },
@@ -10956,6 +11300,9 @@
         "docTag": "#ff33cc",
         "docType": "#ffaa00",
         "docName": "#ff9999",
+        "builtin": "#ff9999",
+        "ctor": "#ffaa00",
+        "param": "#ff66cc",
         "cst": "#ffcc33",
         "bool": "#ffaa00",
         "com_italic": true
@@ -11049,6 +11396,9 @@
         "docTag": "#762b2f",
         "docType": "#2e311a",
         "docName": "#0c0c14",
+        "builtin": "#0c0c14",
+        "ctor": "#2e311a",
+        "param": "#3b3b3b",
         "cst": "#005c32",
         "bool": "#2e311a",
         "com_italic": true
@@ -11147,6 +11497,10 @@
         "docTag": "#c586c0",
         "docType": "#bb8009",
         "docName": "#ffffff",
+        "builtin": "#ffffff",
+        "ctor": "#bb8009",
+        "param": "#4daafc",
+        "param_italic": true,
         "cst": "#bb8009",
         "bool": "#bb8009"
       },
