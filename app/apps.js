@@ -291,8 +291,11 @@
       // be tried first or every `.map(` comes out as a property.
       "(\\.)([A-Za-z_$][\\w$]*)(?=\\s*\\()|" + // 15 accessor, 16 method
       "(\\.)([A-Za-z_$][\\w$]*)|" + // 17 accessor, 18 property
-      "(=>|===|!==|==|!=|<=|>=|\\?\\?|\\|\\||&&|\\.\\.\\.|[=<>!&|+\\-*/?%]+)|" + // 19 operator
-      "([{}()\\[\\];,.:]+)", // 20 punctuation
+      // `name:` -- an object literal key or an interface member. Its own scope
+      // (meta.object-literal.key), and themes do give it its own colour.
+      "([A-Za-z_$][\\w$]*)(?=\\s*:)|" + // 19 object key
+      "(=>|===|!==|==|!=|<=|>=|\\?\\?|\\|\\||&&|\\.\\.\\.|[=<>!&|+\\-*/?%]+)|" + // 20 operator
+      "([{}()\\[\\];,.:]+)", // 21 punctuation
     "g"
   );
 
@@ -338,7 +341,7 @@
       const cls = m[1] ? "t-com" : m[2] ? "t-str" : m[3] ? "t-num"
         : m[4] ? "t-imp" : m[6] ? "t-bool" : m[8] ? "t-key"
         : m[10] ? "t-prim" : m[12] ? "t-typ" : m[14] ? "t-fn"
-        : m[19] ? "t-op" : "t-pun";
+        : m[19] ? "t-objkey" : m[20] ? "t-op" : "t-pun";
       out += '<span class="' + cls + '">' + esc(m[0]) + "</span>";
       last = m.index + m[0].length;
     }

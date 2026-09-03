@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-03T18:07:40Z",
+  "generated": "2026-09-03T18:31:58Z",
   "source": "https://learn.omacom.io/2/the-omarchy-manual/90/extra-themes",
   "count": 115,
   "themes": [
@@ -38,6 +38,7 @@
         "pun": "#c53253",
         "var": "#14b9b5",
         "prop": "#ff7f41",
+        "objkey": "#14b9b5",
         "cst": "#fd3e6a",
         "bool": "#7cd699",
         "com_italic": true
@@ -133,6 +134,7 @@
         "pun": "#404040",
         "var": "#ffffff",
         "prop": "#cccc33",
+        "objkey": "#ffffff",
         "cst": "#ffd93d",
         "bool": "#cc7833",
         "com_italic": true
@@ -222,6 +224,7 @@
         "pun": "#2b1818",
         "var": "#f2e8e8",
         "prop": "#f48a8a",
+        "objkey": "#f2e8e8",
         "cst": "#e87f7f",
         "bool": "#d66b6b",
         "com_italic": true
@@ -313,6 +316,7 @@
         "pun": "#6f7594",
         "var": "#bcc1dc",
         "prop": "#22ecdb",
+        "objkey": "#bcc1dc",
         "cst": "#ffe17a",
         "bool": "#e9954f",
         "com_italic": true
@@ -405,6 +409,7 @@
         "pun": "#543a6e",
         "var": "#d4a5ff",
         "prop": "#5ffbf1",
+        "objkey": "#d4a5ff",
         "cst": "#fbf9a5",
         "bool": "#f9f871",
         "com_italic": true
@@ -497,6 +502,7 @@
         "pun": "#b18d85",
         "var": "#fdf9f8",
         "prop": "#da7a6f",
+        "objkey": "#fdf9f8",
         "cst": "#d7adad",
         "bool": "#bb6d6c",
         "com_italic": true
@@ -587,6 +593,7 @@
         "pun": "#adadad",
         "var": "#e0e0e0",
         "prop": "#767676",
+        "objkey": "#e0e0e0",
         "cst": "#b2b2b2",
         "bool": "#949494",
         "com_italic": true
@@ -677,6 +684,7 @@
         "pun": "#6c6b5a",
         "var": "#dcd9d6",
         "prop": "#5b9d48",
+        "objkey": "#dcd9d6",
         "cst": "#c2b53c",
         "bool": "#a5980d",
         "com_italic": true
@@ -767,6 +775,7 @@
         "pun": "#a0a19f",
         "var": "#f8f8f2",
         "prop": "#8be9fd",
+        "objkey": "#f8f8f2",
         "cst": "#cbc3e3",
         "bool": "#ffb86c",
         "com_italic": true
@@ -855,6 +864,7 @@
         "pun": "#404040",
         "var": "#e6e6e6",
         "prop": "#66cccc",
+        "objkey": "#e6e6e6",
         "cst": "#ffdd80",
         "bool": "#ffcc66",
         "com_italic": true
@@ -948,6 +958,7 @@
         "pun": "#123247",
         "var": "#a8dfff",
         "prop": "#66e0ff",
+        "objkey": "#a8dfff",
         "cst": "#66ddff",
         "bool": "#33ccff",
         "com_italic": true
@@ -1038,6 +1049,7 @@
         "pun": "#8a8c89",
         "var": "#a7a8a3",
         "prop": "#615f5e",
+        "objkey": "#a7a8a3",
         "cst": "#feed6c",
         "bool": "#f3fd21"
       },
@@ -1139,6 +1151,7 @@
         "pun": "#383735",
         "var": "#a4a4a4",
         "prop": "#c2bbb0",
+        "objkey": "#a4a4a4",
         "cst": "#8f4445",
         "bool": "#c6c4b0",
         "com_italic": true
@@ -1226,6 +1239,7 @@
         "pun": "#3a3f4c",
         "var": "#eaeff5",
         "prop": "#809d9e",
+        "objkey": "#eaeff5",
         "cst": "#e0a568",
         "bool": "#e7a46f",
         "com_italic": true
@@ -1320,6 +1334,7 @@
         "pun": "#9c8181",
         "var": "#dcc9bc",
         "prop": "#756d94",
+        "objkey": "#dcc9bc",
         "cst": "#959a6b",
         "bool": "#e39c45",
         "com_italic": true
@@ -1419,6 +1434,7 @@
         "pun": "#262626",
         "var": "#ffffff",
         "prop": "#585858",
+        "objkey": "#ffffff",
         "cst": "#b9b9b9",
         "bool": "#b9b9b9",
         "com_italic": true
@@ -1523,6 +1539,7 @@
         "pun": "#303531",
         "var": "#ebdbb2",
         "prop": "#7a6a2c",
+        "objkey": "#ebdbb2",
         "cst": "#4d574e",
         "bool": "#4d574e",
         "com_italic": true
@@ -1620,6 +1637,7 @@
         "pun": "#322f3b",
         "var": "#c8dcdc",
         "prop": "#5a676b",
+        "objkey": "#c8dcdc",
         "cst": "#a9d1d7",
         "bool": "#a9d1d7",
         "com_italic": true
@@ -1715,6 +1733,7 @@
         "pun": "#484848",
         "var": "#f2f4f8",
         "prop": "#08bdba",
+        "objkey": "#f2f4f8",
         "cst": "#25be6a",
         "bool": "#25be6a",
         "com_italic": true
@@ -1809,6 +1828,7 @@
         "pun": "#4a5568",
         "var": "#e8e6e3",
         "prop": "#7ec8c8",
+        "objkey": "#e8e6e3",
         "cst": "#f4e4bc",
         "bool": "#d4af37",
         "com_italic": true
@@ -1900,6 +1920,7 @@
         "pun": "#585b70",
         "var": "#cdd6f4",
         "prop": "#94e2d5",
+        "objkey": "#cdd6f4",
         "cst": "#f9e2af",
         "bool": "#f9e2af",
         "com_italic": true
@@ -1994,6 +2015,7 @@
         "pun": "#9bd46a",
         "var": "#929292",
         "prop": "#b1e95f",
+        "objkey": "#929292",
         "cst": "#98d450",
         "bool": "#8dee0b",
         "com_italic": true
@@ -2085,6 +2107,7 @@
         "pun": "#6a707a",
         "var": "#b9bec6",
         "prop": "#8f949c",
+        "objkey": "#b9bec6",
         "cst": "#f04a4a",
         "bool": "#cc1f1f"
       },
@@ -2179,6 +2202,7 @@
         "pun": "#0050a4",
         "var": "#ffffff",
         "prop": "#80fcff",
+        "objkey": "#ffffff",
         "cst": "#ffc600",
         "bool": "#ffc600",
         "com_italic": true
@@ -2270,6 +2294,7 @@
         "pun": "#7f6e6e",
         "var": "#ffffff",
         "prop": "#babbbb",
+        "objkey": "#ffffff",
         "cst": "#fff9a3",
         "bool": "#fef348",
         "com_italic": true
@@ -2362,6 +2387,7 @@
         "pun": "#5c5c5c",
         "var": "#a9b7c6",
         "prop": "#39b2ac",
+        "objkey": "#a9b7c6",
         "cst": "#ffd760",
         "bool": "#cc7832",
         "com_italic": true
@@ -2458,6 +2484,7 @@
         "pun": "#6b6867",
         "var": "#e0d4c2",
         "prop": "#7a7d80",
+        "objkey": "#e0d4c2",
         "cst": "#e24c00",
         "bool": "#e24c00",
         "com_italic": true
@@ -2553,6 +2580,7 @@
         "pun": "#3a4849",
         "var": "#f8ebe3",
         "prop": "#6d877d",
+        "objkey": "#f8ebe3",
         "cst": "#f4e276",
         "bool": "#f4e276",
         "com_italic": true
@@ -2645,6 +2673,7 @@
         "pun": "#949494",
         "var": "#f5f5f5",
         "prop": "#b4b4b4",
+        "objkey": "#f5f5f5",
         "cst": "#f0be66",
         "bool": "#f0be66",
         "com_italic": true
@@ -2739,6 +2768,7 @@
         "pun": "#555555",
         "var": "#f2f4f8",
         "prop": "#8be9fd",
+        "objkey": "#f2f4f8",
         "cst": "#ffffa5",
         "bool": "#f1fa8c",
         "com_italic": true
@@ -2835,6 +2865,7 @@
         "pun": "#6272a4",
         "var": "#f8f8f2",
         "prop": "#8be9fd",
+        "objkey": "#f8f8f2",
         "cst": "#ffffa5",
         "bool": "#ffb86c",
         "com_italic": true
@@ -2927,6 +2958,7 @@
         "pun": "#9da0a2",
         "var": "#cbced0",
         "prop": "#59e1e3",
+        "objkey": "#cbced0",
         "cst": "#fbc3a7",
         "bool": "#fab795",
         "com_italic": true
@@ -3026,6 +3058,7 @@
         "pun": "#adc9bc",
         "var": "#adc9bc",
         "prop": "#b3e6db",
+        "objkey": "#adc9bc",
         "cst": "#f5d098",
         "bool": "#f5d098",
         "com_italic": true
@@ -3116,6 +3149,7 @@
         "pun": "#626262",
         "var": "#e7e9ea",
         "prop": "#767676",
+        "objkey": "#e7e9ea",
         "cst": "#b2b2b2",
         "bool": "#9e9e9e",
         "com_italic": true
@@ -3220,6 +3254,7 @@
         "pun": "#b3bdcc",
         "var": "#f0f2f5",
         "prop": "#d0cac7",
+        "objkey": "#f0f2f5",
         "cst": "#c8c3b8",
         "bool": "#cc907d",
         "com_italic": true
@@ -3313,6 +3348,7 @@
         "pun": "#b4bfbf",
         "var": "#f2ffff",
         "prop": "#5ab7d5",
+        "objkey": "#f2ffff",
         "cst": "#ffbfc3",
         "bool": "#cd8186"
       },
@@ -3402,6 +3438,7 @@
         "pun": "#6272a4",
         "var": "#f8f8f2",
         "prop": "#8be9fd",
+        "objkey": "#f8f8f2",
         "cst": "#ffffa5",
         "bool": "#f1fa8c",
         "com_italic": true
@@ -3500,6 +3537,7 @@
         "pun": "#6f6e69",
         "var": "#cecdc3",
         "prop": "#24837b",
+        "objkey": "#cecdc3",
         "cst": "#d0a215",
         "bool": "#ad8301",
         "com_italic": true
@@ -3590,6 +3628,7 @@
         "pun": "#3a4a3d",
         "var": "#a8e6a1",
         "prop": "#56b6c2",
+        "objkey": "#a8e6a1",
         "cst": "#e5c07b",
         "bool": "#d7ba7d",
         "com_italic": true
@@ -3689,6 +3728,7 @@
         "pun": "#9ea0a9",
         "var": "#d4d5d9",
         "prop": "#b8c7d0",
+        "objkey": "#d4d5d9",
         "cst": "#9fadb8",
         "bool": "#92a3b2",
         "com_italic": true
@@ -3781,6 +3821,7 @@
         "pun": "#9dacbe",
         "var": "#f0f8ff",
         "prop": "#f0f8ff",
+        "objkey": "#f0f8ff",
         "cst": "#6a90d2",
         "bool": "#ff7ab8",
         "com_italic": true
@@ -3873,6 +3914,7 @@
         "pun": "#836f79",
         "var": "#ffffff",
         "prop": "#7c93dd",
+        "objkey": "#ffffff",
         "cst": "#f6dbe6",
         "bool": "#e095b5",
         "com_italic": true
@@ -3964,6 +4006,7 @@
         "pun": "#805b10",
         "var": "#d9d9d9",
         "prop": "#805b10",
+        "objkey": "#d9d9d9",
         "cst": "#ffee69",
         "bool": "#fad643",
         "com_italic": true
@@ -4055,6 +4098,7 @@
         "pun": "#57462c",
         "var": "#c3a983",
         "prop": "#dec8a7",
+        "objkey": "#c3a983",
         "cst": "#dec8a7",
         "bool": "#dec8a7",
         "com_italic": true
@@ -4146,6 +4190,7 @@
         "pun": "#525252",
         "var": "#ccd0cf",
         "prop": "#7b837b",
+        "objkey": "#ccd0cf",
         "cst": "#757864",
         "bool": "#757864",
         "com_italic": true
@@ -4236,6 +4281,7 @@
         "pun": "#505b51",
         "var": "#e4d8b4",
         "prop": "#89d9d0",
+        "objkey": "#e4d8b4",
         "cst": "#dbb07b",
         "bool": "#d29c5a",
         "com_italic": true
@@ -4328,6 +4374,7 @@
         "pun": "#7d8794",
         "var": "#1c2d28",
         "prop": "#3d727d",
+        "objkey": "#1c2d28",
         "cst": "#dc8164",
         "bool": "#dc8164",
         "com_italic": true
@@ -4424,6 +4471,7 @@
         "pun": "#817f68",
         "var": "#efebdc",
         "prop": "#6d6d6d",
+        "objkey": "#efebdc",
         "cst": "#a99b7a",
         "bool": "#a99b7a",
         "com_italic": true
@@ -4517,6 +4565,7 @@
         "pun": "#525252",
         "var": "#ffffff",
         "prop": "#868686",
+        "objkey": "#ffffff",
         "cst": "#a0a0a0",
         "bool": "#a0a0a0",
         "com_italic": true
@@ -4623,6 +4672,7 @@
         "pun": "#767476",
         "var": "#e0e0e0",
         "prop": "#e99867",
+        "objkey": "#e0e0e0",
         "cst": "#ffe39a",
         "bool": "#f7d383",
         "com_italic": true
@@ -4713,6 +4763,7 @@
         "pun": "#434353",
         "var": "#c8c8c8",
         "prop": "#919ab7",
+        "objkey": "#c8c8c8",
         "cst": "#e3aebf",
         "bool": "#d18ba2",
         "com_italic": true
@@ -4808,6 +4859,7 @@
         "pun": "#584e51",
         "var": "#fafcfb",
         "prop": "#a5a0b6",
+        "objkey": "#fafcfb",
         "cst": "#6b5e73",
         "bool": "#6b5e73",
         "com_italic": true
@@ -4901,6 +4953,7 @@
         "pun": "#45e6ee",
         "var": "#45e6ee",
         "prop": "#0afdf6",
+        "objkey": "#45e6ee",
         "cst": "#ff7f00",
         "bool": "#ff7f00",
         "com_italic": true
@@ -4998,6 +5051,7 @@
         "pun": "#b79f70",
         "var": "#3c4747",
         "prop": "#7b826d",
+        "objkey": "#3c4747",
         "cst": "#b59d71",
         "bool": "#826e48",
         "com_italic": true
@@ -5091,6 +5145,7 @@
         "pun": "#4a2c2c",
         "var": "#d9afa7",
         "prop": "#7b534e",
+        "objkey": "#d9afa7",
         "cst": "#e07b5f",
         "bool": "#c45a3f",
         "com_italic": true
@@ -5185,6 +5240,7 @@
         "pun": "#6b655c",
         "var": "#f0e4c5",
         "prop": "#d4bd99",
+        "objkey": "#f0e4c5",
         "cst": "#f7df97",
         "bool": "#ebdbb2",
         "com_italic": true
@@ -5277,6 +5333,7 @@
         "pun": "#666666",
         "var": "#c2c2b0",
         "prop": "#c9a554",
+        "objkey": "#c2c2b0",
         "cst": "#b36d43",
         "bool": "#b36d43"
       },
@@ -5373,6 +5430,7 @@
         "pun": "#555555",
         "var": "#efefef",
         "prop": "#88aabb",
+        "objkey": "#efefef",
         "cst": "#f59e0b",
         "bool": "#f59e0b",
         "com_italic": true
@@ -5465,6 +5523,7 @@
         "pun": "#d6ccb9",
         "var": "#5c6a53",
         "prop": "#6fa695",
+        "objkey": "#5c6a53",
         "cst": "#e6bb8a",
         "bool": "#d4a574",
         "com_italic": true
@@ -5554,6 +5613,7 @@
         "pun": "#767676",
         "var": "#d4d4d4",
         "prop": "#d4d4d4",
+        "objkey": "#d4d4d4",
         "cst": "#ffffff",
         "bool": "#d4d4d4",
         "com_italic": true
@@ -5644,6 +5704,7 @@
         "pun": "#b3bdcc",
         "var": "#f0f2f5",
         "prop": "#f28b66",
+        "objkey": "#f0f2f5",
         "cst": "#f2c063",
         "bool": "#f28b66",
         "com_italic": true
@@ -5734,6 +5795,7 @@
         "pun": "#3d4455",
         "var": "#e0e6ed",
         "prop": "#c9aff0",
+        "objkey": "#e0e6ed",
         "cst": "#b388eb",
         "bool": "#82eeff",
         "com_italic": true
@@ -5821,6 +5883,7 @@
         "pun": "#2a4652",
         "var": "#e6f1f4",
         "prop": "#3a9fb7",
+        "objkey": "#e6f1f4",
         "cst": "#f4e2b7",
         "bool": "#eed59a",
         "com_italic": true
@@ -5914,6 +5977,7 @@
         "pun": "#595959",
         "var": "#f4f4f4",
         "prop": "#33acde",
+        "objkey": "#f4f4f4",
         "cst": "#b0db90",
         "bool": "#a4d149",
         "com_italic": true
@@ -5996,6 +6060,7 @@
         "pun": "#1a1a1a",
         "var": "#e0e0e0",
         "prop": "#00bfff",
+        "objkey": "#e0e0e0",
         "cst": "#1e90ff",
         "bool": "#1e90ff",
         "com_italic": true
@@ -6087,6 +6152,7 @@
         "pun": "#9d9f93",
         "var": "#cecfc9",
         "prop": "#9a9d9a",
+        "objkey": "#cecfc9",
         "cst": "#cecfc9",
         "bool": "#ba6e68",
         "com_italic": true
@@ -6178,6 +6244,7 @@
         "pun": "#2c2c2e",
         "var": "#ffffff",
         "prop": "#9a9a9a",
+        "objkey": "#ffffff",
         "cst": "#777777",
         "bool": "#6a6a6a",
         "com_italic": true
@@ -6296,6 +6363,7 @@
         "pun": "#9e9e9e",
         "var": "#f5caff",
         "prop": "#8361ff",
+        "objkey": "#f5caff",
         "cst": "#f5caff",
         "bool": "#ffbcff"
       },
@@ -6394,6 +6462,7 @@
         "pun": "#5c6370",
         "var": "#abb2bf",
         "prop": "#56b6c2",
+        "objkey": "#abb2bf",
         "cst": "#e5c07b",
         "bool": "#d19a66",
         "com_italic": true
@@ -6490,6 +6559,7 @@
         "pun": "#525252",
         "var": "#f2f4f8",
         "prop": "#ff7eb6",
+        "objkey": "#f2f4f8",
         "cst": "#be95ff",
         "bool": "#ee5396",
         "com_italic": true
@@ -6585,6 +6655,7 @@
         "pun": "#363638",
         "var": "#b2b5b3",
         "prop": "#4abaaf",
+        "objkey": "#b2b5b3",
         "cst": "#e0af68",
         "bool": "#e0af68",
         "com_italic": true
@@ -6679,6 +6750,7 @@
         "pun": "#a0a3a3",
         "var": "#d4d5d5",
         "prop": "#c5e8c5",
+        "objkey": "#d4d5d5",
         "cst": "#f2e590",
         "bool": "#aec282",
         "com_italic": true
@@ -6770,6 +6842,7 @@
         "pun": "#a85869",
         "var": "#f17e97",
         "prop": "#f00f40",
+        "objkey": "#f17e97",
         "cst": "#ce0d3c",
         "bool": "#ce0d3c",
         "com_italic": true
@@ -6860,6 +6933,7 @@
         "pun": "#9ca2bd",
         "var": "#e0e6ff",
         "prop": "#3df2f2",
+        "objkey": "#e0e6ff",
         "cst": "#ffff4d",
         "bool": "#ff7a4d",
         "com_italic": true
@@ -6953,6 +7027,7 @@
         "pun": "#9c6cd0",
         "var": "#ffffff",
         "prop": "#b895dd",
+        "objkey": "#ffffff",
         "cst": "#cb97df",
         "bool": "#9845c6",
         "com_italic": true
@@ -7046,6 +7121,7 @@
         "pun": "#ff9acb",
         "var": "#d7accd",
         "prop": "#8adb8a",
+        "objkey": "#d7accd",
         "cst": "#ca2edc",
         "bool": "#ca2edc",
         "com_italic": true
@@ -7142,6 +7218,7 @@
         "pun": "#585b70",
         "var": "#cdd6f4",
         "prop": "#94e2d5",
+        "objkey": "#cdd6f4",
         "cst": "#f9e2af",
         "bool": "#f9e2af",
         "com_italic": true
@@ -7233,6 +7310,7 @@
         "pun": "#2a2025",
         "var": "#ffeaf2",
         "prop": "#f88ab0",
+        "objkey": "#ffeaf2",
         "cst": "#ffd1df",
         "bool": "#ffb3ca",
         "com_italic": true
@@ -7327,6 +7405,7 @@
         "pun": "#57898a",
         "var": "#f6dcac",
         "prop": "#8cbfb8",
+        "objkey": "#f6dcac",
         "cst": "#ed9563",
         "bool": "#e97b3c"
       },
@@ -7441,6 +7520,7 @@
         "pun": "#805500",
         "var": "#ffb000",
         "prop": "#cc9900",
+        "objkey": "#ffb000",
         "cst": "#ffdd00",
         "bool": "#ffd700",
         "com_italic": true
@@ -7530,6 +7610,7 @@
         "pun": "#a09080",
         "var": "#22211d",
         "prop": "#3d6b52",
+        "objkey": "#22211d",
         "cst": "#6b5237",
         "bool": "#8a6c3e",
         "com_italic": true
@@ -7621,6 +7702,7 @@
         "pun": "#495495",
         "var": "#ffffff",
         "prop": "#03edf9",
+        "objkey": "#ffffff",
         "cst": "#fede5d",
         "bool": "#f3e70f",
         "com_italic": true
@@ -7714,6 +7796,7 @@
         "pun": "#6e6a86",
         "var": "#e0def4",
         "prop": "#ebbcba",
+        "objkey": "#e0def4",
         "cst": "#f6c177",
         "bool": "#f6c177",
         "com_italic": true
@@ -7807,6 +7890,7 @@
         "pun": "#c8ac86",
         "var": "#35302a",
         "prop": "#713a56",
+        "objkey": "#35302a",
         "cst": "#694c45",
         "bool": "#644535",
         "com_italic": true
@@ -7902,6 +7986,7 @@
         "pun": "#404040",
         "var": "#d6d0c5",
         "prop": "#717c7c",
+        "objkey": "#d6d0c5",
         "cst": "#8b9388",
         "bool": "#51605b",
         "com_italic": true
@@ -7996,6 +8081,7 @@
         "pun": "#4b4c4d",
         "var": "#fff6ff",
         "prop": "#ffc79b",
+        "objkey": "#fff6ff",
         "cst": "#fff6c3",
         "bool": "#fff6c3",
         "com_italic": true
@@ -8090,6 +8176,7 @@
         "pun": "#c6afba",
         "var": "#f0eaed",
         "prop": "#e8c099",
+        "objkey": "#f0eaed",
         "cst": "#e6ba94",
         "bool": "#ff8e7c",
         "com_italic": true
@@ -8185,6 +8272,7 @@
         "pun": "#678270",
         "var": "#f0b7ca",
         "prop": "#6f9485",
+        "objkey": "#f0b7ca",
         "cst": "#e6d3b4",
         "bool": "#d7be96"
       },
@@ -8282,6 +8370,7 @@
         "pun": "#51688e",
         "var": "#e0f7fa",
         "prop": "#fff6d2",
+        "objkey": "#e0f7fa",
         "cst": "#d7ebe9",
         "bool": "#d5edeb",
         "com_italic": true
@@ -8376,6 +8465,7 @@
         "pun": "#3e6650",
         "var": "#e6f6f0",
         "prop": "#80d4b5",
+        "objkey": "#e6f6f0",
         "cst": "#d1ffb0",
         "bool": "#d1ffb0",
         "com_italic": true
@@ -8468,6 +8558,7 @@
         "pun": "#565656",
         "var": "#0a0a0a",
         "prop": "#0a0a0a",
+        "objkey": "#0a0a0a",
         "cst": "#0a0a0a",
         "bool": "#0a0a0a",
         "com_italic": true
@@ -8559,6 +8650,7 @@
         "pun": "#333333",
         "var": "#ffffff",
         "prop": "#aaaaaa",
+        "objkey": "#ffffff",
         "cst": "#a06666",
         "bool": "#a06666",
         "com_italic": true
@@ -8663,6 +8755,7 @@
         "pun": "#002b36",
         "var": "#839496",
         "prop": "#2aa198",
+        "objkey": "#839496",
         "cst": "#657b83",
         "bool": "#b58900",
         "com_italic": true
@@ -8752,6 +8845,7 @@
         "pun": "#002b36",
         "var": "#586e75",
         "prop": "#2aa198",
+        "objkey": "#586e75",
         "cst": "#657b83",
         "bool": "#b58900",
         "com_italic": true
@@ -8841,6 +8935,7 @@
         "pun": "#5f6f74",
         "var": "#6c7c81",
         "prop": "#2aa198",
+        "objkey": "#6c7c81",
         "cst": "#b38800",
         "bool": "#b38800",
         "com_italic": true
@@ -8931,6 +9026,7 @@
         "pun": "#4b4e55",
         "var": "#cacccc",
         "prop": "#707070",
+        "objkey": "#cacccc",
         "cst": "#c9c2b4",
         "bool": "#d9dbdc",
         "com_italic": true
@@ -9026,6 +9122,7 @@
         "pun": "#948a8b",
         "var": "#e7aa5a",
         "prop": "#bd4924",
+        "objkey": "#e7aa5a",
         "cst": "#fcd675",
         "bool": "#f9cc6c",
         "com_italic": true
@@ -9117,6 +9214,7 @@
         "pun": "#969596",
         "var": "#ffffff",
         "prop": "#fce7b0",
+        "objkey": "#ffffff",
         "cst": "#ddd6d0",
         "bool": "#b2a295",
         "com_italic": true
@@ -9206,6 +9304,7 @@
         "pun": "#181824",
         "var": "#ededfe",
         "prop": "#3cffed",
+        "objkey": "#ededfe",
         "cst": "#ffff80",
         "bool": "#ffea00",
         "com_italic": true
@@ -9296,6 +9395,7 @@
         "pun": "#416828",
         "var": "#88a827",
         "prop": "#88a827",
+        "objkey": "#88a827",
         "cst": "#88a827",
         "bool": "#699020",
         "com_italic": true
@@ -9387,6 +9487,7 @@
         "pun": "#614d85",
         "var": "#ffffff",
         "prop": "#03edf9",
+        "objkey": "#ffffff",
         "cst": "#ffff66",
         "bool": "#f3e70f",
         "com_italic": true
@@ -9476,6 +9577,7 @@
         "pun": "#6b6b6b",
         "var": "#dcfce7",
         "prop": "#86efab",
+        "objkey": "#dcfce7",
         "cst": "#dfb265",
         "bool": "#d4953b",
         "com_italic": true
@@ -9593,6 +9695,7 @@
         "pun": "#6b7360",
         "var": "#242424",
         "prop": "#6b1f2f",
+        "objkey": "#242424",
         "cst": "#51573b",
         "bool": "#51573b",
         "com_italic": true
@@ -9687,6 +9790,7 @@
         "pun": "#444b6a",
         "var": "#a9b1d6",
         "prop": "#449dab",
+        "objkey": "#a9b1d6",
         "cst": "#ff9e64",
         "bool": "#e0af68",
         "com_italic": true
@@ -9776,6 +9880,7 @@
         "pun": "#897981",
         "var": "#f0e9ec",
         "prop": "#706b82",
+        "objkey": "#f0e9ec",
         "cst": "#dfbab2",
         "bool": "#c17a6a",
         "com_italic": true
@@ -9867,6 +9972,7 @@
         "pun": "#a08b52",
         "var": "#f2e2a4",
         "prop": "#9fd3c7",
+        "objkey": "#f2e2a4",
         "cst": "#f6f1c1",
         "bool": "#ff9f1c",
         "com_italic": true
@@ -9964,6 +10070,7 @@
         "pun": "#6b72a8",
         "var": "#ffffff",
         "prop": "#c24f40",
+        "objkey": "#ffffff",
         "cst": "#f0d17c",
         "bool": "#e5af1b",
         "com_italic": true
@@ -10056,6 +10163,7 @@
         "pun": "#361e1b",
         "var": "#492924",
         "prop": "#726947",
+        "objkey": "#492924",
         "cst": "#938a5e",
         "bool": "#706547",
         "com_italic": true
@@ -10138,6 +10246,7 @@
         "pun": "#7e7e7e",
         "var": "#ffffff",
         "prop": "#ea83a5",
+        "objkey": "#ffffff",
         "cst": "#ffc799",
         "bool": "#e6b99d",
         "com_italic": true
@@ -10228,6 +10337,7 @@
         "pun": "#8a8a8d",
         "var": "#d4d4d4",
         "prop": "#2f8383",
+        "objkey": "#d4d4d4",
         "cst": "#e07924",
         "bool": "#a85511",
         "com_italic": true
@@ -10319,6 +10429,7 @@
         "pun": "#6b578f",
         "var": "#ffffff",
         "prop": "#a6b8ff",
+        "objkey": "#ffffff",
         "cst": "#d1bff7",
         "bool": "#ddccff",
         "com_italic": true
@@ -10411,6 +10522,7 @@
         "pun": "#a58c82",
         "var": "#fff4d8",
         "prop": "#9eb8b2",
+        "objkey": "#fff4d8",
         "cst": "#e4c56d",
         "bool": "#c8964b"
       },
@@ -10504,6 +10616,7 @@
         "pun": "#4a2020",
         "var": "#ff9999",
         "prop": "#ff66cc",
+        "objkey": "#ff9999",
         "cst": "#ffcc33",
         "bool": "#ffaa00",
         "com_italic": true
@@ -10593,6 +10706,7 @@
         "pun": "#9a9078",
         "var": "#0c0c14",
         "prop": "#3b3b3b",
+        "objkey": "#0c0c14",
         "cst": "#005c32",
         "bool": "#2e311a",
         "com_italic": true
@@ -10687,6 +10801,7 @@
         "pun": "#616161",
         "var": "#ffffff",
         "prop": "#4daafc",
+        "objkey": "#ffffff",
         "cst": "#bb8009",
         "bool": "#bb8009"
       },

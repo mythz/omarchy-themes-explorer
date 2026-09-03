@@ -386,6 +386,121 @@ def border_colors(raw, colors):
 # made the editor look plausible but wrong: Tokyo Night paints an import
 # keyword (#7aa2f7) and a plain keyword (#bb9af7) in different colours, and
 # neither is a slot in colors.toml.
+# VS Code settings files and theme files are JSONC.
+def strip_jsonc(text):
+    out = []
+    i, n = 0, len(text)
+    in_string = escaped = False
+    while i < n:
+        ch = text[i]
+        if in_string:
+            out.append(ch)
+            if escaped:
+                escaped = False
+            elif ch == "\\":
+                escaped = True
+            elif ch == '"':
+                in_string = False
+            i += 1
+            continue
+        if ch == '"':
+            in_string = True
+            out.append(ch)
+            i += 1
+            continue
+        if ch == "/" and i + 1 < n and text[i + 1] == "/":
+            while i < n and text[i] != "\n":
+                i += 1
+            continue
+        if ch == "/" and i + 1 < n and text[i + 1] == "*":
+            i += 2
+            while i + 1 < n and not (text[i] == "*" and text[i + 1] == "/"):
+                i += 1
+            i += 2
+            continue
+        out.append(ch)
+        i += 1
+    return re.sub(r",(\s*[}\]])", r"\1", "".join(out))
+
+
+EXTENSION_DIRS = (
+    HOME / ".vscode/extensions",
+    HOME / ".vscode-oss/extensions",
+    HOME / ".vscode-insiders/extensions",
+)
+
+
+def extension_theme(descriptor):
+    """Locate the colour theme an installed extension contributes.
+
+    A theme may hand VS Code off to a third-party extension instead of the
+    generated file -- Omarchy's Tokyo Night ships
+    `{"name": "Tokyo Night", "extension": "enkia.tokyo-night"}` -- and
+    omarchy-theme-set-vscode then installs it and points workbench.colorTheme
+    at that label. Nineteen of the shipped themes do this, so reading the
+    generated file for them describes colours the editor never shows.
+    """
+    name = (descriptor.get("name") or "").strip()
+    extension = (descriptor.get("extension") or "").strip()
+    if not name or not re.fullmatch(r"[A-Za-z0-9._-]+", extension):
+        return None
+    for root in EXTENSION_DIRS:
+        if not root.is_dir():
+            continue
+        for entry in sorted(root.iterdir()):
+            # Directories are "<publisher>.<name>-<version>[-<target>]".
+            if not entry.is_dir() or entry.name.lower().find(extension.lower() + "-") != 0:
+                continue
+            try:
+                package = json.loads(strip_jsonc((entry / "package.json").read_text(errors="replace")))
+            except (OSError, ValueError):
+                continue
+            for contributed in (package.get("contributes") or {}).get("themes") or []:
+                label = contributed.get("label") or contributed.get("id") or ""
+                if label != name:
+                    continue
+                path = (entry / (contributed.get("path") or "")).resolve()
+                try:
+                    return json.loads(strip_jsonc(path.read_text(errors="replace")))
+                except (OSError, ValueError):
+                    return None
+    return None
+
+
+def vscode_theme_json(theme_dir):
+    """The colour theme VS Code actually loads for this Omarchy theme."""
+    try:
+        descriptor = json.loads(strip_jsonc((theme_dir / "vscode.json").read_text(errors="replace")))
+    except (OSError, ValueError):
+        descriptor = None
+    if isinstance(descriptor, dict):
+        found = extension_theme(descriptor)
+        if found:
+            return found
+    try:
+        return json.loads(strip_jsonc((theme_dir / "vscode-theme.json").read_text(errors="replace")))
+    except (OSError, ValueError):
+        return None
+
+
+# Semantic tokens override TextMate scopes, but only when the theme turns
+# semantic highlighting on -- enkia's Tokyo Night does not, which is why its
+# `Palette` is the plain foreground of entity.name.type and not the yellow its
+# unused semanticTokenColors would give an interface.
+SEMANTIC_SCOPES = {
+    "key": "keyword",
+    "fn": "function",
+    "str": "string",
+    "num": "number",
+    "bool": "boolean",
+    "op": "operator",
+    "typ": "type",
+    "prop": "property",
+    "var": "variable",
+    "objkey": "property.declaration",
+    "com": "comment",
+}
+
 SYNTAX_SCOPES = {
     "key": "keyword",
     "imp": "keyword.control.import",
@@ -399,6 +514,7 @@ SYNTAX_SCOPES = {
     "pun": "punctuation",
     "var": "variable",
     "prop": "variable.other.property",
+    "objkey": "meta.object-literal.key",
     "cst": "variable.other.constant",
     "bool": "constant.language.boolean",
 }
@@ -445,26 +561,37 @@ SYNTAX_TEMPLATE = {
     "pun": "dark_foreground",    # punctuation, meta.brace
     "var": "foreground",         # variable
     "prop": "cyan",              # variable.other.property
+    "objkey": "foreground",      # meta.object-literal.key
     "cst": "bright_yellow",      # variable.other.constant
     "bool": "orange",            # constant.language.boolean
 }
 
 
 def syntax_colors(theme_dir, colors):
-    """Token colours: the theme's own vscode-theme.json when it ships one, and
-    otherwise the mapping Omarchy's template would have rendered."""
+    """Token colours from the colour theme VS Code actually loads, falling back
+    to the mapping Omarchy's own template would have rendered."""
     out = {}
-    try:
-        data = json.loads((theme_dir / "vscode-theme.json").read_text(errors="replace"))
-        rules = data.get("tokenColors")
-    except (OSError, ValueError):
-        rules = None
+    data = vscode_theme_json(theme_dir) or {}
+    rules = data.get("tokenColors")
     if isinstance(rules, list):
         for name, scope in SYNTAX_SCOPES.items():
             found = scope_color(rules, scope)
             if found:
                 out[name] = found[0]
                 if "italic" in found[1]:
+                    out[name + "_italic"] = True
+    if data.get("semanticHighlighting"):
+        semantic = data.get("semanticTokenColors") or {}
+        for name, key in SEMANTIC_SCOPES.items():
+            value = semantic.get(key)
+            if isinstance(value, dict):
+                style = value.get("fontStyle", "")
+                value = value.get("foreground")
+            else:
+                style = ""
+            if isinstance(value, str) and parse_hex(value):
+                out[name] = to_hex(parse_hex(value))
+                if "italic" in style:
                     out[name + "_italic"] = True
     for name, key in SYNTAX_TEMPLATE.items():
         out.setdefault(name, colors[key])

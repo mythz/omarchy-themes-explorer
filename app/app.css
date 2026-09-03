@@ -666,6 +666,7 @@ body[data-mode="light"] {
 .t-prim { color: var(--tk-prim, var(--tk-typ)); }
 .t-var  { color: var(--tk-var); }
 .t-prop { color: var(--tk-prop, var(--tk-var)); }
+.t-objkey { color: var(--tk-objkey, var(--tk-var)); }
 .t-op   { color: var(--tk-op); }
 .t-pun  { color: var(--tk-pun); }
 .t-cls  { color: var(--tk-typ); }
@@ -705,6 +706,7 @@ body[data-mode="light"] {
   --tk-prim: var(--vs-prim, var(--fg));
   --tk-var: var(--vs-var, var(--fg));
   --tk-prop: var(--vs-prop, var(--cyan));
+  --tk-objkey: var(--vs-objkey, var(--fg));
   --tk-op: var(--vs-op, var(--br-blue));
   --tk-pun: var(--vs-pun, var(--fg-dark));
 }
