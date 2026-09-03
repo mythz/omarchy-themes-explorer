@@ -901,10 +901,10 @@
 
     const tree = [
       [0, "dir", "chev", "omarchy-themes", ""],
-      [1, "dir", "chev", "src", "dot"],
+      [1, "dir err", "chev", "src", "dot"],
       [2, "", "ts", "index.ts", ""],
       [2, "", "ts", "palette.ts", ""],
-      [2, "on", "ts", "theme.ts", "4"],
+      [2, "on err", "ts", "theme.ts", "4"],
       [1, "dir", "chev", "test", ""],
       [2, "", "ts", "theme.test.ts", ""],
       [1, "dir", "chev", "themes", ""],
@@ -912,7 +912,7 @@
       [2, "", "png", "preview.png", ""],
       [1, "", "json", "package.json", ""],
       [1, "", "md", "README.md", ""],
-      [1, "", "json", "tsconfig.json", "1"],
+      [1, "err", "json", "tsconfig.json", "1"],
     ]
       .map(function (n) {
         const icon = n[2] === "chev" ? '<i class="vs-chev">\u2304</i>' : ICON[n[2]];

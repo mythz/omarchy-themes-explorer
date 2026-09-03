@@ -52,7 +52,10 @@ def parse_hex(value):
 
 
 def to_hex(rgb):
-    return "#%02x%02x%02x" % tuple(max(0, min(255, round(c))) for c in rgb)
+    # int(c + 0.5), not round(): Python rounds halves to even, awk -- and so
+    # omarchy-theme-color -- rounds them up, and the two disagree on a handful
+    # of derived shades.
+    return "#%02x%02x%02x" % tuple(max(0, min(255, int(c + 0.5))) for c in rgb)
 
 
 def luminance(rgb):
@@ -62,6 +65,12 @@ def luminance(rgb):
 
 def mix(a, b, t):
     return tuple(a[i] + (b[i] - a[i]) * t for i in range(3))
+
+
+def mix_hex(start, end, amount):
+    """omarchy-theme-color's mix_color: `amount` of `end` blended into `start`."""
+    a, b = parse_hex(start), parse_hex(end)
+    return to_hex(tuple(a[i] * (1 - amount) + b[i] * amount for i in range(3)))
 
 
 def shade(rgb, amount):
@@ -116,63 +125,116 @@ def raw_colors(theme_dir):
 
 
 def normalize(raw):
-    """Fold both colors.toml dialects (named keys, ANSI colorN) into one palette."""
+    """Resolve a palette the way omarchy-theme-color does.
 
-    def get(*keys):
-        for key in keys:
-            rgb = parse_hex(raw.get(key))
-            if rgb:
-                return rgb
-        return None
+    This mirrors that script's fallback chain rather than inventing one, because
+    every generated config -- vscode-theme.json, btop.theme, hyprland.lua -- is
+    rendered from the names it produces. Deriving them differently is how the
+    preview ended up drawing `muted` as a mixed violet when Omarchy resolves it
+    to color8, a flat grey: the file tree, line numbers, inactive tabs and the
+    activity bar all read it.
+    """
 
-    background = get("background", "color0") or (26, 27, 38)
-    foreground = get("foreground", "color7") or (200, 200, 200)
-    is_light = str(raw.get("mode", "")).lower() == "light" or (
-        "mode" not in raw and luminance(background) > 0.5
-    )
+    c = {}
+    for key, value in raw.items():
+        rgb = parse_hex(value)
+        if rgb:
+            c[key] = to_hex(rgb)
 
-    step = 0.10 if not is_light else 0.05
-    palette = {
-        "background": background,
-        "dark_background": get("dark_background") or shade(background, -step),
-        "darker_background": get("darker_background") or shade(background, -step * 2),
-        "lighter_background": get("lighter_background") or mix(background, foreground, 0.10),
-        "foreground": foreground,
-        "dark_foreground": get("dark_foreground") or mix(foreground, background, 0.45),
-        "light_foreground": get("light_foreground") or foreground,
-        "bright_foreground": get("bright_foreground")
-        or shade(foreground, 0.25 if not is_light else -0.25),
-        "red": get("red", "color1") or (220, 90, 90),
-        "green": get("green", "color2") or (140, 190, 110),
-        "yellow": get("yellow", "color3") or (220, 180, 100),
-        "blue": get("blue", "color4") or (120, 160, 240),
-        "magenta": get("magenta", "color5") or (180, 140, 230),
-        "cyan": get("cyan", "color6") or (100, 190, 200),
-        "black": get("black", "color0") or shade(background, -0.3),
-        "white": get("white", "color7") or foreground,
-    }
-    palette["accent"] = get("accent") or palette["blue"]
-    palette["selection"] = get("selection", "selection_background") or mix(
-        background, palette["accent"], 0.28
-    )
-    palette["muted"] = get("muted") or mix(background, foreground, 0.42)
-    palette["orange"] = get("orange") or mix(palette["red"], palette["yellow"], 0.45)
-    palette["brown"] = get("brown") or shade(palette["orange"], -0.4)
+    def alias(key, *fallbacks):
+        if not c.get(key):
+            for name in fallbacks:
+                if c.get(name):
+                    c[key] = c[name]
+                    return
+
+    # Canonical names win over the short forms an older theme may use.
+    for canon, short in (
+        ("background", "bg"),
+        ("dark_background", "dark_bg"),
+        ("darker_background", "darker_bg"),
+        ("lighter_background", "lighter_bg"),
+        ("foreground", "fg"),
+        ("dark_foreground", "dark_fg"),
+        ("light_foreground", "light_fg"),
+        ("bright_foreground", "bright_fg"),
+    ):
+        alias(canon, short)
+
+    alias("background", "color0")
+    alias("foreground", "color7")
+    c.setdefault("background", "#1a1b26")
+    c.setdefault("foreground", "#c8c8c8")
+    c["color0"] = c["background"]
+    c["color7"] = c["foreground"]
 
     for name, ansi in (
-        ("red", "color9"),
-        ("green", "color10"),
-        ("yellow", "color11"),
-        ("blue", "color12"),
-        ("magenta", "color13"),
-        ("cyan", "color14"),
+        ("red", "color1"),
+        ("green", "color2"),
+        ("yellow", "color3"),
+        ("blue", "color4"),
+        ("magenta", "color5"),
+        ("cyan", "color6"),
+        ("bright_red", "color9"),
+        ("bright_green", "color10"),
+        ("bright_yellow", "color11"),
+        ("bright_blue", "color12"),
+        ("bright_magenta", "color13"),
+        ("bright_cyan", "color14"),
     ):
-        key = "bright_" + name
-        palette[key] = get(key, ansi) or shade(palette[name], 0.18)
-    palette["bright_black"] = get("bright_black", "color8") or palette["muted"]
-    palette["bright_white"] = get("bright_white", "color15") or palette["bright_foreground"]
+        alias(name, ansi)
+    alias("magenta", "purple")
+    alias("bright_magenta", "bright_purple")
 
-    out = {k: to_hex(v) for k, v in palette.items()}
+    alias("light_foreground", "color7", "foreground")
+    alias("bright_foreground", "color15", "foreground")
+    c["cursor"] = c["bright_foreground"]
+    alias("lighter_background", "color0", "background")
+    alias("dark_foreground", "color8", "foreground")
+    alias("muted", "color8", "dark_foreground")
+    alias("selection", "selection_background", "color8", "color0", "background")
+    alias("selection_background", "selection")
+    alias("selection_foreground", "bright_foreground")
+
+    # A theme with no palette beyond a background and foreground still needs
+    # the six hues; Omarchy's own themes always carry them.
+    for name, fallback in (
+        ("red", "#dc5a5a"),
+        ("green", "#8cbe6e"),
+        ("yellow", "#dcb464"),
+        ("blue", "#78a0f0"),
+        ("magenta", "#b48ce6"),
+        ("cyan", "#64bec8"),
+    ):
+        c.setdefault(name, fallback)
+
+    alias("orange", "yellow")
+    c.setdefault("brown", mix_hex(c["orange"], "#000000", 0.50))
+    c.setdefault("dark_background", mix_hex(c["background"], "#000000", 0.25))
+    c.setdefault("darker_background", mix_hex(c["background"], "#000000", 0.50))
+    for name in ("red", "yellow", "green", "cyan", "blue", "magenta"):
+        c.setdefault("bright_" + name, mix_hex(c[name], "#ffffff", 0.20))
+    c.setdefault("bright_black", c["muted"])
+    c.setdefault("bright_white", c["bright_foreground"])
+    c.setdefault("black", c["background"])
+    c.setdefault("white", c["foreground"])
+    c.setdefault("accent", c["blue"])
+
+    is_light = str(raw.get("mode", "")).lower() == "light" or (
+        "mode" not in raw and luminance(parse_hex(c["background"])) > 0.5
+    )
+
+    out = {
+        key: c[key]
+        for key in (
+            "background", "dark_background", "darker_background", "lighter_background",
+            "foreground", "dark_foreground", "light_foreground", "bright_foreground",
+            "red", "green", "yellow", "blue", "magenta", "cyan",
+            "black", "white", "accent", "selection", "muted", "orange", "brown",
+            "bright_red", "bright_green", "bright_yellow", "bright_blue",
+            "bright_magenta", "bright_cyan", "bright_black", "bright_white",
+        )
+    }
     out["mode"] = "light" if is_light else "dark"
     return out
 

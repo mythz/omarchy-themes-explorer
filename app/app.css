@@ -679,6 +679,8 @@ body[data-mode="light"] {
    a 19%-alpha selection tint. Omacon ships its own file and lands on the same
    values, so this holds whether a theme supplies one or Omarchy renders it. */
 .app-vscode {
+  /* editorGroup.border is `muted` at 25%; every seam in the chrome uses it. */
+  --vs-border: color-mix(in srgb, var(--muted) 25%, transparent);
   font-size: var(--ui-fs);
   display: flex;
   flex-direction: column;
@@ -688,6 +690,7 @@ body[data-mode="light"] {
 
 .vs-title {
   flex: 0 0 auto;
+  font-family: var(--mono);
   display: flex;
   align-items: center;
   gap: 1em;
@@ -762,9 +765,11 @@ body[data-mode="light"] {
 .vs-side {
   flex: 0 0 23%;
   background: var(--bg);
+  border-top: 1px solid var(--vs-border);
   padding: 0.4em 0 0;
   overflow: hidden;
   color: var(--fg);
+  font-family: var(--mono);
   display: flex;
   flex-direction: column;
 }
@@ -795,12 +800,22 @@ body[data-mode="light"] {
   overflow: hidden;
 }
 .vs-node > span { overflow: hidden; text-overflow: ellipsis; }
-/* list.activeSelectionBackground is the accent at 19% alpha, not a solid bar. */
+/* The Explorer does not hold focus while you are editing, so the selected row
+   takes list.inactiveSelectionBackground -- `muted` at 25%, a neutral grey --
+   and not the accent tint of the active variant. The ring is list.focusOutline. */
 .vs-node.on {
-  background: color-mix(in srgb, var(--accent) 19%, transparent);
+  background: color-mix(in srgb, var(--muted) 25%, transparent);
   color: var(--fg);
+  outline: 1px solid color-mix(in srgb, var(--accent) 38%, transparent);
+  outline-offset: -1px;
 }
 .vs-node.dir > span { color: var(--fg); }
+
+/* A file with problems is decorated in list.errorForeground -- the red slot --
+   label, count and the dot its parent folder shows alike. */
+.vs-node.err > span,
+.vs-node.err .vs-badge { color: var(--red); }
+.vs-node.err .vs-dot { background: var(--red); }
 
 /* Seti-ish file icons: the extension is what carries the colour. */
 .vs-ts {
@@ -817,15 +832,13 @@ body[data-mode="light"] {
 .vs-toml { color: var(--muted); }
 .vs-png { color: var(--green); }
 
-/* Problem counts, and the dot a folder shows when something inside it has one. */
+/* Problem counts, and the dot a folder shows when something inside it has one.
+   The count is a bare numeral: VS Code puts no pill behind it. */
 .vs-badge {
   margin-left: auto;
-  padding: 0 0.4em;
-  font-size: 0.85em;
+  padding: 0 0.2em;
   text-decoration: none;
   color: var(--fg);
-  background: color-mix(in srgb, var(--accent) 45%, transparent);
-  border-radius: 999px;
   flex: 0 0 auto;
 }
 .vs-dot {
@@ -852,9 +865,10 @@ body[data-mode="light"] {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  border-left: 1px solid color-mix(in srgb, var(--muted) 25%, transparent);
+  border-top: 1px solid var(--vs-border);
+  border-left: 1px solid var(--vs-border);
 }
-.vs-tabs { display: flex; background: var(--bg); flex: 0 0 auto; }
+.vs-tabs { display: flex; background: var(--bg); flex: 0 0 auto; font-family: var(--mono); }
 .vs-tab {
   display: flex;
   align-items: center;
@@ -879,7 +893,13 @@ body[data-mode="light"] {
   flex: 0 0 auto;
 }
 .vs-tab i { color: var(--yellow); }
-.vs-crumbs { padding: 0.25em 1.2em; color: var(--muted); font-size: 0.9em; flex: 0 0 auto; }
+.vs-crumbs {
+  padding: 0.25em 1.2em;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.9em;
+  flex: 0 0 auto;
+}
 .vs-editor {
   flex: 1;
   min-height: 0;
