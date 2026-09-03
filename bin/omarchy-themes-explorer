@@ -36,7 +36,12 @@ RUN_DIR="${XDG_RUNTIME_DIR:-/tmp}"
 SPECIAL="themes-explorer"
 
 APP_HOST="omarchy-themes-explorer.localhost"
-WINDOW_CLASS="chrome-omarchy-themes-explorer.localhost__-Default"
+
+# Chrome appends the profile directory to the class -- "__-Default" for a fresh
+# profile, "__-Profile_1" for a second one -- and which profile a launch lands
+# in is not ours to predict. Match the host part only, which is the half that
+# actually identifies this app.
+WINDOW_CLASS_PREFIX="chrome-omarchy-themes-explorer.localhost__"
 
 PORT=8777
 MODE=app
@@ -62,10 +67,10 @@ app_window() {
 import json, sys
 want = sys.argv[1]
 for c in json.load(sys.stdin):
-    if c.get('class') == want:
+    if (c.get('class') or '').startswith(want):
         print(c['address'], c['workspace']['name'], c.get('fullscreen', 0))
         break
-" "$WINDOW_CLASS"
+" "$WINDOW_CLASS_PREFIX"
 }
 
 # Omarchy runs Hyprland's Lua config provider, where hyprctl dispatch takes Lua
@@ -84,14 +89,36 @@ hypr() {
   return 0
 }
 
+# Register the placement rules for this window class. `group barred` matters as
+# much as the workspace: a new window joins the focused window's group, and a
+# grouped window carries its whole group along when it is moved -- so without
+# this, opening the app over a group drags the user's windows onto the
+# scratchpad with it.
+#
 # Register the placement rule for this window class. Rules are per-Hyprland-run
 # and are dropped on a config reload -- and applying a theme reloads the config --
 # so register right before every launch rather than trusting an earlier one to
 # have survived. Omarchy runs the Lua config provider, whose `o.window` helper is
 # reachable from `hyprctl eval`; fall back to the legacy keyword form otherwise.
 ensure_rules() {
-  local class_re="^chrome-omarchy-themes-explorer\\.localhost__-Default$"
-  hyprctl eval "o.window({ class = \"$class_re\" }, { workspace = \"special:$SPECIAL silent\", float = false, fullscreen = true })" >/dev/null 2>&1 && return 0
+  # Single-quoted on purpose. The value is a Lua string literal, and Lua needs a
+  # doubled backslash before the dot; double quotes here would collapse it to a
+  # lone "\." -- an invalid Lua escape, so `hyprctl eval` fails silently, no rule
+  # is ever registered, and the window tiles into the current workspace.
+  #
+  # The trailing ".*$" is load-bearing too: Hyprland matches a class rule against
+  # the whole string, and Chrome appends the profile directory to it
+  # ("__-Default", "__-Profile_1"), which is not ours to predict.
+  local class_re='^chrome-omarchy-themes-explorer\\.localhost__.*$'
+  # `hyprctl eval` exits 0 even when the Lua fails, so trust its output, not its
+  # status, before deciding the rules are in place.
+  local out
+  out=$(hyprctl eval \
+    "o.window({ class = \"$class_re\" }, { workspace = \"special:$SPECIAL silent\", group = \"barred\", float = false, fullscreen = true })" 2>&1 || true)
+  [[ $out == ok* ]] && return 0
+
+  # Legacy .conf setups, where hyprctl keyword still works.
+  hyprctl keyword windowrulev2 "group barred,class:$class_re" >/dev/null 2>&1 || true
   hyprctl keyword windowrulev2 "workspace special:$SPECIAL silent,class:$class_re" >/dev/null 2>&1 || true
 }
 

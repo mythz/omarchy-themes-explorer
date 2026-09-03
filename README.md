@@ -62,6 +62,20 @@ ratios disturbed — which is how a layout gets mangled in a way that is awkward
 to undo by hand. With the rule the window is never a member of your workspace
 at all, so there is nothing to reflow and nothing to restore.
 
+The rule bars grouping as well as setting the workspace, and that half matters
+just as much: a new window joins the focused window's *group*, and moving a
+grouped window carries the whole group with it — so without `group barred`,
+opening the app over a group drags those windows onto the scratchpad too.
+
+Two details the rule depends on, both learned the hard way. Hyprland matches a
+class rule against the **whole** string, and Chrome appends the profile
+directory to it (`__-Default`, `__-Profile_1`) — which profile a launch lands in
+is not ours to predict, so the pattern ends in `.*$` rather than naming one. And
+the pattern is single-quoted in the launcher, because the value is a Lua string
+literal: double quotes would collapse `\\.` to a lone `\.`, an invalid Lua
+escape that makes `hyprctl eval` fail *silently* — it exits 0 either way, so the
+launcher checks its output rather than its status.
+
 The rule is registered from the launcher rather than written into
 `~/.config/hypr`, so **your Hyprland config is never edited**. Omarchy runs the
 Lua config provider, whose `o.window` helper is reachable from `hyprctl eval`;
@@ -76,9 +90,11 @@ the safety net, never the plan.
 Hiding keeps the window alive, so the theme you were looking at and your panel
 arrangement survive a round trip.
 
-Verified on a live desktop with 13 windows across four workspaces: cold launch,
-hide, show and hide again left every window's workspace, position, size and
-floating state byte-identical, and the active workspace unchanged.
+Verified on a live desktop with 13 windows across four workspaces — including a
+cold launch while a three-window group held focus, the case that exposed the
+grouping bug. Cold launch, hide, show and hide again each left every window's
+workspace, position, size and floating state byte-identical, and the active
+workspace unchanged.
 
 **Typography.** Font sizes are fixed rather than scaled, because that is how the
 real apps behave regardless of window size. Narrow panels drop content instead
