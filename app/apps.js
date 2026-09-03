@@ -190,6 +190,14 @@
       'H2.4a.47.47 0 0 1-.467-.467m11.2-4.204v4.204c0 .257-.21.467-.466.467H8V8.927h4.667c.256 0 .466.21.466.467' +
       'M8 7.993v-1.53l1.529 1.53zm5.935-2.72l-2.586 2.59a.456.456 0 0 1-.633 0L8.13 5.272a.445.445 0 0 1 0-.632' +
       'l2.586-2.588a.444.444 0 0 1 .633 0l2.586 2.588a.445.445 0 0 1 0 .632"/></svg>',
+    account:
+      '<svg class="vs-ico vs-ico-account" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
+      '<path d="M12 6c-2.28 0-4 1.72-4 4s1.72 4 4 4s4-1.72 4-4s-1.72-4-4-4m0 6c-1.18 0-2-.82-2-2s.82-2 2-2' +
+      's2 .82 2 2s-.82 2-2 2"/>' +
+      '<path d="M12 2C6.49 2 2 6.49 2 12c0 3.26 1.58 6.16 4 7.98V20h.03c1.67 1.25 3.73 2 5.97 2s4.31-.75 5.97-2' +
+      'H18v-.02c2.42-1.83 4-4.72 4-7.98c0-5.51-4.49-10-10-10M8.18 19.02C8.59 17.85 9.69 17 11 17h2' +
+      'c1.31 0 2.42.85 2.82 2.02c-1.14.62-2.44.98-3.82.98s-2.69-.35-3.82-.98m9.3-1.21c-.81-1.66-2.51-2.82-4.48-2.82' +
+      'h-2c-1.97 0-3.66 1.16-4.48 2.82A7.96 7.96 0 0 1 4 11.99c0-4.41 3.59-8 8-8s8 3.59 8 8c0 2.29-.97 4.36-2.52 5.82"/></svg>',
     settings:
       '<svg class="vs-ico vs-ico-settings" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">' +
       '<path d="M8 6a2 2 0 1 0 0 4a2 2 0 0 0 0-4M7 8a1 1 0 1 1 2 0a1 1 0 0 1-2 0m3.618-3.602a.71.71 0 0 1-.824-.567' +
@@ -963,14 +971,14 @@
             "<i>" + VSCODE_SVG.debug + "</i>" +
             "<i>" + VSCODE_SVG.extensions + "</i>" +
             "<div style='flex:1'></div>" +
-            "<i class='vs-acct'></i><i>" + VSCODE_SVG.settings + "</i>" +
+            "<i>" + VSCODE_SVG.account + "</i><i>" + VSCODE_SVG.settings + "</i>" +
           "</div>" +
           '<div class="vs-side">' +
             '<div class="vs-side-head">Explorer<span>\u22ef</span></div>' +
             '<div class="vs-tree">' + tree + "</div>" +
             '<div class="vs-panes">' +
-              '<div><i class="vs-chev closed">\u2304</i>Outline</div>' +
-              '<div><i class="vs-chev closed">\u2304</i>Timeline</div>' +
+              '<div><i class="vs-chev">\u203a</i><span>Outline</span></div>' +
+              '<div><i class="vs-chev">\u203a</i><span>Timeline</span></div>' +
             "</div>" +
           "</div>" +
           '<div class="vs-main">' +
