@@ -381,6 +381,97 @@ def border_colors(raw, colors):
     }
 
 
+# The scopes the preview's tokeniser can distinguish, each resolved out of the
+# theme's own vscode-theme.json. Guessing these from the ANSI palette is what
+# made the editor look plausible but wrong: Tokyo Night paints an import
+# keyword (#7aa2f7) and a plain keyword (#bb9af7) in different colours, and
+# neither is a slot in colors.toml.
+SYNTAX_SCOPES = {
+    "key": "keyword",
+    "imp": "keyword.control.import",
+    "fn": "entity.name.function",
+    "str": "string",
+    "num": "constant.numeric",
+    "com": "comment",
+    "typ": "entity.name.type",
+    "prim": "support.type",
+    "op": "keyword.operator",
+    "pun": "punctuation",
+    "var": "variable",
+    "prop": "variable.other.property",
+    "cst": "variable.other.constant",
+    "bool": "constant.language.boolean",
+}
+
+
+def scope_color(rules, wanted):
+    """TextMate resolution: the longest matching scope prefix wins, later rules
+    beating earlier ones on a tie -- which is how VS Code itself picks."""
+    best = (-1, None, None)
+    for index, rule in enumerate(rules):
+        settings = rule.get("settings") or {}
+        fg = settings.get("foreground")
+        if not fg or not parse_hex(fg):
+            continue
+        scopes = rule.get("scope") or []
+        if isinstance(scopes, str):
+            scopes = [part.strip() for part in scopes.split(",")]
+        for scope in scopes:
+            scope = scope.strip()
+            # A descendant selector ("source.json meta...") is too narrow to
+            # stand in for a bare scope.
+            if not scope or " " in scope:
+                continue
+            if wanted == scope or wanted.startswith(scope + "."):
+                if (len(scope), index) > (best[0], best[1] if best[1] is not None else -1):
+                    best = (len(scope), index, (to_hex(parse_hex(fg)), settings.get("fontStyle", "")))
+    return best[2]
+
+
+# What default/themed/vscode-theme.json.tpl assigns each of those scopes. Only
+# two of the installed themes ship a vscode-theme.json of their own; for the
+# rest Omarchy renders this, and rendering it here reproduces the staged file
+# exactly -- checked value by value against Tokyo Night's.
+SYNTAX_TEMPLATE = {
+    "key": "bright_magenta",     # keyword, storage.type.class
+    "imp": "blue",               # keyword.control.import / export / from
+    "fn": "blue",                # entity.name.function
+    "str": "green",              # string
+    "num": "orange",             # constant.numeric
+    "com": "muted",              # comment, italic
+    "typ": "yellow",             # storage.type, entity.name.type
+    "prim": "foreground",        # storage.type.primitive, support.type
+    "op": "bright_blue",         # keyword.operator
+    "pun": "dark_foreground",    # punctuation, meta.brace
+    "var": "foreground",         # variable
+    "prop": "cyan",              # variable.other.property
+    "cst": "bright_yellow",      # variable.other.constant
+    "bool": "orange",            # constant.language.boolean
+}
+
+
+def syntax_colors(theme_dir, colors):
+    """Token colours: the theme's own vscode-theme.json when it ships one, and
+    otherwise the mapping Omarchy's template would have rendered."""
+    out = {}
+    try:
+        data = json.loads((theme_dir / "vscode-theme.json").read_text(errors="replace"))
+        rules = data.get("tokenColors")
+    except (OSError, ValueError):
+        rules = None
+    if isinstance(rules, list):
+        for name, scope in SYNTAX_SCOPES.items():
+            found = scope_color(rules, scope)
+            if found:
+                out[name] = found[0]
+                if "italic" in found[1]:
+                    out[name + "_italic"] = True
+    for name, key in SYNTAX_TEMPLATE.items():
+        out.setdefault(name, colors[key])
+    out.setdefault("com_italic", True)
+    return out
+
+
 def icon_theme_for(theme_dir):
     path = theme_dir / "icons.theme"
     try:
@@ -424,6 +515,7 @@ def discover_themes():
                 "mode": colors.pop("mode"),
                 "borders": border_colors(raw, colors),
                 "btop": btop_colors(theme_dir, colors),
+                "syntax": syntax_colors(theme_dir, colors),
                 "iconTheme": icons,
                 "folderColor": FOLDER_COLORS.get(icons, colors["accent"]),
                 "colors": colors,

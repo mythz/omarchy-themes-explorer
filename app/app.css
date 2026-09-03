@@ -649,26 +649,62 @@ body[data-mode="light"] {
 .nv-file { color: var(--fg); flex: 1; min-width: 0; overflow: hidden; }
 .nv-right { background: var(--accent); color: var(--bg); font-weight: 600; }
 
-/* vim/ts syntax. The groups here were read out of a real buffer with
-   nvim_get_hl under this theme's colorscheme, then expressed in the palette
-   the preview has: under omacon a call is #f200f3 bold (the red slot), a type
-   and a number are both #ffbcff (yellow), a string is #8467ff (green), and
-   comments are far darker than the muted colour -- #585858 against a #9e9e9e
-   muted. A colorscheme's own defaults for groups the theme leaves alone
-   cannot be reached from colors.toml, so this is the closest honest mapping
-   rather than a copy. */
-.t-key { color: var(--magenta); }
-.t-fn  { color: var(--red); font-weight: 700; }
-.t-str { color: var(--green); }
-.t-num { color: var(--yellow); }
-.t-com { color: var(--nv-comment); font-style: italic; }
-.t-doc { color: var(--nv-comment); font-style: italic; }
-.t-tag { color: var(--cyan); font-style: italic; }
-.t-typ { color: var(--yellow); font-weight: 700; }
-.t-var { color: var(--fg); }
-.t-op  { color: var(--cyan); }
-.t-pun { color: var(--fg-dark); }
-.t-cls { color: var(--red); }
+/* Syntax. One set of rules, driven by --tk-* so each editor can supply its
+   own values: Neovim and VS Code colour the same token differently and both
+   are right. The defaults below are Neovim's, read out of a real buffer with
+   nvim_get_hl; .app-vscode overrides them from the theme's tokenColors. */
+.t-key  { color: var(--tk-key); font-weight: var(--tk-key-weight, 400); }
+.t-imp  { color: var(--tk-imp, var(--tk-key)); }
+.t-fn   { color: var(--tk-fn); font-weight: var(--tk-fn-weight, 400); }
+.t-str  { color: var(--tk-str); }
+.t-num  { color: var(--tk-num); }
+.t-bool { color: var(--tk-bool, var(--tk-num)); }
+.t-com  { color: var(--tk-com); font-style: italic; }
+.t-doc  { color: var(--tk-com); font-style: italic; }
+.t-tag  { color: var(--tk-tag, var(--tk-com)); font-style: italic; }
+.t-typ  { color: var(--tk-typ); font-weight: var(--tk-typ-weight, 400); }
+.t-prim { color: var(--tk-prim, var(--tk-typ)); }
+.t-var  { color: var(--tk-var); }
+.t-prop { color: var(--tk-prop, var(--tk-var)); }
+.t-op   { color: var(--tk-op); }
+.t-pun  { color: var(--tk-pun); }
+.t-cls  { color: var(--tk-typ); }
+
+/* Neovim: aether paints a call in the red slot and bold, a type bold, and
+   comments darker than `muted`. */
+.app-nvim {
+  --tk-key: var(--magenta);
+  --tk-fn: var(--red);
+  --tk-fn-weight: 700;
+  --tk-str: var(--green);
+  --tk-num: var(--yellow);
+  --tk-com: var(--nv-comment);
+  --tk-tag: var(--cyan);
+  --tk-typ: var(--yellow);
+  --tk-typ-weight: 700;
+  --tk-var: var(--fg);
+  --tk-op: var(--cyan);
+  --tk-pun: var(--fg-dark);
+}
+
+/* VS Code: straight from the theme's own tokenColors, so an import keyword and
+   a plain keyword keep the two different colours the theme gives them. */
+.app-vscode {
+  --tk-key: var(--vs-key);
+  --tk-imp: var(--vs-imp);
+  --tk-fn: var(--vs-fn);
+  --tk-str: var(--vs-str);
+  --tk-num: var(--vs-num);
+  --tk-bool: var(--vs-bool);
+  --tk-com: var(--vs-com);
+  --tk-tag: var(--vs-com);
+  --tk-typ: var(--vs-typ);
+  --tk-prim: var(--vs-prim);
+  --tk-var: var(--vs-var);
+  --tk-prop: var(--vs-prop);
+  --tk-op: var(--vs-op);
+  --tk-pun: var(--vs-pun);
+}
 
 /* ── vs code ─────────────────────────────────────────────────────────── */
 

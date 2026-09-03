@@ -248,27 +248,51 @@
 
   /* ── typescript highlighter ──────────────────────────────────────── */
 
+  /* Split the way the theme's tokenColors split. An import keyword and a plain
+     keyword are different scopes and, under Tokyo Night, different colours
+     (#7aa2f7 against #bb9af7); so are a primitive type and a named one, an
+     operator and a bracket, a boolean and an identifier. Lumping them is what
+     made the preview look plausible but wrong. */
+  const IMPORTS = new RegExp("\\b(import|export|from|require)\\b");
+
   const KEYWORDS = new RegExp(
-    "\\b(const|let|var|function|return|async|await|export|import|default|from|new|" +
+    "\\b(const|let|var|function|return|async|await|default|new|" +
       "if|else|for|while|of|in|class|interface|type|enum|extends|implements|throw|" +
-      "try|catch|finally|as|void|null|undefined|true|false|this|super|switch|case|" +
+      "try|catch|finally|as|void|this|super|switch|case|" +
       "break|continue|yield|typeof|instanceof|delete|readonly|private|public|static)\\b"
   );
 
+  const BOOLS = new RegExp("\\b(true|false|null|undefined)\\b");
+
+  /* storage.type.primitive and support.type, which the template paints in the
+     plain foreground -- unlike the named types below it. */
+  const PRIMITIVES = new RegExp(
+    "\\b(string|number|boolean|bigint|symbol|any|unknown|never|object|void)\\b"
+  );
+
   const TYPES = new RegExp(
-    "\\b(string|number|boolean|bigint|symbol|any|unknown|never|object|Promise|" +
-      "Uint8Array|ArrayBuffer|CryptoKey|TextEncoder|TextDecoder|Record|Array|Map|" +
-      "Set|Date|Error|JSON|Math|Object|Window|Buffer|Partial|Readonly)\\b"
+    "\\b(Promise|Uint8Array|ArrayBuffer|CryptoKey|TextEncoder|TextDecoder|Record|" +
+      "Array|Map|Set|Date|Error|JSON|Math|Object|Window|Buffer|Partial|Readonly|" +
+      "Palette)\\b"
   );
 
   const TOKEN = new RegExp(
-    "(\\/\\/.*$)|" + // 1 line comment
-      "(`[^`]*`|'[^']*'|\"[^\"]*\")|" + // 2 string
-      "(\\b0x[0-9a-fA-F]+\\b|\\b\\d+(?:\\.\\d+)?\\b)|" + // 3 number
-      "(" + KEYWORDS.source + ")|" + // 4 keyword
-      "(" + TYPES.source + ")|" + // 6 type
-      "([A-Za-z_$][\\w$]*)(?=\\s*\\()|" + // 8 call
-      "([{}()\\[\\];,.:=<>!&|+\\-*/?]+)", // 9 punctuation
+    "(\\/\\/.*$)|" + //  1 line comment
+      "(`[^`]*`|'[^']*'|\"[^\"]*\")|" + //  2 string
+      "(\\b0x[0-9a-fA-F]+\\b|\\b\\d+(?:\\.\\d+)?\\b)|" + //  3 number
+      "(" + IMPORTS.source + ")|" + //  4 import keyword
+      "(" + BOOLS.source + ")|" + //  6 boolean / null
+      "(" + KEYWORDS.source + ")|" + //  8 keyword
+      "(" + PRIMITIVES.source + ")|" + // 10 primitive type
+      "(" + TYPES.source + ")|" + // 12 named type
+      "([A-Za-z_$][\\w$]*)(?=\\s*\\()|" + // 14 call
+      // A dotted name is an accessor plus either a method call or a property,
+      // and the theme colours those two differently -- so the call form has to
+      // be tried first or every `.map(` comes out as a property.
+      "(\\.)([A-Za-z_$][\\w$]*)(?=\\s*\\()|" + // 15 accessor, 16 method
+      "(\\.)([A-Za-z_$][\\w$]*)|" + // 17 accessor, 18 property
+      "(=>|===|!==|==|!=|<=|>=|\\?\\?|\\|\\||&&|\\.\\.\\.|[=<>!&|+\\-*/?%]+)|" + // 19 operator
+      "([{}()\\[\\];,.:]+)", // 20 punctuation
     "g"
   );
 
@@ -303,8 +327,18 @@
     let m;
     while ((m = TOKEN.exec(line))) {
       out += esc(line.slice(last, m.index));
+      if (m[15] || m[17]) {
+        /* punctuation.accessor, then the method or the property. */
+        out +=
+          '<span class="t-op">.</span><span class="' + (m[15] ? "t-fn" : "t-prop") +
+          '">' + esc(m[16] || m[18]) + "</span>";
+        last = m.index + m[0].length;
+        continue;
+      }
       const cls = m[1] ? "t-com" : m[2] ? "t-str" : m[3] ? "t-num"
-        : m[4] ? "t-key" : m[6] ? "t-typ" : m[8] ? "t-fn" : "t-pun";
+        : m[4] ? "t-imp" : m[6] ? "t-bool" : m[8] ? "t-key"
+        : m[10] ? "t-prim" : m[12] ? "t-typ" : m[14] ? "t-fn"
+        : m[19] ? "t-op" : "t-pun";
       out += '<span class="' + cls + '">' + esc(m[0]) + "</span>";
       last = m.index + m[0].length;
     }

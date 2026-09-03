@@ -191,6 +191,14 @@
     };
     Object.keys(BTOP_VARS).forEach((key) => root.setProperty(key, BTOP_VARS[key]));
 
+    /* VS Code's token colours come from the theme's tokenColors -- or from the
+       mapping Omarchy's template would have rendered -- rather than from the
+       ANSI palette, which cannot tell an import keyword from a plain one. */
+    const sx = t.syntax || {};
+    Object.keys(sx).forEach((key) => {
+      if (typeof sx[key] === "string") root.setProperty("--vs-" + key, sx[key]);
+    });
+
     /* fastfetch draws its logo in ANSI green -- `"color": {"1": "green"}` in
        Omarchy's fastfetch config -- which is why omacon's mark is violet on
        the real desktop and not the magenta accent. */

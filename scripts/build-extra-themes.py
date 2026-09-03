@@ -54,11 +54,14 @@ sys.path.insert(0, str(REPO_ROOT / "app"))
 # point: a change to server.py's fallbacks reaches extra themes on the next build.
 from server import (  # noqa: E402
     BTOP_TEMPLATE,
+    SYNTAX_SCOPES,
+    SYNTAX_TEMPLATE,
     FOLDER_COLORS,
     IMAGE_EXT,
     border_colors,
     btop_colors_from_text,
     flatten_alacritty,
+    scope_color,
     normalize,
 )
 
@@ -403,6 +406,26 @@ def build_theme(listing, cache_dir, refresh, http=None):
         key: colors[value] for key, value in BTOP_TEMPLATE.items()
     }
 
+    # Token colours the same way: the repo's own vscode-theme.json if it ships
+    # one, else the mapping Omarchy's template renders.
+    syntax = {}
+    theme_json = clone.read(prefix + "vscode-theme.json")
+    if theme_json:
+        try:
+            rules = json.loads(theme_json).get("tokenColors")
+        except ValueError:
+            rules = None
+        if isinstance(rules, list):
+            for name, scope in SYNTAX_SCOPES.items():
+                found = scope_color(rules, scope)
+                if found:
+                    syntax[name] = found[0]
+                    if "italic" in found[1]:
+                        syntax[name + "_italic"] = True
+    for name, key in SYNTAX_TEMPLATE.items():
+        syntax.setdefault(name, colors[key])
+    syntax.setdefault("com_italic", True)
+
     icon_theme = ""
     text = clone.read(prefix + "icons.theme")
     if text:
@@ -425,6 +448,7 @@ def build_theme(listing, cache_dir, refresh, http=None):
         "mode": mode,
         "borders": borders,
         "btop": btop,
+        "syntax": syntax,
         "iconTheme": icon_theme,
         "folderColor": FOLDER_COLORS.get(icon_theme, colors["accent"]),
         "colors": colors,
