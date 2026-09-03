@@ -832,8 +832,13 @@ html, body {
 .picker-extra {
   position: absolute;
   top: 10px;                 /* clears .picker's hover bridge */
-  left: calc(100% + 8px);
-  width: 272px;
+  /* Flush against the installed column, with the 8px gap made out of this
+     element's own padding rather than empty space between the two boxes. The
+     gap is then still inside .picker, so crossing it slowly does not drop the
+     :hover that keeps the popover open. */
+  left: 100%;
+  width: 280px;              /* 272 for the column plus the 8px bridge */
+  padding-left: 8px;
 }
 
 .picker-head {
