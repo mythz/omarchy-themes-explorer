@@ -934,7 +934,7 @@
         '<div class="bar-theme">' + GLYPH.brush + " " + esc(theme.name) + "</div>" +
       "</div>" +
       '<div class="bar-clock">' +
-        TRAY_SVG.coffee + TRAY_SVG.cloud + "<span>Wednesday 17:52</span>" +
+        TRAY_SVG.coffee + "<span>Wednesday 17:52</span>" + TRAY_SVG.cloud +
       "</div>" +
       '<div class="bar-tray">' +
         TRAY_SVG.chevron +

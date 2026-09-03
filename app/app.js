@@ -195,6 +195,18 @@
        Omarchy's fastfetch config -- which is why omacon's mark is violet on
        the real desktop and not the magenta accent. */
     root.setProperty("--logo-ink", t.colors.green || t.colors.accent);
+    /* Neovim's Visual and Comment are the colorscheme's, not the terminal's:
+       a theme's `selection_background` is a terminal colour and using it paints
+       the selected block in whatever the terminal highlights with -- a light
+       pink, under omacon. Both are derived against the background instead. */
+    root.setProperty(
+      "--nv-visual",
+      "color-mix(in srgb, " + t.colors.blue + " 20%, " + t.colors.darker_background + ")"
+    );
+    root.setProperty(
+      "--nv-comment",
+      "color-mix(in srgb, " + t.colors.muted + " 55%, " + t.colors.background + ")"
+    );
     root.setProperty("--folder", t.folderColor || t.colors.accent);
     /* Rounding belongs to Omarchy, not to the theme -- every theme's staged
        hyprland.lua only carries border colours -- so it is one value for the
