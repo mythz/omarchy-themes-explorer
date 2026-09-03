@@ -138,6 +138,47 @@ The launcher works without the bar widget:
 `--hide` toggles the scratchpad, `--stop` shuts the server down, `--port N`
 moves it off 8777.
 
+## Extra themes
+
+`extra-themes.json` describes every community theme listed in [the Omarchy
+manual's Extra Themes page][extra], in the same shape `/api/themes` returns for
+installed ones -- palette, mode, corner rounding, icon theme, folder colour --
+so the page can render one without it being on disk. Backgrounds stay as
+GitHub URLs (`.../blob/main/backgrounds/1-pulsar-dark.jpg?raw=true`); nothing
+is vendored, which keeps the file around 250 KB.
+
+Rebuild it with:
+
+```bash
+scripts/build-extra-themes.py           # ~30s cold, seconds warm
+scripts/build-extra-themes.py --refresh # ignore the cache
+```
+
+It needs a GitHub token -- `GITHUB_TOKEN`, `GH_TOKEN`, or just a logged-in
+`gh`. Two API calls per repo over 117 repos is well past the 60/hour
+unauthenticated budget. Responses are cached under `.cache/extra-themes`
+(gitignored), so a re-run costs almost nothing and a rebuild after editing the
+script does not spend the budget again.
+
+Some notes on what it does, since the inputs are other people's repos:
+
+- The colour maths is **imported from `app/server.py`**, not reimplemented. An
+  extra theme and an installed one go through the same `normalize()`, so they
+  cannot drift apart.
+- Slugs reproduce `omarchy-theme-install` exactly (`basename`, minus a leading
+  `omarchy-` and a trailing `-theme`, lowercased). That is what lets the page
+  tell that an extra theme is already installed.
+- The theme root is found rather than assumed: the shallowest directory holding
+  a `colors.toml` or `alacritty.toml`, for the few repos that vendor the theme
+  a level down.
+- `learn.omacom.io` answers urllib's default User-Agent with a 403, which is
+  why the fetcher sets one. That, not a real outage, is the "503" you get from
+  a plain `urllib.request.urlopen`.
+- One bad repo never loses the rest. Failures are listed on stderr at the end;
+  `--strict` turns them into a non-zero exit for CI.
+
+[extra]: https://learn.omacom.io/2/the-omarchy-manual/90/extra-themes
+
 ## Layout
 
 ```
@@ -150,6 +191,8 @@ app/app.js                     theme navigation, panel swapping, persistence
 app/apps.js                    the simulated apps
 app/icons.js                   Adwaita icon geometry
 app/tools/build-icons.py       regenerates icons.js from /usr/share/icons
+scripts/build-extra-themes.py  regenerates extra-themes.json from the manual
+extra-themes.json              the community themes, ready to preview
 ```
 
 ## License

@@ -35,9 +35,10 @@ ANSI_NAMES = ["black", "red", "green", "yellow", "blue", "magenta", "cyan", "whi
 
 
 def parse_hex(value):
+    """Accepts #rrggbb, #rgb and 0xrrggbb -- the last is what alacritty.toml uses."""
     if not isinstance(value, str):
         return None
-    m = re.fullmatch(r"#?([0-9a-fA-F]{6})|#?([0-9a-fA-F]{3})", value.strip())
+    m = re.fullmatch(r"(?:#|0x)?([0-9a-fA-F]{6})|#?([0-9a-fA-F]{3})", value.strip())
     if not m:
         return None
     h = (m.group(1) or m.group(2)).lower()
