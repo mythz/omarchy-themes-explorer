@@ -808,17 +808,12 @@ html, body {
    the rest of the HUD; the per-theme swatches carry the colour. */
 .hud-theme-wrap { position: relative; }
 
-/* Left-aligned rather than centred on the theme name: with the extra-themes
-   column open this is 560px wide, and the HUD now sits at the left edge of the
-   screen, so centring would push half of it off-screen. */
 .picker {
   position: absolute;
   top: 100%;
-  left: 0;
-  transform: translateY(-6px);
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  width: 272px;
   padding-top: 10px;         /* bridges the gap so hover is continuous */
   opacity: 0;
   pointer-events: none;
@@ -828,10 +823,18 @@ html, body {
 .picker:hover {
   opacity: 1;
   pointer-events: auto;
-  transform: translateY(0);
+  transform: translateX(-50%) translateY(0);
 }
 
-.picker-col { width: 272px; flex: 0 0 auto; }
+/* The extras hang off the right edge instead of joining a flex row, so that
+   the installed list stays centred under the theme name whether or not
+   extra-themes.json is there -- the column appearing must not shift it. */
+.picker-extra {
+  position: absolute;
+  top: 10px;                 /* clears .picker's hover bridge */
+  left: calc(100% + 8px);
+  width: 272px;
+}
 
 .picker-head {
   padding: 9px 12px 7px;
