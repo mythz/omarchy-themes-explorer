@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-03T12:56:56Z",
+  "generated": "2026-09-03T13:04:52Z",
   "source": "https://learn.omacom.io/2/the-omarchy-manual/90/extra-themes",
   "count": 115,
   "themes": [
@@ -53,10 +53,10 @@
       "repo": "https://github.com/JJDizz1L/aetheria",
       "branch": "omarchy-aetheria-theme",
       "preview": "https://learn.omacom.io/u/aetheria-jaDcHN.png",
+      "install": "omarchy theme install https://github.com/JJDizz1L/aetheria",
       "description": "Welcome to Aetheria",
       "stars": 91,
-      "updated": "2026-08-17T18:50:04Z",
-      "install": "omarchy theme install https://github.com/JJDizz1L/aetheria"
+      "updated": "2026-08-17T18:50:04Z"
     },
     {
       "slug": "all-hallows-eve",
@@ -103,10 +103,10 @@
       "repo": "https://github.com/guilhermetk/omarchy-all-hallows-eve-theme",
       "branch": "master",
       "preview": "https://learn.omacom.io/u/all-hallows-eve-theme-XQuTDB.webp",
+      "install": "omarchy theme install https://github.com/guilhermetk/omarchy-all-hallows-eve-theme",
       "description": "An All Hallow's Eve theme for Omarchy.",
       "stars": 17,
-      "updated": "2025-09-16T19:59:11Z",
-      "install": "omarchy theme install https://github.com/guilhermetk/omarchy-all-hallows-eve-theme"
+      "updated": "2025-09-16T19:59:11Z"
     },
     {
       "slug": "amberbyte",
@@ -154,10 +154,10 @@
       "repo": "https://github.com/tahfizhabib/omarchy-amberbyte-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/amberbyte-gevf2N.png",
+      "install": "omarchy theme install https://github.com/tahfizhabib/omarchy-amberbyte-theme",
       "description": "Amberbyte: a modern, animated, and minimal Omarchy theme with a sleek reddish ninja-inspired look.",
       "stars": 12,
-      "updated": "2025-12-26T13:53:31Z",
-      "install": "omarchy theme install https://github.com/tahfizhabib/omarchy-amberbyte-theme"
+      "updated": "2025-12-26T13:53:31Z"
     },
     {
       "slug": "arc-blueberry",
@@ -207,10 +207,10 @@
       "repo": "https://github.com/vale-c/omarchy-arc-blueberry",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/arc-blueberry-e64rOP.png",
+      "install": "omarchy theme install https://github.com/vale-c/omarchy-arc-blueberry",
       "description": "Arc Blueberry-inspired theme for Omarchy",
       "stars": 22,
-      "updated": "2026-08-23T11:19:41Z",
-      "install": "omarchy theme install https://github.com/vale-c/omarchy-arc-blueberry"
+      "updated": "2026-08-23T11:19:41Z"
     },
     {
       "slug": "archwave",
@@ -260,10 +260,10 @@
       "repo": "https://github.com/davidguttman/archwave",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/archwave-ogNCX2.png",
+      "install": "omarchy theme install https://github.com/davidguttman/archwave",
       "description": "Vaporwave theme for Omarchy",
       "stars": 18,
-      "updated": "2026-01-24T04:34:29Z",
-      "install": "omarchy theme install https://github.com/davidguttman/archwave"
+      "updated": "2026-01-24T04:34:29Z"
     },
     {
       "slug": "artzen",
@@ -310,10 +310,10 @@
       "repo": "https://github.com/tahfizhabib/omarchy-artzen-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/artzen-ddIz8i.png",
+      "install": "omarchy theme install https://github.com/tahfizhabib/omarchy-artzen-theme",
       "description": "Artzen: a modern, animated, and minimal Omarchy theme with a sleek red-dark background combo.",
       "stars": 12,
-      "updated": "2025-11-12T05:33:23Z",
-      "install": "omarchy theme install https://github.com/tahfizhabib/omarchy-artzen-theme"
+      "updated": "2025-11-12T05:33:23Z"
     },
     {
       "slug": "ash",
@@ -361,10 +361,10 @@
       "repo": "https://github.com/bjarneo/omarchy-ash-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/ash-theme-DnGpEy.png",
+      "install": "omarchy theme install https://github.com/bjarneo/omarchy-ash-theme",
       "description": "This is the Ash Theme for Omarchy.org, providing a cohesive and visually appealing configuration set for your Linux desktop environment.",
       "stars": 49,
-      "updated": "2026-08-30T12:08:01Z",
-      "install": "omarchy theme install https://github.com/bjarneo/omarchy-ash-theme"
+      "updated": "2026-08-30T12:08:01Z"
     },
     {
       "slug": "atelier",
@@ -411,10 +411,10 @@
       "repo": "https://github.com/atif-1402/omarchy-atelier-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/atelier-L2xcft.png",
+      "install": "omarchy theme install https://github.com/atif-1402/omarchy-atelier-theme",
       "description": "Atelier Theme for Omarchy",
       "stars": 5,
-      "updated": "2026-05-22T16:49:10Z",
-      "install": "omarchy theme install https://github.com/atif-1402/omarchy-atelier-theme"
+      "updated": "2026-05-22T16:49:10Z"
     },
     {
       "slug": "aura",
@@ -462,10 +462,10 @@
       "repo": "https://github.com/bjarneo/omarchy-aura-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/aura-theme-LfFuUo.png",
+      "install": "omarchy theme install https://github.com/bjarneo/omarchy-aura-theme",
       "description": "This is the Aura theme for Omarchy.org, providing a visually appealing configuration set for your Linux desktop environment.",
       "stars": 29,
-      "updated": "2026-08-30T12:08:03Z",
-      "install": "omarchy theme install https://github.com/bjarneo/omarchy-aura-theme"
+      "updated": "2026-08-30T12:08:03Z"
     },
     {
       "slug": "ayaka",
@@ -516,10 +516,10 @@
       "repo": "https://github.com/abhijeet-swami/omarchy-ayaka-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/ayaka-FcJ4UP.png",
+      "install": "omarchy theme install https://github.com/abhijeet-swami/omarchy-ayaka-theme",
       "description": "With a subtle glass-like blur that melts into the background, Ayaka highlights your workspace without overwhelming it. Vibrant accents breathe life into the dark base, striking a perfect balance of minimalism and color.",
       "stars": 56,
-      "updated": "2026-01-02T07:06:21Z",
-      "install": "omarchy theme install https://github.com/abhijeet-swami/omarchy-ayaka-theme"
+      "updated": "2026-01-02T07:06:21Z"
     },
     {
       "slug": "azure-glow",
@@ -566,10 +566,10 @@
       "repo": "https://github.com/Hydradevx/omarchy-azure-glow-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/azure-glow-theme-vLp53z.png",
+      "install": "omarchy theme install https://github.com/Hydradevx/omarchy-azure-glow-theme",
       "description": "",
       "stars": 22,
-      "updated": "2025-08-12T10:54:32Z",
-      "install": "omarchy theme install https://github.com/Hydradevx/omarchy-azure-glow-theme"
+      "updated": "2025-08-12T10:54:32Z"
     },
     {
       "slug": "batman",
@@ -629,10 +629,10 @@
       "repo": "https://github.com/OldJobobo/omarchy-batman-theme",
       "branch": "master",
       "preview": "https://learn.omacom.io/u/batman-ec0yWD.png",
+      "install": "omarchy theme install https://github.com/OldJobobo/omarchy-batman-theme",
       "description": "A Batman theme for Omarchy",
       "stars": 10,
-      "updated": "2026-08-12T06:16:54Z",
-      "install": "omarchy theme install https://github.com/OldJobobo/omarchy-batman-theme"
+      "updated": "2026-08-12T06:16:54Z"
     },
     {
       "slug": "batou",
@@ -683,10 +683,10 @@
       "repo": "https://github.com/HANCORE-linux/omarchy-batou-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/batou-pCugc6.png",
+      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-batou-theme",
       "description": "A moody Linux theme inspired by Batou\u2019s car and the iconic opening scene \u2014 crafted for omarchy.org.",
       "stars": 36,
-      "updated": "2026-08-04T21:31:33Z",
-      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-batou-theme"
+      "updated": "2026-08-04T21:31:33Z"
     },
     {
       "slug": "bauhaus",
@@ -738,10 +738,10 @@
       "repo": "https://github.com/somerocketeer/omarchy-bauhaus-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/bauhaus-ZDRJnD.png",
+      "install": "omarchy theme install https://github.com/somerocketeer/omarchy-bauhaus-theme",
       "description": "",
       "stars": 35,
-      "updated": "2025-10-11T17:27:08Z",
-      "install": "omarchy theme install https://github.com/somerocketeer/omarchy-bauhaus-theme"
+      "updated": "2025-10-11T17:27:08Z"
     },
     {
       "slug": "biscuit-de-mar-dark",
@@ -798,10 +798,10 @@
       "repo": "https://github.com/OldJobobo/omarchy-biscuit-de-mar-dark-theme",
       "branch": "master",
       "preview": "https://learn.omacom.io/u/biscuit-5ZFemm.png",
+      "install": "omarchy theme install https://github.com/OldJobobo/omarchy-biscuit-de-mar-dark-theme",
       "description": "A Biscuit de Mar Dark theme for Omarchy",
       "stars": 15,
-      "updated": "2026-08-14T04:58:59Z",
-      "install": "omarchy theme install https://github.com/OldJobobo/omarchy-biscuit-de-mar-dark-theme"
+      "updated": "2026-08-14T04:58:59Z"
     },
     {
       "slug": "black_arch",
@@ -862,10 +862,10 @@
       "repo": "https://github.com/ankur311sudo/black_arch",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/black-arch-gveh1G.png",
+      "install": "omarchy theme install https://github.com/ankur311sudo/black_arch",
       "description": "When asthetic meets productivity.",
       "stars": 12,
-      "updated": "2026-08-26T08:29:27Z",
-      "install": "omarchy theme install https://github.com/ankur311sudo/black_arch"
+      "updated": "2026-08-26T08:29:27Z"
     },
     {
       "slug": "blackgold",
@@ -919,10 +919,10 @@
       "repo": "https://github.com/HANCORE-linux/omarchy-blackgold-theme",
       "branch": "V2-Blackgold",
       "preview": "https://learn.omacom.io/u/black-gold-qUepi7.png",
+      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-blackgold-theme",
       "description": "BlackGold \u2014 A sleek black-and-gold Linux theme for omarchy.org",
       "stars": 45,
-      "updated": "2026-08-04T21:31:33Z",
-      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-blackgold-theme"
+      "updated": "2026-08-04T21:31:33Z"
     },
     {
       "slug": "blackturq",
@@ -975,10 +975,10 @@
       "repo": "https://github.com/HANCORE-linux/omarchy-blackturq-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/black-turq-YQQZhg.png",
+      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-blackturq-theme",
       "description": "BlackTurq \u2014 A bold black & turquoise Linux theme for omarchy.org",
       "stars": 48,
-      "updated": "2026-08-04T21:31:33Z",
-      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-blackturq-theme"
+      "updated": "2026-08-04T21:31:33Z"
     },
     {
       "slug": "bluedotrb",
@@ -1030,10 +1030,10 @@
       "repo": "https://github.com/dotsilva/omarchy-bluedotrb-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/bluedotrb-D9Cqtr.png",
+      "install": "omarchy theme install https://github.com/dotsilva/omarchy-bluedotrb-theme",
       "description": "Blue version of dotrb",
       "stars": 4,
-      "updated": "2026-03-04T12:18:25Z",
-      "install": "omarchy theme install https://github.com/dotsilva/omarchy-bluedotrb-theme"
+      "updated": "2026-03-04T12:18:25Z"
     },
     {
       "slug": "blueridge-dark",
@@ -1081,10 +1081,10 @@
       "repo": "https://github.com/hipsterusername/omarchy-blueridge-dark-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/blueridge-theme-fkB0tl.png",
+      "install": "omarchy theme install https://github.com/hipsterusername/omarchy-blueridge-dark-theme",
       "description": "",
       "stars": 17,
-      "updated": "2025-08-26T15:51:05Z",
-      "install": "omarchy theme install https://github.com/hipsterusername/omarchy-blueridge-dark-theme"
+      "updated": "2025-08-26T15:51:05Z"
     },
     {
       "slug": "catppuccin-dark",
@@ -1136,10 +1136,10 @@
       "repo": "https://github.com/Luquatic/omarchy-catppuccin-dark",
       "branch": "master",
       "preview": "https://learn.omacom.io/u/catppuccin-mocha-dark-mNVF5H.png",
+      "install": "omarchy theme install https://github.com/Luquatic/omarchy-catppuccin-dark",
       "description": "",
       "stars": 19,
-      "updated": "2026-06-12T20:35:41Z",
-      "install": "omarchy theme install https://github.com/Luquatic/omarchy-catppuccin-dark"
+      "updated": "2026-06-12T20:35:41Z"
     },
     {
       "slug": "citrus-cynapse",
@@ -1187,10 +1187,10 @@
       "repo": "https://github.com/Grey-007/citrus-cynapse",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/citrus-cynapse-9rtDDg.png",
+      "install": "omarchy theme install https://github.com/Grey-007/citrus-cynapse",
       "description": "Omarchy Theme",
       "stars": 3,
-      "updated": "2025-11-15T04:49:57Z",
-      "install": "omarchy theme install https://github.com/Grey-007/citrus-cynapse"
+      "updated": "2025-11-15T04:49:57Z"
     },
     {
       "slug": "city-783",
@@ -1243,10 +1243,10 @@
       "repo": "https://github.com/OldJobobo/omarchy-city-783-theme",
       "branch": "master",
       "preview": "https://learn.omacom.io/u/city-783-7xHciV.png",
+      "install": "omarchy theme install https://github.com/OldJobobo/omarchy-city-783-theme",
       "description": "A Dark Cyber-Dystopia Sci-Fi Theme for Omarchy",
       "stars": 41,
-      "updated": "2026-08-27T03:06:32Z",
-      "install": "omarchy theme install https://github.com/OldJobobo/omarchy-city-783-theme"
+      "updated": "2026-08-27T03:06:32Z"
     },
     {
       "slug": "cobalt2",
@@ -1295,10 +1295,10 @@
       "repo": "https://github.com/hoblin/omarchy-cobalt2-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/cobalt2-RGgNWQ.png",
+      "install": "omarchy theme install https://github.com/hoblin/omarchy-cobalt2-theme",
       "description": "A vibrant Cobalt2 theme for Omarchy featuring deep blue aesthetics with golden accents, perfect for developers who love the iconic VSCode Cobalt2 experience",
       "stars": 16,
-      "updated": "2026-01-09T15:26:44Z",
-      "install": "omarchy theme install https://github.com/hoblin/omarchy-cobalt2-theme"
+      "updated": "2026-01-09T15:26:44Z"
     },
     {
       "slug": "cpunk",
@@ -1348,10 +1348,10 @@
       "repo": "https://github.com/stannorbvb-cmd/cpunk",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/cpunk-hcNDrl.png",
+      "install": "omarchy theme install https://github.com/stannorbvb-cmd/cpunk",
       "description": "Custom theme for Omarchy",
       "stars": 9,
-      "updated": "2026-03-18T18:04:38Z",
-      "install": "omarchy theme install https://github.com/stannorbvb-cmd/cpunk"
+      "updated": "2026-03-18T18:04:38Z"
     },
     {
       "slug": "darcula",
@@ -1405,10 +1405,10 @@
       "repo": "https://github.com/noahljungberg/omarchy-darcula-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/darcula-boUMqL.png",
+      "install": "omarchy theme install https://github.com/noahljungberg/omarchy-darcula-theme",
       "description": "",
       "stars": 2,
-      "updated": "2026-03-01T19:46:34Z",
-      "install": "omarchy theme install https://github.com/noahljungberg/omarchy-darcula-theme"
+      "updated": "2026-03-01T19:46:34Z"
     },
     {
       "slug": "demon",
@@ -1460,10 +1460,10 @@
       "repo": "https://github.com/HANCORE-linux/omarchy-demon-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/demon-b0AEYS.png",
+      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-demon-theme",
       "description": "Demon \u2014 A dark and intense Linux theme forged for omarchy.org",
       "stars": 17,
-      "updated": "2026-08-04T21:31:33Z",
-      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-demon-theme"
+      "updated": "2026-08-04T21:31:33Z"
     },
     {
       "slug": "dos-moos",
@@ -1513,10 +1513,10 @@
       "repo": "https://github.com/HANCORE-linux/omarchy-dos-moos-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/dos-moos-GGqdkw.png",
+      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-dos-moos-theme",
       "description": "A Terminal , a carpet and moos.",
       "stars": 21,
-      "updated": "2026-08-13T08:07:54Z",
-      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-dos-moos-theme"
+      "updated": "2026-08-13T08:07:54Z"
     },
     {
       "slug": "dotrb",
@@ -1568,10 +1568,10 @@
       "repo": "https://github.com/dotsilva/omarchy-dotrb-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/dotrb-Ev8dB3.png",
+      "install": "omarchy theme install https://github.com/dotsilva/omarchy-dotrb-theme",
       "description": "Ruby language inspired Omarchy linux theme",
       "stars": 6,
-      "updated": "2026-03-04T11:27:16Z",
-      "install": "omarchy theme install https://github.com/dotsilva/omarchy-dotrb-theme"
+      "updated": "2026-03-04T11:27:16Z"
     },
     {
       "slug": "drac",
@@ -1624,10 +1624,10 @@
       "repo": "https://github.com/ShehabShaef/omarchy-drac-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/drac-jUSHEO.png",
+      "install": "omarchy theme install https://github.com/ShehabShaef/omarchy-drac-theme",
       "description": "\ud83d\udc09 A deep blue, dragon-inspired Omarchy theme \u2014 blending calm, power, and precision across Hyprland, Waybar, Neovim, and more.",
       "stars": 6,
-      "updated": "2025-12-03T10:11:39Z",
-      "install": "omarchy theme install https://github.com/ShehabShaef/omarchy-drac-theme"
+      "updated": "2025-12-03T10:11:39Z"
     },
     {
       "slug": "dracula",
@@ -1677,10 +1677,10 @@
       "repo": "https://github.com/catlee/omarchy-dracula-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/dracula-theme-Rq2gWj.png",
+      "install": "omarchy theme install https://github.com/catlee/omarchy-dracula-theme",
       "description": "Dracula theme for Omarchy",
       "stars": 36,
-      "updated": "2026-08-22T02:45:20Z",
-      "install": "omarchy theme install https://github.com/catlee/omarchy-dracula-theme"
+      "updated": "2026-08-22T02:45:20Z"
     },
     {
       "slug": "event-horizon",
@@ -1736,10 +1736,10 @@
       "repo": "https://github.com/OldJobobo/omarchy-event-horizon-theme",
       "branch": "master",
       "preview": "https://learn.omacom.io/u/event-horizon-c8ryZU.png",
+      "install": "omarchy theme install https://github.com/OldJobobo/omarchy-event-horizon-theme",
       "description": "a Horizon Dark Theme for Omarchy",
       "stars": 30,
-      "updated": "2026-08-12T07:30:10Z",
-      "install": "omarchy theme install https://github.com/OldJobobo/omarchy-event-horizon-theme"
+      "updated": "2026-08-12T07:30:10Z"
     },
     {
       "slug": "evergarden",
@@ -1786,10 +1786,10 @@
       "repo": "https://github.com/celsobenedetti/omarchy-evergarden",
       "branch": "master",
       "preview": "https://learn.omacom.io/u/evergarden-euPINv.png",
+      "install": "omarchy theme install https://github.com/celsobenedetti/omarchy-evergarden",
       "description": "Evergarden for Omarchy",
       "stars": 10,
-      "updated": "2026-05-27T17:55:23Z",
-      "install": "omarchy theme install https://github.com/celsobenedetti/omarchy-evergarden"
+      "updated": "2026-05-27T17:55:23Z"
     },
     {
       "slug": "felix",
@@ -1850,10 +1850,10 @@
       "repo": "https://github.com/TyRichards/omarchy-felix-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/felix-theme-vk8Fgx.png",
+      "install": "omarchy theme install https://github.com/TyRichards/omarchy-felix-theme",
       "description": "Minimalist Omarchy Theme for Arch Linux",
       "stars": 55,
-      "updated": "2026-08-14T18:36:48Z",
-      "install": "omarchy theme install https://github.com/TyRichards/omarchy-felix-theme"
+      "updated": "2026-08-14T18:36:48Z"
     },
     {
       "slug": "fireside",
@@ -1902,10 +1902,10 @@
       "repo": "https://github.com/bjarneo/omarchy-fireside-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/fireside-3NyKEj.png",
+      "install": "omarchy theme install https://github.com/bjarneo/omarchy-fireside-theme",
       "description": "Fireside is a warm, cozy theme for Omarchy inspired by the gentle glow of a crackling fire.",
       "stars": 15,
-      "updated": "2026-08-30T12:08:12Z",
-      "install": "omarchy theme install https://github.com/bjarneo/omarchy-fireside-theme"
+      "updated": "2026-08-30T12:08:12Z"
     },
     {
       "slug": "fish-material",
@@ -1952,10 +1952,10 @@
       "repo": "https://github.com/Eidan78/omarchy-fish-material-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/fish-material-Alh9tj.png",
+      "install": "omarchy theme install https://github.com/Eidan78/omarchy-fish-material-theme",
       "description": "Deep-sea Material theme for Omarchy \u2014 abyss black, sea foam white, coral accents.",
       "stars": 2,
-      "updated": "2026-08-26T08:43:04Z",
-      "install": "omarchy theme install https://github.com/Eidan78/omarchy-fish-material-theme"
+      "updated": "2026-08-26T08:43:04Z"
     },
     {
       "slug": "flat-dracula",
@@ -2010,10 +2010,10 @@
       "repo": "https://github.com/OldJobobo/omarchy-flat-dracula-theme",
       "branch": "master",
       "preview": "https://learn.omacom.io/u/flat-dracula-UDlJ2T.png",
+      "install": "omarchy theme install https://github.com/OldJobobo/omarchy-flat-dracula-theme",
       "description": "A Flat Dracula Theme for Omarchy",
       "stars": 7,
-      "updated": "2026-06-21T16:14:10Z",
-      "install": "omarchy theme install https://github.com/OldJobobo/omarchy-flat-dracula-theme"
+      "updated": "2026-06-21T16:14:10Z"
     },
     {
       "slug": "flexoki-dark",
@@ -2061,10 +2061,10 @@
       "repo": "https://github.com/euandeas/omarchy-flexoki-dark-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/flexoki-dark-theme-meZCr4.png",
+      "install": "omarchy theme install https://github.com/euandeas/omarchy-flexoki-dark-theme",
       "description": "",
       "stars": 42,
-      "updated": "2026-07-18T12:21:31Z",
-      "install": "omarchy theme install https://github.com/euandeas/omarchy-flexoki-dark-theme"
+      "updated": "2026-07-18T12:21:31Z"
     },
     {
       "slug": "forest-green",
@@ -2120,10 +2120,10 @@
       "repo": "https://github.com/abhijeet-swami/omarchy-forest-green-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/forest-green-hYkgXb.png",
+      "install": "omarchy theme install https://github.com/abhijeet-swami/omarchy-forest-green-theme",
       "description": "A sleek, modern theme with a refreshing green palette and subtle glassmorphism for a cohesive, focused desktop experience.",
       "stars": 31,
-      "updated": "2026-01-02T07:07:18Z",
-      "install": "omarchy theme install https://github.com/abhijeet-swami/omarchy-forest-green-theme"
+      "updated": "2026-01-02T07:07:18Z"
     },
     {
       "slug": "frost",
@@ -2172,10 +2172,10 @@
       "repo": "https://github.com/bjarneo/omarchy-frost-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/frost-zu4B6C.png",
+      "install": "omarchy theme install https://github.com/bjarneo/omarchy-frost-theme",
       "description": "Frost is a simple, elegant, and dark theme for Omarchy inspired by the serene beauty of frost patterns on a winter morning.",
       "stars": 9,
-      "updated": "2026-08-30T12:08:01Z",
-      "install": "omarchy theme install https://github.com/bjarneo/omarchy-frost-theme"
+      "updated": "2026-08-30T12:08:01Z"
     },
     {
       "slug": "futurism",
@@ -2225,10 +2225,10 @@
       "repo": "https://github.com/bjarneo/omarchy-futurism-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/futurism-theme-2w6HZI.png",
+      "install": "omarchy theme install https://github.com/bjarneo/omarchy-futurism-theme",
       "description": "This is the Futurism theme for Omarchy.org, providing a visually appealing configuration set for your Linux desktop environment.",
       "stars": 38,
-      "updated": "2026-08-30T12:08:03Z",
-      "install": "omarchy theme install https://github.com/bjarneo/omarchy-futurism-theme"
+      "updated": "2026-08-30T12:08:03Z"
     },
     {
       "slug": "ghost-pastel",
@@ -2277,10 +2277,10 @@
       "repo": "https://github.com/row-huh/omarchy-ghost-pastel-theme",
       "branch": "master",
       "preview": "https://learn.omacom.io/u/ghost-pastel-ZgK0Ne.png",
+      "install": "omarchy theme install https://github.com/row-huh/omarchy-ghost-pastel-theme",
       "description": "Theme for arch btw",
       "stars": 20,
-      "updated": "2026-07-27T15:18:56Z",
-      "install": "omarchy theme install https://github.com/row-huh/omarchy-ghost-pastel-theme"
+      "updated": "2026-07-27T15:18:56Z"
     },
     {
       "slug": "gold-rush",
@@ -2328,10 +2328,10 @@
       "repo": "https://github.com/tahayvr/omarchy-gold-rush-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/goldrush-bzSWXn.png",
+      "install": "omarchy theme install https://github.com/tahayvr/omarchy-gold-rush-theme",
       "description": "Gold Rush is a theme made for omarchy.org",
       "stars": 33,
-      "updated": "2026-02-20T16:25:28Z",
-      "install": "omarchy theme install https://github.com/tahayvr/omarchy-gold-rush-theme"
+      "updated": "2026-02-20T16:25:28Z"
     },
     {
       "slug": "golden-brown",
@@ -2379,10 +2379,10 @@
       "repo": "https://github.com/atif-1402/omarchy-golden-brown-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/golden-brown-LcSn39.png",
+      "install": "omarchy theme install https://github.com/atif-1402/omarchy-golden-brown-theme",
       "description": "Golden Brown is a warm muted sepia theme with deep earthy tones and soft golden highlights, inspired by autumn leaves, vintage terminals, and dark bronze aesthetics.",
       "stars": 7,
-      "updated": "2026-05-23T14:19:01Z",
-      "install": "omarchy theme install https://github.com/atif-1402/omarchy-golden-brown-theme"
+      "updated": "2026-05-23T14:19:01Z"
     },
     {
       "slug": "greek-noir",
@@ -2432,10 +2432,10 @@
       "repo": "https://github.com/HANCORE-linux/omarchy-greek-noir-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/greek-noir-u9xqyi.png",
+      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-greek-noir-theme",
       "description": "Inverted Theme of my light Theme \"The Greek\"",
       "stars": 26,
-      "updated": "2026-08-10T01:18:26Z",
-      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-greek-noir-theme"
+      "updated": "2026-08-10T01:18:26Z"
     },
     {
       "slug": "green-garden",
@@ -2485,10 +2485,10 @@
       "repo": "https://github.com/kalk-ak/omarchy-green-garden-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/omarchy-lush-green-fZgXeQ.png",
+      "install": "omarchy theme install https://github.com/kalk-ak/omarchy-green-garden-theme",
       "description": "A fresh and calming theme for Hyprland inspired by nature. Green Garden brings a vibrant yet soothing feel to your desktop. Let me know what you think\u2014your feedback is welcome and appreciated!",
       "stars": 23,
-      "updated": "2026-02-03T16:06:09Z",
-      "install": "omarchy theme install https://github.com/kalk-ak/omarchy-green-garden-theme"
+      "updated": "2026-02-03T16:06:09Z"
     },
     {
       "slug": "harbor",
@@ -2542,10 +2542,10 @@
       "repo": "https://github.com/HANCORE-linux/omarchy-harbor-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/harbor-FYmTgs.png",
+      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-harbor-theme",
       "description": "Harbor is a calm, paper-light color scheme with cool ink accents, inspired by Nordic tones, designed for clear, serene, and focused coding sessions.",
       "stars": 17,
-      "updated": "2026-08-05T10:18:58Z",
-      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-harbor-theme"
+      "updated": "2026-08-05T10:18:58Z"
     },
     {
       "slug": "harbordark",
@@ -2595,10 +2595,10 @@
       "repo": "https://github.com/HANCORE-linux/omarchy-harbordark-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/harbor-dark-tLwJe3.png",
+      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-harbordark-theme",
       "description": "Dark version of Harbor",
       "stars": 33,
-      "updated": "2026-08-05T20:53:35Z",
-      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-harbordark-theme"
+      "updated": "2026-08-05T20:53:35Z"
     },
     {
       "slug": "hinterlands",
@@ -2662,10 +2662,10 @@
       "repo": "https://github.com/OldJobobo/omarchy-hinterlands-theme",
       "branch": "master",
       "preview": "https://learn.omacom.io/u/hinterlands-nh7aFP.png",
+      "install": "omarchy theme install https://github.com/OldJobobo/omarchy-hinterlands-theme",
       "description": "A Monochrome Dark Mode theme for Omarchy",
       "stars": 15,
-      "updated": "2026-06-21T16:14:17Z",
-      "install": "omarchy theme install https://github.com/OldJobobo/omarchy-hinterlands-theme"
+      "updated": "2026-06-21T16:14:17Z"
     },
     {
       "slug": "infernium-dark",
@@ -2713,10 +2713,10 @@
       "repo": "https://github.com/RiO7MAKK3R/omarchy-infernium-dark-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/infernium-jTFC59.png",
+      "install": "omarchy theme install https://github.com/RiO7MAKK3R/omarchy-infernium-dark-theme",
       "description": "Theme created for Omarchy/Hyperland",
       "stars": 6,
-      "updated": "2025-10-04T13:51:01Z",
-      "install": "omarchy theme install https://github.com/RiO7MAKK3R/omarchy-infernium-dark-theme"
+      "updated": "2025-10-04T13:51:01Z"
     },
     {
       "slug": "inkypinky",
@@ -2768,10 +2768,10 @@
       "repo": "https://github.com/HANCORE-linux/omarchy-inkypinky-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/inky-pink-VoKwwC.png",
+      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-inkypinky-theme",
       "description": "Inky Pinky \u2013 where bold meets blush in a swirl of creative elegance.",
       "stars": 32,
-      "updated": "2026-08-05T09:48:52Z",
-      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-inkypinky-theme"
+      "updated": "2026-08-05T09:48:52Z"
     },
     {
       "slug": "lasthorizon",
@@ -2821,10 +2821,10 @@
       "repo": "https://github.com/HANCORE-linux/omarchy-lasthorizon-theme",
       "branch": "v2.0.0",
       "preview": "https://learn.omacom.io/u/last-horizon-YLrE41.png",
+      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-lasthorizon-theme",
       "description": "A fleeting vision of twilight \u2014 where warmth, silence, and beauty fade into the sun\u2019s final breath.",
       "stars": 34,
-      "updated": "2026-08-05T21:04:45Z",
-      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-lasthorizon-theme"
+      "updated": "2026-08-05T21:04:45Z"
     },
     {
       "slug": "liotronic",
@@ -2879,10 +2879,10 @@
       "repo": "https://github.com/azeemsher788/omarchy-liotronic-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/liotronic-MGuJ3r.png",
+      "install": "omarchy theme install https://github.com/azeemsher788/omarchy-liotronic-theme",
       "description": "",
       "stars": 0,
-      "updated": "2026-08-25T05:41:48Z",
-      "install": "omarchy theme install https://github.com/azeemsher788/omarchy-liotronic-theme"
+      "updated": "2026-08-25T05:41:48Z"
     },
     {
       "slug": "mapquest",
@@ -2933,10 +2933,10 @@
       "repo": "https://github.com/ItsABigIgloo/omarchy-mapquest-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/mapquest-WsJvyQ.png",
+      "install": "omarchy theme install https://github.com/ItsABigIgloo/omarchy-mapquest-theme",
       "description": "in a world full of Light Mode themes that are just white, here is a tea stained one to enjoy.",
       "stars": 14,
-      "updated": "2025-12-04T06:24:29Z",
-      "install": "omarchy theme install https://github.com/ItsABigIgloo/omarchy-mapquest-theme"
+      "updated": "2025-12-04T06:24:29Z"
     },
     {
       "slug": "mars",
@@ -2987,10 +2987,10 @@
       "repo": "https://github.com/steve-lohmeyer/omarchy-mars-theme",
       "branch": "master",
       "preview": "https://learn.omacom.io/u/mars-theme-r03GXm.png",
+      "install": "omarchy theme install https://github.com/steve-lohmeyer/omarchy-mars-theme",
       "description": "Mars theme for Omarchy",
       "stars": 49,
-      "updated": "2025-10-25T15:06:41Z",
-      "install": "omarchy theme install https://github.com/steve-lohmeyer/omarchy-mars-theme"
+      "updated": "2025-10-25T15:06:41Z"
     },
     {
       "slug": "mechanoonna",
@@ -3039,10 +3039,10 @@
       "repo": "https://github.com/HANCORE-linux/omarchy-mechanoonna-theme",
       "branch": "mechanoonna-v2",
       "preview": "https://learn.omacom.io/u/mechanoonna-DNCESY.png",
+      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-mechanoonna-theme",
       "description": "Mecha no Onna (\u30e1\u30ab\u306e\u5973) the \"Metal Woman\u201d.",
       "stars": 41,
-      "updated": "2026-08-23T01:00:41Z",
-      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-mechanoonna-theme"
+      "updated": "2026-08-23T01:00:41Z"
     },
     {
       "slug": "miasma",
@@ -3097,10 +3097,10 @@
       "repo": "https://github.com/OldJobobo/omarchy-miasma-theme",
       "branch": "master",
       "preview": "https://learn.omacom.io/u/miasma-FCluYv.png",
+      "install": "omarchy theme install https://github.com/OldJobobo/omarchy-miasma-theme",
       "description": "A Miasma Color Scheme Theme for Omarchy",
       "stars": 119,
-      "updated": "2026-08-12T14:30:50Z",
-      "install": "omarchy theme install https://github.com/OldJobobo/omarchy-miasma-theme"
+      "updated": "2026-08-12T14:30:50Z"
     },
     {
       "slug": "midnight",
@@ -3149,10 +3149,10 @@
       "repo": "https://github.com/JaxonWright/omarchy-midnight-theme",
       "branch": "master",
       "preview": "https://learn.omacom.io/u/midnight-theme-I5HKym.png",
+      "install": "omarchy theme install https://github.com/JaxonWright/omarchy-midnight-theme",
       "description": "A theme for Omarchy that gives you the inky black that your OLED monitor craves",
       "stars": 45,
-      "updated": "2026-07-30T02:58:21Z",
-      "install": "omarchy theme install https://github.com/JaxonWright/omarchy-midnight-theme"
+      "updated": "2026-07-30T02:58:21Z"
     },
     {
       "slug": "milkmatcha-light",
@@ -3199,10 +3199,10 @@
       "repo": "https://github.com/hipsterusername/omarchy-milkmatcha-light-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/milkymatcha-theme-JFT2X2.png",
+      "install": "omarchy theme install https://github.com/hipsterusername/omarchy-milkmatcha-light-theme",
       "description": "",
       "stars": 8,
-      "updated": "2025-08-26T15:51:24Z",
-      "install": "omarchy theme install https://github.com/hipsterusername/omarchy-milkmatcha-light-theme"
+      "updated": "2025-08-26T15:51:24Z"
     },
     {
       "slug": "monochrome",
@@ -3249,10 +3249,10 @@
       "repo": "https://github.com/Swarnim114/omarchy-monochrome-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/monochrome-theme-GwATD6.png",
+      "install": "omarchy theme install https://github.com/Swarnim114/omarchy-monochrome-theme",
       "description": "",
       "stars": 16,
-      "updated": "2025-08-09T04:46:25Z",
-      "install": "omarchy theme install https://github.com/Swarnim114/omarchy-monochrome-theme"
+      "updated": "2025-08-09T04:46:25Z"
     },
     {
       "slug": "monokai",
@@ -3299,10 +3299,10 @@
       "repo": "https://github.com/bjarneo/omarchy-monokai-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/monokai-UoJwdC.png",
+      "install": "omarchy theme install https://github.com/bjarneo/omarchy-monokai-theme",
       "description": "A vibrant, high-contrast theme for Omarchy based on the iconic Monokai Pro color palette.",
       "stars": 18,
-      "updated": "2026-08-30T12:08:03Z",
-      "install": "omarchy theme install https://github.com/bjarneo/omarchy-monokai-theme"
+      "updated": "2026-08-30T12:08:03Z"
     },
     {
       "slug": "moodpeak",
@@ -3353,10 +3353,10 @@
       "repo": "https://github.com/HANCORE-linux/omarchy-moodpeak-theme",
       "branch": "moodpeak-v2",
       "preview": "https://learn.omacom.io/u/moodpeak-CCiNoe.png",
+      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-moodpeak-theme",
       "description": "Moodpeak \u2013 tiny tools that quietly pull you out of a bad mood and back to peak focus.",
       "stars": 21,
-      "updated": "2026-08-05T20:56:04Z",
-      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-moodpeak-theme"
+      "updated": "2026-08-05T20:56:04Z"
     },
     {
       "slug": "nagai-poolside",
@@ -3406,10 +3406,10 @@
       "repo": "https://github.com/somerocketeer/omarchy-nagai-poolside-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/nagai-poolside-twaJTF.png",
+      "install": "omarchy theme install https://github.com/somerocketeer/omarchy-nagai-poolside-theme",
       "description": "",
       "stars": 12,
-      "updated": "2025-09-22T20:50:10Z",
-      "install": "omarchy theme install https://github.com/somerocketeer/omarchy-nagai-poolside-theme"
+      "updated": "2025-09-22T20:50:10Z"
     },
     {
       "slug": "neo-sploosh",
@@ -3459,10 +3459,10 @@
       "repo": "https://github.com/monoooki/omarchy-neo-sploosh-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/neo-sploosh-JWbVVa.png",
+      "install": "omarchy theme install https://github.com/monoooki/omarchy-neo-sploosh-theme",
       "description": "Lightweight neon palette for Omarchy, tuned after the Neo Sploosh lineup: yellow, teal, and midnight blue for fast iteration.",
       "stars": 3,
-      "updated": "2025-11-13T03:05:27Z",
-      "install": "omarchy theme install https://github.com/monoooki/omarchy-neo-sploosh-theme"
+      "updated": "2025-11-13T03:05:27Z"
     },
     {
       "slug": "neovoid",
@@ -3510,10 +3510,10 @@
       "repo": "https://github.com/RiO7MAKK3R/omarchy-neovoid-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/neovoid-fVklHO.png",
+      "install": "omarchy theme install https://github.com/RiO7MAKK3R/omarchy-neovoid-theme",
       "description": "Theme created for Omarchy/Hyperland",
       "stars": 16,
-      "updated": "2025-10-22T12:54:53Z",
-      "install": "omarchy theme install https://github.com/RiO7MAKK3R/omarchy-neovoid-theme"
+      "updated": "2025-10-22T12:54:53Z"
     },
     {
       "slug": "nes",
@@ -3561,10 +3561,10 @@
       "repo": "https://github.com/bjarneo/omarchy-nes-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/nes-theme-1Z6uqG.png",
+      "install": "omarchy theme install https://github.com/bjarneo/omarchy-nes-theme",
       "description": "This is the retro nes theme for Omarchy.org, providing a visually appealing configuration set for your Linux desktop environment.",
       "stars": 28,
-      "updated": "2026-08-30T12:08:05Z",
-      "install": "omarchy theme install https://github.com/bjarneo/omarchy-nes-theme"
+      "updated": "2026-08-30T12:08:05Z"
     },
     {
       "slug": "omacarchy",
@@ -3638,10 +3638,10 @@
       "repo": "https://github.com/RiO7MAKK3R/omarchy-omacarchy-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/omacarchy-QPQF1d.png",
+      "install": "omarchy theme install https://github.com/RiO7MAKK3R/omarchy-omacarchy-theme",
       "description": "Theme created for Omarchy/Hyperland",
       "stars": 8,
-      "updated": "2026-01-12T08:44:06Z",
-      "install": "omarchy theme install https://github.com/RiO7MAKK3R/omarchy-omacarchy-theme"
+      "updated": "2026-01-12T08:44:06Z"
     },
     {
       "slug": "omacon",
@@ -3697,10 +3697,10 @@
       "repo": "https://github.com/Eidan78/omarchy-omacon-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/omacon-8Zbj6g.png",
+      "install": "omarchy theme install https://github.com/Eidan78/omarchy-omacon-theme",
       "description": "Theme inspired by the Omacon 2026 event.",
       "stars": 3,
-      "updated": "2026-08-18T14:58:09Z",
-      "install": "omarchy theme install https://github.com/Eidan78/omarchy-omacon-theme"
+      "updated": "2026-08-18T14:58:09Z"
     },
     {
       "slug": "one-dark-pro",
@@ -3754,10 +3754,10 @@
       "repo": "https://github.com/sc0ttman/omarchy-one-dark-pro-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/one-dark-pro-lm5SO2.png",
+      "install": "omarchy theme install https://github.com/sc0ttman/omarchy-one-dark-pro-theme",
       "description": "A One Dark Pro theme for Omarchy",
       "stars": 50,
-      "updated": "2026-08-22T02:29:31Z",
-      "install": "omarchy theme install https://github.com/sc0ttman/omarchy-one-dark-pro-theme"
+      "updated": "2026-08-22T02:29:31Z"
     },
     {
       "slug": "oxocarbon",
@@ -3809,10 +3809,10 @@
       "repo": "https://github.com/HANCORE-linux/omarchy-oxocarbon-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/oxocarbon-3C2AtT.png",
+      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-oxocarbon-theme",
       "description": "A minimal, developer-first theme for omarchy.org inspired by the Oxocarbon Dark color scheme.",
       "stars": 14,
-      "updated": "2026-08-05T11:47:59Z",
-      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-oxocarbon-theme"
+      "updated": "2026-08-05T11:47:59Z"
     },
     {
       "slug": "pandora",
@@ -3863,10 +3863,10 @@
       "repo": "https://github.com/imbypass/omarchy-pandora-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/pandora-WwROvb.png",
+      "install": "omarchy theme install https://github.com/imbypass/omarchy-pandora-theme",
       "description": "",
       "stars": 5,
-      "updated": "2025-12-25T12:05:19Z",
-      "install": "omarchy theme install https://github.com/imbypass/omarchy-pandora-theme"
+      "updated": "2025-12-25T12:05:19Z"
     },
     {
       "slug": "pina",
@@ -3915,10 +3915,10 @@
       "repo": "https://github.com/bjarneo/omarchy-pina-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/pina-0TNGvx.png",
+      "install": "omarchy theme install https://github.com/bjarneo/omarchy-pina-theme",
       "description": "Pina is a vibrant, tropical-inspired theme for Omarchy that brings the warm, golden hues of pineapple to your coding environment.",
       "stars": 4,
-      "updated": "2026-08-30T12:08:11Z",
-      "install": "omarchy theme install https://github.com/bjarneo/omarchy-pina-theme"
+      "updated": "2026-08-30T12:08:11Z"
     },
     {
       "slug": "pink-blood-omarchy",
@@ -3965,10 +3965,10 @@
       "repo": "https://github.com/ITSZXY/pink-blood-omarchy-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/pink-blood-Fh9voH.png",
+      "install": "omarchy theme install https://github.com/ITSZXY/pink-blood-omarchy-theme",
       "description": "pink blood omarchy theme",
       "stars": 20,
-      "updated": "2025-10-25T05:14:32Z",
-      "install": "omarchy theme install https://github.com/ITSZXY/pink-blood-omarchy-theme"
+      "updated": "2025-10-25T05:14:32Z"
     },
     {
       "slug": "pulsar",
@@ -4019,10 +4019,10 @@
       "repo": "https://github.com/bjarneo/omarchy-pulsar-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/pulsar-theme-DMUX7U.png",
+      "install": "omarchy theme install https://github.com/bjarneo/omarchy-pulsar-theme",
       "description": "Pulsar is a vibrant, cosmic-inspired dark theme for Omarchy that captures the brilliant energy of neutron stars and celestial phenomena.",
       "stars": 18,
-      "updated": "2026-08-30T12:08:13Z",
-      "install": "omarchy theme install https://github.com/bjarneo/omarchy-pulsar-theme"
+      "updated": "2026-08-30T12:08:13Z"
     },
     {
       "slug": "purple-moon",
@@ -4073,10 +4073,10 @@
       "repo": "https://github.com/Grey-007/purple-moon",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/purple-moon-S9IiCU.png",
+      "install": "omarchy theme install https://github.com/Grey-007/purple-moon",
       "description": "Omarchy Theme",
       "stars": 17,
-      "updated": "2026-08-22T05:33:32Z",
-      "install": "omarchy theme install https://github.com/Grey-007/purple-moon"
+      "updated": "2026-08-22T05:33:32Z"
     },
     {
       "slug": "purplewave",
@@ -4130,10 +4130,10 @@
       "repo": "https://github.com/dotsilva/omarchy-purplewave-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/purplewave-ZGiAbQ.png",
+      "install": "omarchy theme install https://github.com/dotsilva/omarchy-purplewave-theme",
       "description": "Omarchy purple theme",
       "stars": 20,
-      "updated": "2026-05-15T00:20:48Z",
-      "install": "omarchy theme install https://github.com/dotsilva/omarchy-purplewave-theme"
+      "updated": "2026-05-15T00:20:48Z"
     },
     {
       "slug": "rainynight",
@@ -4184,10 +4184,10 @@
       "repo": "https://github.com/atif-1402/omarchy-rainynight-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/rainynight-auQymU.png",
+      "install": "omarchy theme install https://github.com/atif-1402/omarchy-rainynight-theme",
       "description": "",
       "stars": 44,
-      "updated": "2026-05-22T16:58:05Z",
-      "install": "omarchy theme install https://github.com/atif-1402/omarchy-rainynight-theme"
+      "updated": "2026-05-22T16:58:05Z"
     },
     {
       "slug": "red-monarch",
@@ -4238,10 +4238,10 @@
       "repo": "https://github.com/kamatealif/omarchy-red-monarch-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/red-monarch-VYuVL2.png",
+      "install": "omarchy theme install https://github.com/kamatealif/omarchy-red-monarch-theme",
       "description": "an a own customized theme for the arc",
       "stars": 9,
-      "updated": "2026-08-22T05:29:52Z",
-      "install": "omarchy theme install https://github.com/kamatealif/omarchy-red-monarch-theme"
+      "updated": "2026-08-22T05:29:52Z"
     },
     {
       "slug": "retro-82",
@@ -4314,10 +4314,10 @@
       "repo": "https://github.com/OldJobobo/omarchy-retro-82-theme",
       "branch": "master",
       "preview": "https://learn.omacom.io/u/retro-82-pegjCg.png",
+      "install": "omarchy theme install https://github.com/OldJobobo/omarchy-retro-82-theme",
       "description": "A Retro Teal and Amber Sci-Fi Theme for Omarchy",
       "stars": 21,
-      "updated": "2026-08-25T18:46:52Z",
-      "install": "omarchy theme install https://github.com/OldJobobo/omarchy-retro-82-theme"
+      "updated": "2026-08-25T18:46:52Z"
     },
     {
       "slug": "retropc",
@@ -4364,10 +4364,10 @@
       "repo": "https://github.com/rondilley/omarchy-retropc-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/retropc-theme-a24vKN.png",
+      "install": "omarchy theme install https://github.com/rondilley/omarchy-retropc-theme",
       "description": "Omarchy Theme to relive the good old days",
       "stars": 80,
-      "updated": "2025-11-22T08:21:23Z",
-      "install": "omarchy theme install https://github.com/rondilley/omarchy-retropc-theme"
+      "updated": "2025-11-22T08:21:23Z"
     },
     {
       "slug": "ristretto-light",
@@ -4415,10 +4415,10 @@
       "repo": "https://github.com/brokkoli71/omarchy-ristretto-light-theme",
       "branch": "master",
       "preview": "https://learn.omacom.io/u/ristretto-light-IcJFUF.png",
+      "install": "omarchy theme install https://github.com/brokkoli71/omarchy-ristretto-light-theme",
       "description": "",
       "stars": 3,
-      "updated": "2026-08-18T15:12:52Z",
-      "install": "omarchy theme install https://github.com/brokkoli71/omarchy-ristretto-light-theme"
+      "updated": "2026-08-18T15:12:52Z"
     },
     {
       "slug": "robzee84",
@@ -4468,10 +4468,10 @@
       "repo": "https://github.com/robzolkos/omarchy-robzee84-theme",
       "branch": "master",
       "preview": "https://learn.omacom.io/u/robzee84-N1hj0E.png",
+      "install": "omarchy theme install https://github.com/robzolkos/omarchy-robzee84-theme",
       "description": "A dark synthwave Omarchy theme inspired by SynthWave '84.",
       "stars": 3,
-      "updated": "2026-05-05T00:38:38Z",
-      "install": "omarchy theme install https://github.com/robzolkos/omarchy-robzee84-theme"
+      "updated": "2026-05-05T00:38:38Z"
     },
     {
       "slug": "rose-pine-dark",
@@ -4521,10 +4521,10 @@
       "repo": "https://github.com/guilhermetk/omarchy-rose-pine-dark",
       "branch": "master",
       "preview": "https://learn.omacom.io/u/rose-pine-dark-pIMUcV.webp",
+      "install": "omarchy theme install https://github.com/guilhermetk/omarchy-rose-pine-dark",
       "description": "A rose pine (dark) theme for Omarchy",
       "stars": 47,
-      "updated": "2026-05-04T16:59:04Z",
-      "install": "omarchy theme install https://github.com/guilhermetk/omarchy-rose-pine-dark"
+      "updated": "2026-05-04T16:59:04Z"
     },
     {
       "slug": "roseofdune",
@@ -4576,10 +4576,10 @@
       "repo": "https://github.com/HANCORE-linux/omarchy-roseofdune-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/rose-of-dune-bX5Vhf.png",
+      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-roseofdune-theme",
       "description": "Rose of Dune \u2014 A soft rose-gold Linux theme touched by warm brown accents for omarchy.org",
       "stars": 14,
-      "updated": "2026-08-05T14:35:11Z",
-      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-roseofdune-theme"
+      "updated": "2026-08-05T14:35:11Z"
     },
     {
       "slug": "ryu",
@@ -4630,10 +4630,10 @@
       "repo": "https://github.com/HANCORE-linux/omarchy-ryu-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/ryu-9OnK9B.png",
+      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-ryu-theme",
       "description": "Inspired by the raw intensity of legendary dragons and the refined elegance of Japanese Sumi-e ink painting.",
       "stars": 7,
-      "updated": "2026-08-05T21:00:30Z",
-      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-ryu-theme"
+      "updated": "2026-08-05T21:00:30Z"
     },
     {
       "slug": "saga",
@@ -4684,10 +4684,10 @@
       "repo": "https://github.com/HANCORE-linux/omarchy-saga-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/saga-4taZZI.png",
+      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-saga-theme",
       "description": "SAGA color scheme palette - Omarchy Theme.",
       "stars": 15,
-      "updated": "2026-08-05T21:14:10Z",
-      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-saga-theme"
+      "updated": "2026-08-05T21:14:10Z"
     },
     {
       "slug": "sakura",
@@ -4739,10 +4739,10 @@
       "repo": "https://github.com/bjarneo/omarchy-sakura-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/sakura-njsB9m.png",
+      "install": "omarchy theme install https://github.com/bjarneo/omarchy-sakura-theme",
       "description": "Sakura is an elegant, high-contrast theme for Omarchy inspired by the delicate beauty of cherry blossoms.",
       "stars": 20,
-      "updated": "2026-08-30T12:08:03Z",
-      "install": "omarchy theme install https://github.com/bjarneo/omarchy-sakura-theme"
+      "updated": "2026-08-30T12:08:03Z"
     },
     {
       "slug": "sakura-mochi",
@@ -4797,10 +4797,10 @@
       "repo": "https://github.com/OldJobobo/omarchy-sakura-mochi-theme",
       "branch": "master",
       "preview": "https://learn.omacom.io/u/sakura-mochi-Um17iV.png",
+      "install": "omarchy theme install https://github.com/OldJobobo/omarchy-sakura-mochi-theme",
       "description": "A dark Omarchy theme with soft pink accents, cool green structure, and a near-black base.",
       "stars": 23,
-      "updated": "2026-08-15T04:01:28Z",
-      "install": "omarchy theme install https://github.com/OldJobobo/omarchy-sakura-mochi-theme"
+      "updated": "2026-08-15T04:01:28Z"
     },
     {
       "slug": "sapphire",
@@ -4851,10 +4851,10 @@
       "repo": "https://github.com/HANCORE-linux/omarchy-sapphire-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/sapphire-tocQNg.png",
+      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-sapphire-theme",
       "description": "Sapphire \u2014 A vivid blue Linux theme with rich accents for omarchy.org",
       "stars": 21,
-      "updated": "2026-08-05T21:20:51Z",
-      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-sapphire-theme"
+      "updated": "2026-08-05T21:20:51Z"
     },
     {
       "slug": "shadesofjade",
@@ -4903,10 +4903,10 @@
       "repo": "https://github.com/HANCORE-linux/omarchy-shadesofjade-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/shades-of-jade-uSYodf.png",
+      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-shadesofjade-theme",
       "description": "Shades of Jade \u2014 A serene green-toned Linux theme sculpted for omarchy.org",
       "stars": 23,
-      "updated": "2026-08-05T21:29:14Z",
-      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-shadesofjade-theme"
+      "updated": "2026-08-05T21:29:14Z"
     },
     {
       "slug": "snow",
@@ -4955,10 +4955,10 @@
       "repo": "https://github.com/bjarneo/omarchy-snow-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/snow-theme-MDtvlu.png",
+      "install": "omarchy theme install https://github.com/bjarneo/omarchy-snow-theme",
       "description": "This is the Snow Theme for Omarchy.org, providing a cohesive and visually appealing configuration set for your Linux desktop environment.",
       "stars": 15,
-      "updated": "2026-08-30T12:08:07Z",
-      "install": "omarchy theme install https://github.com/bjarneo/omarchy-snow-theme"
+      "updated": "2026-08-30T12:08:07Z"
     },
     {
       "slug": "snow_black",
@@ -5020,10 +5020,10 @@
       "repo": "https://github.com/ankur311sudo/snow_black",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/snow-black-LXbCcU.png",
+      "install": "omarchy theme install https://github.com/ankur311sudo/snow_black",
       "description": "Snow_Black turns Hyprland into a smooth, frosted environment with consistent styling across Waybar, Neovim, and your terminal. Clean. Sharp. Addictive.",
       "stars": 32,
-      "updated": "2026-07-24T16:29:32Z",
-      "install": "omarchy theme install https://github.com/ankur311sudo/snow_black"
+      "updated": "2026-07-24T16:29:32Z"
     },
     {
       "slug": "solarized",
@@ -5070,10 +5070,10 @@
       "repo": "https://github.com/Gazler/omarchy-solarized-theme",
       "branch": "master",
       "preview": "https://learn.omacom.io/u/solarized-theme-9OhQ7Y.png",
+      "install": "omarchy theme install https://github.com/Gazler/omarchy-solarized-theme",
       "description": "",
       "stars": 10,
-      "updated": "2025-07-28T13:36:10Z",
-      "install": "omarchy theme install https://github.com/Gazler/omarchy-solarized-theme"
+      "updated": "2025-07-28T13:36:10Z"
     },
     {
       "slug": "solarized-light",
@@ -5120,10 +5120,10 @@
       "repo": "https://github.com/dfrico/omarchy-solarized-light-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/solarized-light2-OTGWbc.png",
+      "install": "omarchy theme install https://github.com/dfrico/omarchy-solarized-light-theme",
       "description": "Omarchy (omarchy.org) Solarized-light Theme",
       "stars": 12,
-      "updated": "2025-07-28T11:04:34Z",
-      "install": "omarchy theme install https://github.com/dfrico/omarchy-solarized-light-theme"
+      "updated": "2025-07-28T11:04:34Z"
     },
     {
       "slug": "solarizedosaka",
@@ -5170,10 +5170,10 @@
       "repo": "https://github.com/motorsss/omarchy-solarizedosaka-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/solarized-osaka-theme-9pnXgG.png",
+      "install": "omarchy theme install https://github.com/motorsss/omarchy-solarizedosaka-theme",
       "description": "Omarchy Solarized Osaka Theme",
       "stars": 12,
-      "updated": "2025-07-29T23:32:05Z",
-      "install": "omarchy theme install https://github.com/motorsss/omarchy-solarizedosaka-theme"
+      "updated": "2025-07-29T23:32:05Z"
     },
     {
       "slug": "solitude",
@@ -5225,10 +5225,10 @@
       "repo": "https://github.com/HANCORE-linux/omarchy-solitude-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/solitude-gJpmBW.png",
+      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-solitude-theme",
       "description": "minimal approach",
       "stars": 58,
-      "updated": "2026-08-05T21:36:28Z",
-      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-solitude-theme"
+      "updated": "2026-08-05T21:36:28Z"
     },
     {
       "slug": "space-monkey",
@@ -5277,10 +5277,10 @@
       "repo": "https://github.com/TyRichards/omarchy-space-monkey-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/space-monkey-theme-UGmUHp.jpg",
+      "install": "omarchy theme install https://github.com/TyRichards/omarchy-space-monkey-theme",
       "description": "Omarchy Theme for Arch Linux",
       "stars": 46,
-      "updated": "2026-06-09T14:36:07Z",
-      "install": "omarchy theme install https://github.com/TyRichards/omarchy-space-monkey-theme"
+      "updated": "2026-06-09T14:36:07Z"
     },
     {
       "slug": "sunset",
@@ -5327,10 +5327,10 @@
       "repo": "https://github.com/rondilley/omarchy-sunset-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/sunset-PsLG4m.png",
+      "install": "omarchy theme install https://github.com/rondilley/omarchy-sunset-theme",
       "description": "Omarchy Sunset in Santa Monica Theme",
       "stars": 1,
-      "updated": "2025-10-10T21:00:10Z",
-      "install": "omarchy theme install https://github.com/rondilley/omarchy-sunset-theme"
+      "updated": "2025-10-10T21:00:10Z"
     },
     {
       "slug": "sunset-drive",
@@ -5378,10 +5378,10 @@
       "repo": "https://github.com/tahayvr/omarchy-sunset-drive-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/sunsetdrive-UV9Gss.png",
+      "install": "omarchy theme install https://github.com/tahayvr/omarchy-sunset-drive-theme",
       "description": "Sunset Drive theme for Omarchy Linux",
       "stars": 16,
-      "updated": "2026-02-22T08:03:04Z",
-      "install": "omarchy theme install https://github.com/tahayvr/omarchy-sunset-drive-theme"
+      "updated": "2026-02-22T08:03:04Z"
     },
     {
       "slug": "super-game-bro",
@@ -5429,10 +5429,10 @@
       "repo": "https://github.com/TyRichards/omarchy-super-game-bro-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/super-game-bro-theme-2DNtSt.png",
+      "install": "omarchy theme install https://github.com/TyRichards/omarchy-super-game-bro-theme",
       "description": "A pea-green throwback theme for Omarchy (Arch + Hyprland)",
       "stars": 9,
-      "updated": "2025-09-18T03:21:58Z",
-      "install": "omarchy theme install https://github.com/TyRichards/omarchy-super-game-bro-theme"
+      "updated": "2025-09-18T03:21:58Z"
     },
     {
       "slug": "synthwave84",
@@ -5479,10 +5479,10 @@
       "repo": "https://github.com/omacom-io/omarchy-synthwave84-theme",
       "branch": "master",
       "preview": "https://learn.omacom.io/u/synthwave-theme-7yHWFA.png",
+      "install": "omarchy theme install https://github.com/omacom-io/omarchy-synthwave84-theme",
       "description": "",
       "stars": 31,
-      "updated": "2025-07-26T20:58:09Z",
-      "install": "omarchy theme install https://github.com/omacom-io/omarchy-synthwave84-theme"
+      "updated": "2025-07-26T20:58:09Z"
     },
     {
       "slug": "temerald",
@@ -5557,10 +5557,10 @@
       "repo": "https://github.com/Ahmad-Mtr/omarchy-temerald-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/temerald-aTOeZ9.png",
+      "install": "omarchy theme install https://github.com/Ahmad-Mtr/omarchy-temerald-theme",
       "description": "Minimal Dark Theme inspired by Emerald for Omarchy",
       "stars": 18,
-      "updated": "2026-01-16T15:04:29Z",
-      "install": "omarchy theme install https://github.com/Ahmad-Mtr/omarchy-temerald-theme"
+      "updated": "2026-01-16T15:04:29Z"
     },
     {
       "slug": "thegreek",
@@ -5612,10 +5612,10 @@
       "repo": "https://github.com/HANCORE-linux/omarchy-thegreek-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/thegreek-rPS5HB.png",
+      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-thegreek-theme",
       "description": "\u201cTheGreek\u201d \u2014 a sleek, strategic spy theme blending classic espionage style with modern intrigue and mystery.",
       "stars": 16,
-      "updated": "2026-08-05T21:42:18Z",
-      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-thegreek-theme"
+      "updated": "2026-08-05T21:42:18Z"
     },
     {
       "slug": "tokyoled",
@@ -5662,10 +5662,10 @@
       "repo": "https://github.com/Justin-De-Sio/omarchy-tokyoled-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/tokyo-night-oled-nTsHOs.png",
+      "install": "omarchy theme install https://github.com/Justin-De-Sio/omarchy-tokyoled-theme",
       "description": "Tokyo Night variant (OLED) for the Omarchy theme.",
       "stars": 24,
-      "updated": "2026-01-26T11:44:22Z",
-      "install": "omarchy theme install https://github.com/Justin-De-Sio/omarchy-tokyoled-theme"
+      "updated": "2026-01-26T11:44:22Z"
     },
     {
       "slug": "tycho",
@@ -5714,10 +5714,10 @@
       "repo": "https://github.com/leonardobetti/omarchy-tycho",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/tycho-vTGePC.png",
+      "install": "omarchy theme install https://github.com/leonardobetti/omarchy-tycho",
       "description": "Omarchy-Tycho is a minimalist, pastel theme for Omarchy inspired by the ambient soundscapes and visual aesthetics of musician and designer Tycho (Scott Hansen)",
       "stars": 17,
-      "updated": "2026-03-10T20:08:59Z",
-      "install": "omarchy theme install https://github.com/leonardobetti/omarchy-tycho"
+      "updated": "2026-03-10T20:08:59Z"
     },
     {
       "slug": "van-gogh",
@@ -5772,10 +5772,10 @@
       "repo": "https://github.com/Nirmal314/omarchy-van-gogh-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/van-gogh-bwoogF.png",
+      "install": "omarchy theme install https://github.com/Nirmal314/omarchy-van-gogh-theme",
       "description": "",
       "stars": 8,
-      "updated": "2026-08-31T13:37:52Z",
-      "install": "omarchy theme install https://github.com/Nirmal314/omarchy-van-gogh-theme"
+      "updated": "2026-08-31T13:37:52Z"
     },
     {
       "slug": "velvetnight",
@@ -5824,10 +5824,10 @@
       "repo": "https://github.com/HANCORE-linux/omarchy-velvetnight-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/velvet-night-tGkahY.png",
+      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-velvetnight-theme",
       "description": "Velvet Night \u2013 a dark, night-inspired theme where soft contrasts and subtle glimmers create a calm, mysterious coding atmosphere.",
       "stars": 12,
-      "updated": "2026-08-05T21:57:37Z",
-      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-velvetnight-theme"
+      "updated": "2026-08-05T21:57:37Z"
     },
     {
       "slug": "venice-from-above-omarchy",
@@ -5879,10 +5879,10 @@
       "repo": "https://github.com/mattbbia/venice-from-above-omarchy",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/venice-5IEmB6.png",
+      "install": "omarchy theme install https://github.com/mattbbia/venice-from-above-omarchy",
       "description": "A Jacopo de' Barbari inspired theme for Omarchy",
       "stars": 11,
-      "updated": "2026-08-27T15:10:48Z",
-      "install": "omarchy theme install https://github.com/mattbbia/venice-from-above-omarchy"
+      "updated": "2026-08-27T15:10:48Z"
     },
     {
       "slug": "vesper",
@@ -5930,10 +5930,10 @@
       "repo": "https://github.com/thmoee/omarchy-vesper-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/vesper-1tdScF.png",
+      "install": "omarchy theme install https://github.com/thmoee/omarchy-vesper-theme",
       "description": "Vesper is a simple orange flavored dark theme for Omarchy.",
       "stars": 9,
-      "updated": "2025-11-22T08:32:31Z",
-      "install": "omarchy theme install https://github.com/thmoee/omarchy-vesper-theme"
+      "updated": "2025-11-22T08:32:31Z"
     },
     {
       "slug": "vhs80",
@@ -5982,10 +5982,10 @@
       "repo": "https://github.com/tahayvr/omarchy-vhs80-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/vhs80-8MnZ4x.png",
+      "install": "omarchy theme install https://github.com/tahayvr/omarchy-vhs80-theme",
       "description": "vhs80 theme for Omarchy Linux",
       "stars": 31,
-      "updated": "2026-02-23T14:28:39Z",
-      "install": "omarchy theme install https://github.com/tahayvr/omarchy-vhs80-theme"
+      "updated": "2026-02-23T14:28:39Z"
     },
     {
       "slug": "void",
@@ -6033,10 +6033,10 @@
       "repo": "https://github.com/vyrx-dev/omarchy-void-theme",
       "branch": "master",
       "preview": "https://learn.omacom.io/u/void-Q9aUIc.png",
+      "install": "omarchy theme install https://github.com/vyrx-dev/omarchy-void-theme",
       "description": "Void theme  for omarchy",
       "stars": 60,
-      "updated": "2026-04-15T00:17:13Z",
-      "install": "omarchy theme install https://github.com/vyrx-dev/omarchy-void-theme"
+      "updated": "2026-04-15T00:17:13Z"
     },
     {
       "slug": "waffle-cat",
@@ -6088,10 +6088,10 @@
       "repo": "https://github.com/OldJobobo/omarchy-waffle-cat-theme",
       "branch": "master",
       "preview": "https://learn.omacom.io/u/waffle-cat-SSnrsG.png",
+      "install": "omarchy theme install https://github.com/OldJobobo/omarchy-waffle-cat-theme",
       "description": "The Official Waffle-Cat Colorscheme Theme for Omarchy",
       "stars": 12,
-      "updated": "2026-08-16T15:04:56Z",
-      "install": "omarchy theme install https://github.com/OldJobobo/omarchy-waffle-cat-theme"
+      "updated": "2026-08-16T15:04:56Z"
     },
     {
       "slug": "waveform-dark",
@@ -6138,10 +6138,10 @@
       "repo": "https://github.com/hipsterusername/omarchy-waveform-dark-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/waveform-theme-ZiWq97.png",
+      "install": "omarchy theme install https://github.com/hipsterusername/omarchy-waveform-dark-theme",
       "description": "",
       "stars": 15,
-      "updated": "2025-08-26T15:51:41Z",
-      "install": "omarchy theme install https://github.com/hipsterusername/omarchy-waveform-dark-theme"
+      "updated": "2025-08-26T15:51:41Z"
     },
     {
       "slug": "whitegold",
@@ -6192,10 +6192,10 @@
       "repo": "https://github.com/HANCORE-linux/omarchy-whitegold-theme",
       "branch": "main",
       "preview": "https://learn.omacom.io/u/whitegold-HGrllY.png",
+      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-whitegold-theme",
       "description": "WhiteGold \u2014 Light and elegance intertwined for omarchy.org",
       "stars": 14,
-      "updated": "2026-08-05T22:03:17Z",
-      "install": "omarchy theme install https://github.com/HANCORE-linux/omarchy-whitegold-theme"
+      "updated": "2026-08-05T22:03:17Z"
     },
     {
       "slug": "windows-dark-mode",
@@ -6247,10 +6247,10 @@
       "repo": "https://github.com/oldjobobo/omarchy-windows-dark-mode-theme",
       "branch": "master",
       "preview": "https://learn.omacom.io/u/windows-dark-mode-5MIFmi.png",
+      "install": "omarchy theme install https://github.com/oldjobobo/omarchy-windows-dark-mode-theme",
       "description": "A clean Windows-inspired dark theme.",
       "stars": 0,
-      "updated": "2026-07-13T04:59:51Z",
-      "install": "omarchy theme install https://github.com/oldjobobo/omarchy-windows-dark-mode-theme"
+      "updated": "2026-07-13T04:59:51Z"
     }
   ]
 }

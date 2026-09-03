@@ -154,11 +154,22 @@ scripts/build-extra-themes.py           # ~30s cold, seconds warm
 scripts/build-extra-themes.py --refresh # ignore the cache
 ```
 
-It needs a GitHub token -- `GITHUB_TOKEN`, `GH_TOKEN`, or just a logged-in
-`gh`. Two API calls per repo over 117 repos is well past the 60/hour
-unauthenticated budget. Responses are cached under `.cache/extra-themes`
-(gitignored), so a re-run costs almost nothing and a rebuild after editing the
-script does not spend the budget again.
+Each repo is read with one blobless partial clone:
+
+```
+git clone --filter=blob:limit=64k --no-checkout --depth=1 --single-branch
+```
+
+which is about 150 KB and one round trip per theme -- 17 MB and ~30 seconds for
+all 115, then under a second on a warm cache (`.cache/extra-themes`,
+gitignored). That single clone answers everything: the default branch, the file
+list, and the config files, while the 64k filter leaves the wallpapers on
+GitHub where they belong.
+
+**No GitHub token is needed.** If one is around (`GITHUB_TOKEN`, `GH_TOKEN`, or
+a logged-in `gh`) each theme also gets its repo description, star count and
+last-push date; without one those three fields are simply omitted rather than
+spending the 60/hour anonymous API budget. `--no-metadata` skips them either way.
 
 Some notes on what it does, since the inputs are other people's repos:
 
@@ -168,6 +179,9 @@ Some notes on what it does, since the inputs are other people's repos:
 - Slugs reproduce `omarchy-theme-install` exactly (`basename`, minus a leading
   `omarchy-` and a trailing `-theme`, lowercased). That is what lets the page
   tell that an extra theme is already installed.
+- The branch is read, never assumed. Aetheria's default branch is
+  `omarchy-aetheria-theme`, so a hardcoded `main` in the background URLs would
+  quietly 404.
 - The theme root is found rather than assumed: the shallowest directory holding
   a `colors.toml` or `alacritty.toml`, for the few repos that vendor the theme
   a level down.
@@ -175,7 +189,14 @@ Some notes on what it does, since the inputs are other people's repos:
   why the fetcher sets one. That, not a real outage, is the "503" you get from
   a plain `urllib.request.urlopen`.
 - One bad repo never loses the rest. Failures are listed on stderr at the end;
-  `--strict` turns them into a non-zero exit for CI.
+  `--strict` turns them into a non-zero exit for CI. Two are expected: the
+  manual still links Eldritch and Gruvu, whose repos are gone.
+
+Downloading each repo's zip is the same idea, and was the first thing tried: it
+costs about 20 MB a theme (2+ GB for the list) because the wallpapers come with
+it, and `codeload`'s `zip/HEAD` names its root directory `-HEAD`, so it cannot
+even answer the branch question. The partial clone is that idea at 1/130th the
+bytes.
 
 [extra]: https://learn.omacom.io/2/the-omarchy-manual/90/extra-themes
 
