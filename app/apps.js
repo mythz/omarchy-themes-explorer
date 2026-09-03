@@ -1050,9 +1050,11 @@
           '<span class="vs-menu">File</span><span class="vs-menu">Edit</span>' +
           '<span class="vs-menu">Selection</span><span class="vs-menu">\u22ef</span>' +
           '<div class="vs-centre">' + VSCODE_SVG.search + " omarchy-themes</div>" +
-          '<span class="vs-wctl">' + VSCODE_SVG.minimize + "</span>" +
-          '<span class="vs-wctl">' + VSCODE_SVG.restore + "</span>" +
-          '<span class="vs-wctl vs-wctl-close">' + VSCODE_SVG.close + "</span>" +
+          '<div class="vs-wctls">' +
+            '<span class="vs-wctl">' + VSCODE_SVG.minimize + "</span>" +
+            '<span class="vs-wctl">' + VSCODE_SVG.restore + "</span>" +
+            '<span class="vs-wctl vs-wctl-close">' + VSCODE_SVG.close + "</span>" +
+          "</div>" +
         "</div>" +
         '<div class="vs-top">' +
           '<div class="vs-rail">' +

@@ -796,13 +796,16 @@ body[data-mode="light"] {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+/* The controls sit together in their own group, so the title bar's 1em gap
+   separates them from the menus without also spreading them apart. */
+.vs-wctls { display: flex; flex: 0 0 auto; }
 .vs-wctl {
   color: var(--fg);
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.9em;
+  width: 1.5em;
   height: 1.5em;
 }
 
