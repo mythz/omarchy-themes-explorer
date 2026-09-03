@@ -22,6 +22,32 @@ and puts nothing on your `PATH`.
 
 Remove it with `omarchy plugin remove mythz.themes-explorer`.
 
+## Nesting it in the Omarchy menu
+
+The bar icon is optional — you can reach it from the Omarchy menu instead, or as
+well. Add a row to `~/.config/omarchy/extensions/omarchy-menu.jsonc`; the parent
+is inferred from the dotted id, so `style.themes-explorer` nests under the
+built-in **Style** submenu:
+
+```jsonc
+"style.themes-explorer": {
+  "icon": "\uf1fc",
+  "label": "Themes Explorer",
+  "description": "Try on every installed theme against a simulated desktop",
+  "aliases": ["themes", "theme explorer", "preview themes"],
+  "action": "~/.config/omarchy/plugins/mythz.themes-explorer/bin/omarchy-themes-explorer",
+  "when": "[ -x ~/.config/omarchy/plugins/mythz.themes-explorer/bin/omarchy-themes-explorer ]"
+}
+```
+
+Use the literal paintbrush glyph for `icon` rather than the escape shown above.
+The file hot-reloads on save. `when` is a bash test that hides the row if the
+plugin is not installed, and `aliases` make it reachable with
+`omarchy menu summon`, and searchable from the menu's filter.
+
+Because the launcher toggles, picking the row a second time hides the app again,
+exactly like the bar icon.
+
 ## Use
 
 | | |
