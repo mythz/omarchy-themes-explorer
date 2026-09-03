@@ -611,6 +611,9 @@ body[data-mode="light"] {
   display: flex;
   flex-direction: column;
   line-height: 1.42;
+  /* Normal, which nvim sets to the bright foreground -- so an identifier the
+     tokeniser does not wrap still lands on the right colour. */
+  color: var(--tk-var);
 }
 .nv-tabline {
   flex: 0 0 auto;
@@ -671,21 +674,34 @@ body[data-mode="light"] {
 .t-pun  { color: var(--tk-pun); }
 .t-cls  { color: var(--tk-typ); }
 
-/* Neovim: aether paints a call in the red slot and bold, a type bold, and
-   comments darker than `muted`. */
+/* Neovim. Read out of a real buffer with nvim_get_hl under Tokyo Night and
+   checked against the theme's own code colours: nine of the eleven groups the
+   preview draws are the same value in both editors, so those reuse --vs-*.
+   The two that genuinely differ get nvim's answer --
+
+     @punctuation.bracket  foreground        (VS Code punctuation is the operator colour)
+     Comment               dark_foreground   (#565f89 against VS Code's #51597d)
+
+   -- as does Normal, which is bright_foreground rather than the plain one, and
+   types, which nvim paints cyan where VS Code separates a named type from a
+   primitive. Palette slots behind every one, so a theme whose editor colours
+   cannot be read still highlights. */
 .app-nvim {
-  --tk-key: var(--magenta);
-  --tk-fn: var(--red);
-  --tk-fn-weight: 700;
-  --tk-str: var(--green);
-  --tk-num: var(--yellow);
-  --tk-com: var(--nv-comment);
-  --tk-tag: var(--cyan);
-  --tk-typ: var(--yellow);
-  --tk-typ-weight: 700;
-  --tk-var: var(--fg);
-  --tk-op: var(--cyan);
-  --tk-pun: var(--fg-dark);
+  --tk-key: var(--vs-key, var(--br-magenta));
+  --tk-imp: var(--vs-imp, var(--blue));
+  --tk-fn: var(--vs-fn, var(--blue));
+  --tk-str: var(--vs-str, var(--green));
+  --tk-num: var(--vs-num, var(--br-yellow));
+  --tk-bool: var(--vs-num, var(--br-yellow));
+  --tk-com: var(--fg-dark);
+  --tk-tag: var(--vs-imp, var(--blue));
+  --tk-typ: var(--vs-prim, var(--br-cyan));
+  --tk-prim: var(--vs-prim, var(--br-cyan));
+  --tk-var: var(--fg-bright);
+  --tk-prop: var(--vs-objkey, var(--cyan));
+  --tk-objkey: var(--vs-objkey, var(--cyan));
+  --tk-op: var(--vs-op, var(--br-blue));
+  --tk-pun: var(--fg);
 }
 
 /* VS Code: straight from the theme's own tokenColors, so an import keyword and
