@@ -726,7 +726,27 @@ body[data-mode="light"] {
   color: var(--fg-dark);
 }
 .vs-rail { color: var(--muted); }
-.vs-rail i { font-style: normal; position: relative; }
+.vs-rail i { font-style: normal; position: relative; display: block; }
+
+/* Seven icons from four viewBoxes filling them by different amounts, so each
+   is scaled to a common optical size rather than a common nominal one -- the
+   same treatment the bar tray gets. */
+.vs-ico { display: block; width: 1em; height: 1em; }
+.vs-ico-explorer { width: 1.27em; height: 1.27em; }
+.vs-ico-search   { width: 1.23em; height: 1.23em; }
+.vs-ico-debug    { width: 1.14em; height: 1.14em; }
+.vs-ico-ext      { width: 1.14em; height: 1.14em; }
+.vs-ico-settings { width: 1.22em; height: 1.22em; }
+.vs-ico-logo     { width: 1.35em; height: 1.35em; flex: 0 0 auto; }
+
+/* The command centre's magnifier sits on a text line, not on its own row. */
+.vs-centre .vs-ico {
+  display: inline-block;
+  width: 0.95em;
+  height: 0.95em;
+  vertical-align: -0.14em;
+  margin-right: 0.3em;
+}
 /* The active tool is marked by a bar down the rail's left edge, not just a
    brighter glyph. */
 .vs-rail i.on { color: var(--fg); }
