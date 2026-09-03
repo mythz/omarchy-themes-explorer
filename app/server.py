@@ -181,26 +181,23 @@ def title_case(slug):
     return re.sub(r"(^|-)([a-z])", lambda m: m.group(1) + m.group(2).upper(), slug).replace("-", " ")
 
 
-# Omarchy's own default is square corners; a theme opts into rounding by
-# setting decoration.rounding in its Hyprland config. `rounding_power`,
-# `dots_rounding` and `gradient_rounding` are different settings and must not
-# be mistaken for it.
+# Corner radius is Omarchy's, never the theme's. Every theme's staged
+# hyprland.lua is generated from default/themed/hyprland.lua.tpl, which sets
+# border colours and nothing else -- and a git-installed theme cannot supply
+# Lua at all, so a `rounding` in its own hyprland.conf is never read. What
+# Hyprland actually runs is default/hypr/looknfeel.lua, which is square.
+# `rounding_power`, `dots_rounding` and `gradient_rounding` are different
+# settings and must not be mistaken for it.
 ROUNDING_RE = re.compile(r"(?<![\w])rounding\s*=\s*(\d+)")
+LOOKNFEEL = Path(os.environ.get("OMARCHY_PATH", "/usr/share/omarchy")) / "default/hypr/looknfeel.lua"
 
 
-def rounding_for(theme_dir):
-    for name in ("hyprland.lua", "hyprland.conf"):
-        path = theme_dir / name
-        if not path.is_file():
-            continue
-        try:
-            text = path.read_text(errors="replace")
-        except OSError:
-            continue
-        found = ROUNDING_RE.search(text)
-        if found:
-            return int(found.group(1))
-    return 0
+def system_rounding():
+    try:
+        found = ROUNDING_RE.search(LOOKNFEEL.read_text(errors="replace"))
+    except OSError:
+        return 0
+    return int(found.group(1)) if found else 0
 
 
 # A theme names a Yaru icon variant in icons.theme, which is what actually
@@ -257,52 +254,69 @@ def btop_colors_from_text(text):
     return out
 
 
-def btop_colors(theme_dir):
+# What Omarchy renders from default/themed/btop.theme.tpl for a theme that
+# ships no btop.theme of its own. Only the keys the page paints with.
+BTOP_TEMPLATE = {
+    "title": "foreground",
+    "hi_fg": "accent",
+    "inactive_fg": "muted",
+    "div_line": "muted",
+    "proc_misc": "light_foreground",
+    "cpu_box": "magenta",
+    "mem_box": "green",
+    "net_box": "red",
+    "proc_box": "accent",
+    "selected_bg": "selection",
+    "selected_fg": "accent",
+    "meter_bg": "selection",
+    "cpu_start": "cyan",
+    "cpu_mid": "blue",
+    "cpu_end": "magenta",
+    "temp_start": "green",
+    "download_mid": "red",
+    "upload_mid": "cyan",
+}
+
+
+def btop_colors(theme_dir, colors):
     try:
-        return btop_colors_from_text((theme_dir / "btop.theme").read_text(errors="replace"))
+        found = btop_colors_from_text((theme_dir / "btop.theme").read_text(errors="replace"))
     except OSError:
-        return {}
+        found = {}
+    return found or {k: colors[v] for k, v in BTOP_TEMPLATE.items()}
 
 
-# Hyprland writes a colour as rgba(rrggbbaa), rgb(rrggbb) or 0xaarrggbb, and a
-# border may be a gradient of several plus an angle -- the first colour is the
-# one this preview can show.
-HYPR_RGBA_RE = re.compile(r"rgba?\(\s*([0-9a-fA-F]{6,8})\s*\)|0x([0-9a-fA-F]{8})")
-BORDER_RE = re.compile(r"(?:col\.)?(active|inactive)_border\s*=\s*(.+)")
+# Hyprland border colours come from colors.toml, not from a theme's own
+# hyprland config: the staged hyprland.lua is rendered from
+# default/themed/hyprland.lua.tpl, which reads `hyprland_active_border`
+# (defaulting to the accent) and `hyprland_inactive_border` (defaulting to a
+# fixed grey). Either may be a gradient of several colours plus an angle; the
+# first stop is the one a flat preview can show.
+HYPR_COLOR_RE = re.compile(
+    r"rgba?\(\s*([0-9a-fA-F]{6,8})\s*\)|0x([0-9a-fA-F]{8})|#([0-9a-fA-F]{6,8})"
+)
+DEFAULT_INACTIVE_BORDER = "rgba(595959aa)"
 
 
-def hypr_border_colors_from_text(text):
-    """active/inactive window border colours, as CSS."""
-    out = {}
-    for which, rest in BORDER_RE.findall(text or ""):
-        if which in out:
-            continue
-        found = HYPR_RGBA_RE.search(rest)
-        if not found:
-            continue
-        if found.group(1):
-            # rgba() is rrggbbaa; rgb() has no alpha to move.
-            css = "#" + found.group(1)
-        else:
-            # 0xaarrggbb -> #rrggbbaa
-            digits = found.group(2)
-            css = "#" + digits[2:] + digits[:2]
-        out[which] = css.lower()
-    return out
+def hypr_color(value, fallback=""):
+    """First stop of a Hyprland colour or gradient, as CSS."""
+    found = HYPR_COLOR_RE.search(str(value or ""))
+    if not found:
+        return fallback
+    if found.group(2):
+        # 0xaarrggbb -> #rrggbbaa
+        digits = found.group(2)
+        return ("#" + digits[2:] + digits[:2]).lower()
+    # rgb()/rgba()/# are already rrggbb[aa]
+    return ("#" + (found.group(1) or found.group(3))).lower()
 
 
-def hypr_border_colors(theme_dir):
-    for name in ("hyprland.lua", "hyprland.conf"):
-        path = theme_dir / name
-        if not path.is_file():
-            continue
-        try:
-            found = hypr_border_colors_from_text(path.read_text(errors="replace"))
-        except OSError:
-            continue
-        if found:
-            return found
-    return {}
+def border_colors(raw, colors):
+    return {
+        "active": hypr_color(raw.get("hyprland_active_border"), colors["accent"]),
+        "inactive": hypr_color(raw.get("hyprland_inactive_border"))
+        or hypr_color(DEFAULT_INACTIVE_BORDER),
+    }
 
 
 def icon_theme_for(theme_dir):
@@ -336,7 +350,8 @@ def discover_themes():
     themes = []
     for slug in sorted(dirs):
         theme_dir, source = dirs[slug]
-        colors = normalize(raw_colors(theme_dir))
+        raw = raw_colors(theme_dir)
+        colors = normalize(raw)
         icons = icon_theme_for(theme_dir)
         images = backgrounds_for(slug, theme_dir)
         themes.append(
@@ -345,9 +360,8 @@ def discover_themes():
                 "name": title_case(slug),
                 "source": source,
                 "mode": colors.pop("mode"),
-                "rounding": rounding_for(theme_dir),
-                "borders": hypr_border_colors(theme_dir),
-                "btop": btop_colors(theme_dir),
+                "borders": border_colors(raw, colors),
+                "btop": btop_colors(theme_dir, colors),
                 "iconTheme": icons,
                 "folderColor": FOLDER_COLORS.get(icons, colors["accent"]),
                 "colors": colors,
@@ -444,6 +458,7 @@ class Handler(BaseHTTPRequestHandler):
             self.send_json(
                 {
                     "current": current_slug(),
+                    "rounding": system_rounding(),
                     "themes": themes,
                     "extra": extra_themes({t["slug"] for t in themes}),
                 }

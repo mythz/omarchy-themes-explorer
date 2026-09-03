@@ -53,12 +53,12 @@ sys.path.insert(0, str(REPO_ROOT / "app"))
 # The single source of truth for how a palette is derived. Importing it is the
 # point: a change to server.py's fallbacks reaches extra themes on the next build.
 from server import (  # noqa: E402
+    BTOP_TEMPLATE,
     FOLDER_COLORS,
     IMAGE_EXT,
-    ROUNDING_RE,
+    border_colors,
     btop_colors_from_text,
     flatten_alacritty,
-    hypr_border_colors_from_text,
     normalize,
 )
 
@@ -394,25 +394,14 @@ def build_theme(listing, cache_dir, refresh, http=None):
     colors = normalize(raw)
     mode = colors.pop("mode")
 
-    # One pass over the Hyprland config for both the corner radius and the
-    # window border colours, so an extra theme carries what an installed one
-    # does -- the page paints from the same fields either way.
-    rounding = 0
-    borders = {}
-    for name in ("hyprland.lua", "hyprland.conf"):
-        text = clone.read(prefix + name)
-        if not text:
-            continue
-        if not rounding:
-            found = ROUNDING_RE.search(text)
-            if found:
-                rounding = int(found.group(1))
-        if not borders:
-            borders = hypr_border_colors_from_text(text)
-        if rounding and borders:
-            break
+    # Borders come from colors.toml, the way Omarchy's hyprland.lua template
+    # reads them -- a theme's own hyprland config is never applied. Corner
+    # radius is Omarchy's and is sent once by the server, not per theme.
+    borders = border_colors(raw, colors)
 
-    btop = btop_colors_from_text(clone.read(prefix + "btop.theme") or "")
+    btop = btop_colors_from_text(clone.read(prefix + "btop.theme") or "") or {
+        key: colors[value] for key, value in BTOP_TEMPLATE.items()
+    }
 
     icon_theme = ""
     text = clone.read(prefix + "icons.theme")
@@ -434,7 +423,6 @@ def build_theme(listing, cache_dir, refresh, http=None):
         "name": listing["name"],
         "source": "extra",
         "mode": mode,
-        "rounding": rounding,
         "borders": borders,
         "btop": btop,
         "iconTheme": icon_theme,

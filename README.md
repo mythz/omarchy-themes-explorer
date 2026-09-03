@@ -72,9 +72,26 @@ dependencies to install beyond what Omarchy already ships.
 **Palettes.** Themes are read straight from `~/.config/omarchy/themes` and
 `/usr/share/omarchy/themes`, and `colors.toml` is normalised across all three
 dialects in the wild — named keys, `color0`–`color15`, and the older layout
-where the palette only exists in `alacritty.toml`. Corner rounding is parsed out
-of each theme's `hyprland.lua`/`.conf`, and the Nautilus folder tint is derived
-from its `icons.theme`, so the preview matches what you would actually get.
+where the palette only exists in `alacritty.toml`. Window border colours come
+from `colors.toml`'s `hyprland_active_border`/`hyprland_inactive_border` the way
+Omarchy's own `hyprland.lua` template reads them, btop is read from the theme's
+`btop.theme` (falling back to Omarchy's template mapping), and the Nautilus
+folder tint comes from its `icons.theme`.
+
+What a theme does **not** decide is worth knowing, because it is where a preview
+most easily lies:
+
+- **Corner radius is Omarchy's, not the theme's.** Every theme's staged
+  `hyprland.lua` is generated from `default/themed/hyprland.lua.tpl`, which sets
+  border colours and nothing else — and a git-installed theme may not supply Lua
+  at all. A `rounding` in a theme's own `hyprland.conf` is never read; what runs
+  is `default/hypr/looknfeel.lua`, which is square.
+- **Nautilus does not wear the theme either.** `omarchy-theme-set-gnome` only
+  flips GTK between stock Adwaita and Adwaita-dark on the theme's mode and points
+  the icon theme at its `icons.theme`. A theme's `gtk.css` is never staged, so
+  the file manager is Adwaita grey with theme-coloured folders.
+- **fastfetch draws its logo in ANSI green**, per its `"color": {"1": "green"}` —
+  not in the accent.
 
 **The window never touches your layout.** It opens on its own special
 workspace, `special:themes-explorer` — a dedicated scratchpad, not Omarchy's

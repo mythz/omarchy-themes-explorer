@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-03T16:09:34Z",
+  "generated": "2026-09-03T16:19:26Z",
   "source": "https://learn.omacom.io/2/the-omarchy-manual/90/extra-themes",
   "count": 115,
   "themes": [
@@ -8,10 +8,9 @@
       "name": "Aetheria",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
       "borders": {
-        "active": "#e20342",
-        "inactive": "#2a153c"
+        "active": "#be3f50",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#14b9b5",
@@ -80,8 +79,10 @@
       "name": "All Hallow's Eve",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
-      "borders": {},
+      "borders": {
+        "active": "#3387cc",
+        "inactive": "#595959aa"
+      },
       "btop": {
         "title": "#aaaaaa",
         "hi_fg": "#ffffff",
@@ -151,10 +152,9 @@
       "name": "Amberbyte",
       "source": "extra",
       "mode": "dark",
-      "rounding": 16,
       "borders": {
-        "active": "#b44a4a",
-        "inactive": "#3a3532"
+        "active": "#eaeaea",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#8a8a8d",
@@ -225,9 +225,30 @@
       "name": "Arc Blueberry",
       "source": "extra",
       "mode": "dark",
-      "rounding": 6,
-      "borders": {},
-      "btop": {},
+      "borders": {
+        "active": "#f38cecee",
+        "inactive": "#3c4776cc"
+      },
+      "btop": {
+        "title": "#bcc1dc",
+        "hi_fg": "#8eb0e6",
+        "inactive_fg": "#424761",
+        "div_line": "#424761",
+        "proc_misc": "#d3d7ea",
+        "cpu_box": "#f38cec",
+        "mem_box": "#3cec85",
+        "net_box": "#e35535",
+        "proc_box": "#8eb0e6",
+        "selected_bg": "#313b62",
+        "selected_fg": "#8eb0e6",
+        "meter_bg": "#313b62",
+        "cpu_start": "#22ecdb",
+        "cpu_mid": "#69c3ff",
+        "cpu_end": "#f38cec",
+        "temp_start": "#3cec85",
+        "download_mid": "#e35535",
+        "upload_mid": "#22ecdb"
+      },
       "iconTheme": "Yaru-blue",
       "folderColor": "#2686e6",
       "colors": {
@@ -280,9 +301,9 @@
       "name": "Archwave",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
       "borders": {
-        "active": "#ff6ec7"
+        "active": "#ff6ec7",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#5ffbf1",
@@ -355,10 +376,9 @@
       "name": "Artzen",
       "source": "extra",
       "mode": "dark",
-      "rounding": 12,
       "borders": {
-        "inactive": "#2a2a2eff",
-        "active": "#ed333bee"
+        "active": "#fdf9f8",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#9a8c8a",
@@ -428,9 +448,30 @@
       "name": "Ash",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
-      "borders": {},
-      "btop": {},
+      "borders": {
+        "active": "#626262",
+        "inactive": "#595959aa"
+      },
+      "btop": {
+        "title": "#e0e0e0",
+        "hi_fg": "#626262",
+        "inactive_fg": "#5a5a5a",
+        "div_line": "#5a5a5a",
+        "proc_misc": "#eaeaea",
+        "cpu_box": "#8a8a8a",
+        "mem_box": "#767676",
+        "net_box": "#8a8a8a",
+        "proc_box": "#626262",
+        "selected_bg": "#0d0d0d",
+        "selected_fg": "#626262",
+        "meter_bg": "#0d0d0d",
+        "cpu_start": "#767676",
+        "cpu_mid": "#626262",
+        "cpu_end": "#8a8a8a",
+        "temp_start": "#767676",
+        "download_mid": "#8a8a8a",
+        "upload_mid": "#767676"
+      },
       "iconTheme": "Yaru-grey",
       "folderColor": "#626262",
       "colors": {
@@ -481,8 +522,10 @@
       "name": "Atelier",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
-      "borders": {},
+      "borders": {
+        "active": "#36a166",
+        "inactive": "#595959aa"
+      },
       "btop": {
         "title": "#c5a587",
         "hi_fg": "#b0c5b9",
@@ -551,9 +594,30 @@
       "name": "Aura",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
-      "borders": {},
-      "btop": {},
+      "borders": {
+        "active": "#f8f8f2ee",
+        "inactive": "#282a3688"
+      },
+      "btop": {
+        "title": "#f8f8f2",
+        "hi_fg": "#8be9fd",
+        "inactive_fg": "#44475a",
+        "div_line": "#44475a",
+        "proc_misc": "#fbfbf6",
+        "cpu_box": "#ffc8dd",
+        "mem_box": "#8be9fd",
+        "net_box": "#ffafcc",
+        "proc_box": "#8be9fd",
+        "selected_bg": "#44475a",
+        "selected_fg": "#8be9fd",
+        "meter_bg": "#44475a",
+        "cpu_start": "#8be9fd",
+        "cpu_mid": "#8be9fd",
+        "cpu_end": "#ffc8dd",
+        "temp_start": "#8be9fd",
+        "download_mid": "#ffafcc",
+        "upload_mid": "#8be9fd"
+      },
       "iconTheme": "Yaru-magenta",
       "folderColor": "#bc65bd",
       "colors": {
@@ -604,9 +668,9 @@
       "name": "Ayaka",
       "source": "extra",
       "mode": "dark",
-      "rounding": 10,
       "borders": {
-        "inactive": "#404040ff"
+        "active": "#ffcc66",
+        "inactive": "#595959aa"
       },
       "btop": {
         "inactive_fg": "#606060",
@@ -678,10 +742,9 @@
       "name": "Azure Glow",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
       "borders": {
         "active": "#00ccff",
-        "inactive": "#00334d"
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#00aaff",
@@ -751,8 +814,10 @@
       "name": "Batman",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
-      "borders": {},
+      "borders": {
+        "active": "#fcef0c",
+        "inactive": "#595959aa"
+      },
       "btop": {
         "title": "#747271",
         "hi_fg": "#62605f",
@@ -834,8 +899,10 @@
       "name": "Batou",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
-      "borders": {},
+      "borders": {
+        "active": "#605d5b",
+        "inactive": "#595959aa"
+      },
       "btop": {
         "title": "#8a8575",
         "hi_fg": "#c2bbb0",
@@ -908,10 +975,9 @@
       "name": "Bauhaus",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
       "borders": {
         "active": "#e37b66",
-        "inactive": "#3a3f4c"
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#eaeff5",
@@ -980,8 +1046,10 @@
       "name": "Biscuit de Mar Dark",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
-      "borders": {},
+      "borders": {
+        "active": "#ae3f82",
+        "inactive": "#595959aa"
+      },
       "btop": {
         "title": "#ffe9c7",
         "hi_fg": "#cf223e",
@@ -1060,10 +1128,9 @@
       "name": "Black Arch",
       "source": "extra",
       "mode": "dark",
-      "rounding": 4,
       "borders": {
-        "active": "#505359ff",
-        "inactive": "#000000ff"
+        "active": "#989898",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#79aaeb",
@@ -1147,10 +1214,9 @@
       "name": "Black Gold",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
       "borders": {
-        "active": "#7f680b",
-        "inactive": "#120f02"
+        "active": "#6e6a58",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#4d574e",
@@ -1228,9 +1294,9 @@
       "name": "Black Turq",
       "source": "extra",
       "mode": "dark",
-      "rounding": 1,
       "borders": {
-        "inactive": "#272b30"
+        "active": "#adf0e9",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#485362",
@@ -1307,10 +1373,9 @@
       "name": "bluedotrb",
       "source": "extra",
       "mode": "dark",
-      "rounding": 8,
       "borders": {
         "active": "#4242b1",
-        "inactive": "#1a1a1a"
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#4242b1",
@@ -1385,10 +1450,9 @@
       "name": "Blue Ridge Dark",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
       "borders": {
-        "active": "#e8e6e3",
-        "inactive": "#3e4452"
+        "active": "#7ec8c8",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#d4af37",
@@ -1459,10 +1523,9 @@
       "name": "Catppuccin Mocha Dark",
       "source": "extra",
       "mode": "dark",
-      "rounding": 4,
       "borders": {
-        "active": "#89b4faee",
-        "inactive": "#1a1a1a60"
+        "active": "#89b4fa",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#cdd6f4",
@@ -1538,10 +1601,9 @@
       "name": "Citrus Cynapse",
       "source": "extra",
       "mode": "dark",
-      "rounding": 8,
       "borders": {
-        "active": "#a6eb5d44",
-        "inactive": "#00000088"
+        "active": "#929292",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#a6eb5d",
@@ -1612,8 +1674,10 @@
       "name": "City-783",
       "source": "extra",
       "mode": "dark",
-      "rounding": 16,
-      "borders": {},
+      "borders": {
+        "active": "#ad2222",
+        "inactive": "#4b515b"
+      },
       "btop": {
         "title": "#c3c8d0",
         "hi_fg": "#ff5c5c",
@@ -1688,8 +1752,10 @@
       "name": "Cobalt2",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
-      "borders": {},
+      "borders": {
+        "active": "#ffc600",
+        "inactive": "#595959aa"
+      },
       "btop": {
         "title": "#ffc600",
         "hi_fg": "#80fcff",
@@ -1760,8 +1826,10 @@
       "name": "CpUnk",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
-      "borders": {},
+      "borders": {
+        "active": "#aaacac",
+        "inactive": "#595959aa"
+      },
       "btop": {
         "title": "#f76e78",
         "hi_fg": "#babbbb",
@@ -1833,10 +1901,9 @@
       "name": "Darcula",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
       "borders": {
-        "active": "#cc7832",
-        "inactive": "#3c3f41"
+        "active": "#ffd760",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#808080",
@@ -1913,9 +1980,9 @@
       "name": "Demon",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
       "borders": {
-        "inactive": "#05050a"
+        "active": "#5c624b",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#3a403b",
@@ -1990,10 +2057,9 @@
       "name": "Dos Moos",
       "source": "extra",
       "mode": "dark",
-      "rounding": 4,
       "borders": {
-        "active": "#a5b5ab",
-        "inactive": "#35373a"
+        "active": "#819890",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#a5b5ab",
@@ -2067,10 +2133,9 @@
       "name": "Dotrb",
       "source": "extra",
       "mode": "dark",
-      "rounding": 8,
       "borders": {
         "active": "#b14242",
-        "inactive": "#1a1a1a"
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#b14242",
@@ -2145,10 +2210,9 @@
       "name": "Drac",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
       "borders": {
-        "active": "#1e90ffee",
-        "inactive": "#bbbbbb88"
+        "active": "#1e90ff",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#1e90ff",
@@ -2224,10 +2288,9 @@
       "name": "Dracula",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
       "borders": {
-        "active": "#8be9fdee",
-        "inactive": "#44475acc"
+        "active": "#8be9fd",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#f8f8f2",
@@ -2301,8 +2364,10 @@
       "name": "Event Horizon",
       "source": "extra",
       "mode": "dark",
-      "rounding": 12,
-      "borders": {},
+      "borders": {
+        "active": "#59e1e3",
+        "inactive": "#59e1e355"
+      },
       "btop": {
         "title": "#ee64ac",
         "hi_fg": "#26bbd9",
@@ -2380,9 +2445,30 @@
       "name": "Evergarden",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
-      "borders": {},
-      "btop": {},
+      "borders": {
+        "active": "#b3e6db",
+        "inactive": "#595959aa"
+      },
+      "btop": {
+        "title": "#adc9bc",
+        "hi_fg": "#b3e6db",
+        "inactive_fg": "#5d6d6a",
+        "div_line": "#5d6d6a",
+        "proc_misc": "#adc9bc",
+        "cpu_box": "#b3e6db",
+        "mem_box": "#cbe3b3",
+        "net_box": "#f57f82",
+        "proc_box": "#b3e6db",
+        "selected_bg": "#839e9a",
+        "selected_fg": "#b3e6db",
+        "meter_bg": "#839e9a",
+        "cpu_start": "#b3e6db",
+        "cpu_mid": "#839e9a",
+        "cpu_end": "#b3e6db",
+        "temp_start": "#cbe3b3",
+        "download_mid": "#f57f82",
+        "upload_mid": "#b3e6db"
+      },
       "iconTheme": "Yaru-sage",
       "folderColor": "#7c8c7f",
       "colors": {
@@ -2432,12 +2518,30 @@
       "name": "Felix",
       "source": "extra",
       "mode": "dark",
-      "rounding": 10,
       "borders": {
-        "active": "#878787ff",
-        "inactive": "#262626ff"
+        "active": "#ff8852",
+        "inactive": "#595959aa"
       },
-      "btop": {},
+      "btop": {
+        "title": "#e7e9ea",
+        "hi_fg": "#ff8852",
+        "inactive_fg": "#616262",
+        "div_line": "#616262",
+        "proc_misc": "#e7e9ea",
+        "cpu_box": "#8a8a8a",
+        "mem_box": "#e7e9ea",
+        "net_box": "#8a8a8a",
+        "proc_box": "#ff8852",
+        "selected_bg": "#e7e9ea",
+        "selected_fg": "#ff8852",
+        "meter_bg": "#e7e9ea",
+        "cpu_start": "#767676",
+        "cpu_mid": "#626262",
+        "cpu_end": "#8a8a8a",
+        "temp_start": "#e7e9ea",
+        "download_mid": "#8a8a8a",
+        "upload_mid": "#767676"
+      },
       "iconTheme": "Yaru-sage",
       "folderColor": "#7c8c7f",
       "colors": {
@@ -2501,9 +2605,30 @@
       "name": "Fireside",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
-      "borders": {},
-      "btop": {},
+      "borders": {
+        "active": "#b8b8b6",
+        "inactive": "#595959aa"
+      },
+      "btop": {
+        "title": "#f0f2f5",
+        "hi_fg": "#b8b8b6",
+        "inactive_fg": "#5a606b",
+        "div_line": "#5a606b",
+        "proc_misc": "#fcfdfd",
+        "cpu_box": "#e48b7a",
+        "mem_box": "#889889",
+        "net_box": "#e06b58",
+        "proc_box": "#b8b8b6",
+        "selected_bg": "#111f37",
+        "selected_fg": "#b8b8b6",
+        "meter_bg": "#111f37",
+        "cpu_start": "#d0cac7",
+        "cpu_mid": "#b8b8b6",
+        "cpu_end": "#e48b7a",
+        "temp_start": "#889889",
+        "download_mid": "#e06b58",
+        "upload_mid": "#d0cac7"
+      },
       "iconTheme": "Yaru-red",
       "folderColor": "#dd5169",
       "colors": {
@@ -2555,8 +2680,10 @@
       "name": "Fish Material",
       "source": "extra",
       "mode": "dark",
-      "rounding": 7,
-      "borders": {},
+      "borders": {
+        "active": "#d2787d",
+        "inactive": "#595959aa"
+      },
       "btop": {
         "title": "#f2ffff",
         "hi_fg": "#d2787d",
@@ -2626,9 +2753,9 @@
       "name": "Flat Dracula",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
       "borders": {
-        "inactive": "#44475aff"
+        "active": "#bd93f9",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#f8f8f2",
@@ -2707,8 +2834,10 @@
       "name": "Flexoki Dark",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
-      "borders": {},
+      "borders": {
+        "active": "#4385be",
+        "inactive": "#595959aa"
+      },
       "btop": {
         "title": "#cecdc3",
         "hi_fg": "#4385be",
@@ -2779,10 +2908,9 @@
       "name": "Forest Green",
       "source": "extra",
       "mode": "dark",
-      "rounding": 16,
       "borders": {
-        "inactive": "#2a2a2eff",
-        "active": "#6bbf7aff"
+        "active": "#cddc39",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#cddc39",
@@ -2861,9 +2989,30 @@
       "name": "Frost",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
-      "borders": {},
-      "btop": {},
+      "borders": {
+        "active": "#9bb0c2",
+        "inactive": "#595959aa"
+      },
+      "btop": {
+        "title": "#d4d5d9",
+        "hi_fg": "#9bb0c2",
+        "inactive_fg": "#51545e",
+        "div_line": "#51545e",
+        "proc_misc": "#dfe0e3",
+        "cpu_box": "#a8b9c6",
+        "mem_box": "#95a8b8",
+        "net_box": "#869aac",
+        "proc_box": "#9bb0c2",
+        "selected_bg": "#121b33",
+        "selected_fg": "#9bb0c2",
+        "meter_bg": "#121b33",
+        "cpu_start": "#b8c7d0",
+        "cpu_mid": "#9bb0c2",
+        "cpu_end": "#a8b9c6",
+        "temp_start": "#95a8b8",
+        "download_mid": "#869aac",
+        "upload_mid": "#b8c7d0"
+      },
       "iconTheme": "Yaru-blue",
       "folderColor": "#2686e6",
       "colors": {
@@ -2915,9 +3064,30 @@
       "name": "Futurism",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
-      "borders": {},
-      "btop": {},
+      "borders": {
+        "active": "#ff40a3",
+        "inactive": "#595959aa"
+      },
+      "btop": {
+        "title": "#f0f8ff",
+        "hi_fg": "#ff40a3",
+        "inactive_fg": "#53627a",
+        "div_line": "#53627a",
+        "proc_misc": "#f7fbff",
+        "cpu_box": "#ff40a3",
+        "mem_box": "#00bfff",
+        "net_box": "#ff40a3",
+        "proc_box": "#ff40a3",
+        "selected_bg": "#17294a",
+        "selected_fg": "#ff40a3",
+        "meter_bg": "#17294a",
+        "cpu_start": "#f0f8ff",
+        "cpu_mid": "#f0f8ff",
+        "cpu_end": "#ff40a3",
+        "temp_start": "#00bfff",
+        "download_mid": "#ff40a3",
+        "upload_mid": "#f0f8ff"
+      },
       "iconTheme": "Yaru-magenta",
       "folderColor": "#bc65bd",
       "colors": {
@@ -2970,8 +3140,10 @@
       "name": "Ghost Pastel",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
-      "borders": {},
+      "borders": {
+        "active": "#979fec",
+        "inactive": "#595959aa"
+      },
       "btop": {
         "title": "#cd9dcf",
         "hi_fg": "#7c93dd",
@@ -3042,9 +3214,9 @@
       "name": "Gold Rush",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
       "borders": {
-        "active": "#76520e"
+        "active": "#c9a227",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#c9a227",
@@ -3115,8 +3287,10 @@
       "name": "Golden Brown",
       "source": "extra",
       "mode": "dark",
-      "rounding": 12,
-      "borders": {},
+      "borders": {
+        "active": "#c3a983",
+        "inactive": "#595959aa"
+      },
       "btop": {
         "title": "#dec8a7",
         "hi_fg": "#a88c62",
@@ -3187,10 +3361,9 @@
       "name": "Greek Noir",
       "source": "extra",
       "mode": "dark",
-      "rounding": 4,
       "borders": {
-        "active": "#706e5e",
-        "inactive": "#171717"
+        "active": "#f25623",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#f25623",
@@ -3264,10 +3437,9 @@
       "name": "Green Garden",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
       "borders": {
-        "active": "#809d69",
-        "inactive": "#5d412c"
+        "active": "#e4d8b4",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#76ff03",
@@ -3338,10 +3510,9 @@
       "name": "Harbor",
       "source": "extra",
       "mode": "light",
-      "rounding": 3,
       "borders": {
-        "active": "#253631ee",
-        "inactive": "#7d8794"
+        "active": "#5e81ac",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#8a5b81",
@@ -3418,9 +3589,9 @@
       "name": "Harbor Dark",
       "source": "extra",
       "mode": "dark",
-      "rounding": 3,
       "borders": {
-        "inactive": "#1b1b1b"
+        "active": "#e75a50",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#a99b7a",
@@ -3493,9 +3664,30 @@
       "name": "Hinterlands",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
-      "borders": {},
-      "btop": {},
+      "borders": {
+        "active": "#686868",
+        "inactive": "#595959aa"
+      },
+      "btop": {
+        "title": "#ffffff",
+        "hi_fg": "#686868",
+        "inactive_fg": "#7f7f7f",
+        "div_line": "#7f7f7f",
+        "proc_misc": "#ffffff",
+        "cpu_box": "#747474",
+        "mem_box": "#8b8b8b",
+        "net_box": "#7c7c7c",
+        "proc_box": "#686868",
+        "selected_bg": "#686868",
+        "selected_fg": "#686868",
+        "meter_bg": "#686868",
+        "cpu_start": "#868686",
+        "cpu_mid": "#686868",
+        "cpu_end": "#747474",
+        "temp_start": "#8b8b8b",
+        "download_mid": "#7c7c7c",
+        "upload_mid": "#868686"
+      },
       "iconTheme": "Yaru-red",
       "folderColor": "#dd5169",
       "colors": {
@@ -3562,10 +3754,9 @@
       "name": "Infernium",
       "source": "extra",
       "mode": "dark",
-      "rounding": 1,
       "borders": {
         "active": "#e3884a",
-        "inactive": "#767476"
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#e0e0e0",
@@ -3636,8 +3827,10 @@
       "name": "Inky Pinky",
       "source": "extra",
       "mode": "dark",
-      "rounding": 3,
-      "borders": {},
+      "borders": {
+        "active": "#7c7ca8",
+        "inactive": "#595959aa"
+      },
       "btop": {
         "title": "#9f859f",
         "hi_fg": "#919ab7",
@@ -3711,9 +3904,9 @@
       "name": "Last Horizon",
       "source": "extra",
       "mode": "dark",
-      "rounding": 5,
       "borders": {
-        "inactive": "#05080a"
+        "active": "#b59790",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#b59790",
@@ -3787,8 +3980,10 @@
       "name": "Liotronic",
       "source": "extra",
       "mode": "dark",
-      "rounding": 8,
-      "borders": {},
+      "borders": {
+        "active": "#45e6ee",
+        "inactive": "#595959aa"
+      },
       "btop": {
         "title": "#f8f8f2",
         "hi_fg": "#45e6ee",
@@ -3866,9 +4061,9 @@
       "name": "Map Quest",
       "source": "extra",
       "mode": "light",
-      "rounding": 16,
       "borders": {
-        "active": "#00a86bee"
+        "active": "#3c4747",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#764e27",
@@ -3942,9 +4137,9 @@
       "name": "Mars",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
       "borders": {
-        "active": "#c45a3fff"
+        "active": "#ff6b4a",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#d9afa7",
@@ -4018,8 +4213,10 @@
       "name": "Mechanoonna",
       "source": "extra",
       "mode": "dark",
-      "rounding": 4,
-      "borders": {},
+      "borders": {
+        "active": "#d4bd99",
+        "inactive": "#595959aa"
+      },
       "btop": {
         "title": "#f0e4c5",
         "hi_fg": "#d4bd99",
@@ -4091,8 +4288,10 @@
       "name": "Miasma",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
-      "borders": {},
+      "borders": {
+        "active": "#78824b",
+        "inactive": "#43492a"
+      },
       "btop": {
         "title": "#bb7744",
         "hi_fg": "#c9a554",
@@ -4169,9 +4368,9 @@
       "name": "Midnight",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
       "borders": {
-        "active": "#407e70"
+        "active": "#407e70",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#8a8a8d",
@@ -4243,10 +4442,9 @@
       "name": "Milky Matcha",
       "source": "extra",
       "mode": "light",
-      "rounding": 0,
       "borders": {
         "active": "#7a9461",
-        "inactive": "#e8e2d5"
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#7a9461",
@@ -4317,9 +4515,9 @@
       "name": "Monochrome",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
       "borders": {
-        "active": "#d4d4d4"
+        "active": "#d4d4d4",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#ffffff",
@@ -4389,9 +4587,30 @@
       "name": "Monokai",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
-      "borders": {},
-      "btop": {},
+      "borders": {
+        "active": "#aba0f2ee",
+        "inactive": "#0a122088"
+      },
+      "btop": {
+        "title": "#f0f2f5",
+        "hi_fg": "#78dce8",
+        "inactive_fg": "#555c65",
+        "div_line": "#555c65",
+        "proc_misc": "#fcfdfd",
+        "cpu_box": "#aba0f2",
+        "mem_box": "#b2d977",
+        "net_box": "#f25e86",
+        "proc_box": "#78dce8",
+        "selected_bg": "#555c65",
+        "selected_fg": "#78dce8",
+        "meter_bg": "#555c65",
+        "cpu_start": "#f28b66",
+        "cpu_mid": "#78dce8",
+        "cpu_end": "#aba0f2",
+        "temp_start": "#b2d977",
+        "download_mid": "#f25e86",
+        "upload_mid": "#f28b66"
+      },
       "iconTheme": "Yaru-magenta",
       "folderColor": "#bc65bd",
       "colors": {
@@ -4441,9 +4660,9 @@
       "name": "Moodpeak",
       "source": "extra",
       "mode": "dark",
-      "rounding": 6,
       "borders": {
-        "inactive": "#3d4455"
+        "active": "#4ecdc4",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#6a85ff",
@@ -4518,10 +4737,9 @@
       "name": "Nagai Poolside",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
       "borders": {
         "active": "#58afd8",
-        "inactive": "#30404b"
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#e6f1f4",
@@ -4588,10 +4806,9 @@
       "name": "Neo Sploosh",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
       "borders": {
-        "active": "#008dc9ed",
-        "inactive": "#1c1c1cb3"
+        "active": "#008dc9",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#f2f2f2",
@@ -4665,10 +4882,9 @@
       "name": "Neovoid",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
       "borders": {
         "active": "#00bfff",
-        "inactive": "#1a1a1a"
+        "inactive": "#595959aa"
       },
       "btop": {
         "div_line": "#8a8a8d",
@@ -4729,9 +4945,30 @@
       "name": "NES",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
-      "borders": {},
-      "btop": {},
+      "borders": {
+        "active": "#9a9d9a",
+        "inactive": "#595959aa"
+      },
+      "btop": {
+        "title": "#cecfc9",
+        "hi_fg": "#9a9d9a",
+        "inactive_fg": "#525351",
+        "div_line": "#525351",
+        "proc_misc": "#d8d9d4",
+        "cpu_box": "#d93f37",
+        "mem_box": "#9a9d9a",
+        "net_box": "#d93f37",
+        "proc_box": "#9a9d9a",
+        "selected_bg": "#1f1f1f",
+        "selected_fg": "#9a9d9a",
+        "meter_bg": "#1f1f1f",
+        "cpu_start": "#9a9d9a",
+        "cpu_mid": "#9a9d9a",
+        "cpu_end": "#d93f37",
+        "temp_start": "#9a9d9a",
+        "download_mid": "#d93f37",
+        "upload_mid": "#9a9d9a"
+      },
       "iconTheme": "Yaru-grey",
       "folderColor": "#9a9d9a",
       "colors": {
@@ -4782,9 +5019,9 @@
       "name": "Omacarchy",
       "source": "extra",
       "mode": "dark",
-      "rounding": 8,
       "borders": {
-        "active": "#c0c0c0"
+        "active": "#ffffff",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#ffffff",
@@ -4882,10 +5119,9 @@
       "name": "Omacon",
       "source": "extra",
       "mode": "dark",
-      "rounding": 7,
       "borders": {
-        "active": "#f200f3ff",
-        "inactive": "#4a2e4aaa"
+        "active": "#ff66ff",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#f5caff",
@@ -4965,9 +5201,30 @@
       "name": "One Dark Pro",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
-      "borders": {},
-      "btop": {},
+      "borders": {
+        "active": "#61afefff",
+        "inactive": "#595959aa"
+      },
+      "btop": {
+        "title": "#abb2bf",
+        "hi_fg": "#61afef",
+        "inactive_fg": "#5c6370",
+        "div_line": "#5c6370",
+        "proc_misc": "#9aa2ad",
+        "cpu_box": "#c678dd",
+        "mem_box": "#98c379",
+        "net_box": "#e06c75",
+        "proc_box": "#61afef",
+        "selected_bg": "#3e4451",
+        "selected_fg": "#61afef",
+        "meter_bg": "#3e4451",
+        "cpu_start": "#56b6c2",
+        "cpu_mid": "#61afef",
+        "cpu_end": "#c678dd",
+        "temp_start": "#98c379",
+        "download_mid": "#e06c75",
+        "upload_mid": "#56b6c2"
+      },
       "iconTheme": "Yaru-blue-dark",
       "folderColor": "#59a9ff",
       "colors": {
@@ -5024,10 +5281,9 @@
       "name": "Oxo Carbon",
       "source": "extra",
       "mode": "dark",
-      "rounding": 4,
       "borders": {
-        "active": "#8a8a8d",
-        "inactive": "#363636"
+        "active": "#33b1ff",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#33b1ff",
@@ -5102,12 +5358,30 @@
       "name": "Pandora",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
       "borders": {
-        "active": "#131315ff",
-        "inactive": "#131315ff"
+        "active": "#b2b5b3",
+        "inactive": "#595959aa"
       },
-      "btop": {},
+      "btop": {
+        "title": "#b2b5b3",
+        "hi_fg": "#b2b5b3",
+        "inactive_fg": "#515252",
+        "div_line": "#515252",
+        "proc_misc": "#b2b5b3",
+        "cpu_box": "#bb9af7",
+        "mem_box": "#9ece6a",
+        "net_box": "#f7768e",
+        "proc_box": "#b2b5b3",
+        "selected_bg": "#393a3b",
+        "selected_fg": "#b2b5b3",
+        "meter_bg": "#393a3b",
+        "cpu_start": "#4abaaf",
+        "cpu_mid": "#7aa2f7",
+        "cpu_end": "#bb9af7",
+        "temp_start": "#9ece6a",
+        "download_mid": "#f7768e",
+        "upload_mid": "#4abaaf"
+      },
       "iconTheme": "Papirus-Dark",
       "folderColor": "#b2b5b3",
       "colors": {
@@ -5161,9 +5435,30 @@
       "name": "Pina",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
-      "borders": {},
-      "btop": {},
+      "borders": {
+        "active": "#7dd2b8",
+        "inactive": "#595959aa"
+      },
+      "btop": {
+        "title": "#d4d5d5",
+        "hi_fg": "#7dd2b8",
+        "inactive_fg": "#595b5a",
+        "div_line": "#595b5a",
+        "proc_misc": "#dedfdf",
+        "cpu_box": "#b5c9a4",
+        "mem_box": "#b8c082",
+        "net_box": "#d47c6b",
+        "proc_box": "#7dd2b8",
+        "selected_bg": "#252a27",
+        "selected_fg": "#7dd2b8",
+        "meter_bg": "#252a27",
+        "cpu_start": "#c5e8c5",
+        "cpu_mid": "#7dd2b8",
+        "cpu_end": "#b5c9a4",
+        "temp_start": "#b8c082",
+        "download_mid": "#d47c6b",
+        "upload_mid": "#c5e8c5"
+      },
       "iconTheme": "Yaru-yellow",
       "folderColor": "#b17d26",
       "colors": {
@@ -5215,10 +5510,9 @@
       "name": "Pink Blood",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
       "borders": {
-        "active": "#d40d40ee",
-        "inactive": "#05000788"
+        "active": "#f17e97",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#d40d40",
@@ -5288,9 +5582,30 @@
       "name": "Pulsar",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
-      "borders": {},
-      "btop": {},
+      "borders": {
+        "active": "#3298fa",
+        "inactive": "#595959aa"
+      },
+      "btop": {
+        "title": "#e0e6ff",
+        "hi_fg": "#3298fa",
+        "inactive_fg": "#aa5abc",
+        "div_line": "#aa5abc",
+        "proc_misc": "#eef1ff",
+        "cpu_box": "#b82aff",
+        "mem_box": "#5cb960",
+        "net_box": "#e53e61",
+        "proc_box": "#3298fa",
+        "selected_bg": "#1c0a2c",
+        "selected_fg": "#3298fa",
+        "meter_bg": "#1c0a2c",
+        "cpu_start": "#3df2f2",
+        "cpu_mid": "#3298fa",
+        "cpu_end": "#b82aff",
+        "temp_start": "#5cb960",
+        "download_mid": "#e53e61",
+        "upload_mid": "#3df2f2"
+      },
       "iconTheme": "Yaru-red",
       "folderColor": "#dd5169",
       "colors": {
@@ -5344,10 +5659,9 @@
       "name": "Purple Moon",
       "source": "extra",
       "mode": "dark",
-      "rounding": 8,
       "borders": {
-        "active": "#9865cf44",
-        "inactive": "#02000788"
+        "active": "#ffffff",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#9865cf",
@@ -5421,10 +5735,9 @@
       "name": "Purplewave",
       "source": "extra",
       "mode": "dark",
-      "rounding": 8,
       "borders": {
         "active": "#d7accd",
-        "inactive": "#121212"
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#d7accd",
@@ -5501,10 +5814,9 @@
       "name": "Rainy Night",
       "source": "extra",
       "mode": "dark",
-      "rounding": 14,
       "borders": {
-        "active": "#303463",
-        "inactive": "#1a1b26"
+        "active": "#89b4fa",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#d6e7ff",
@@ -5578,8 +5890,10 @@
       "name": "Red Monarch",
       "source": "extra",
       "mode": "dark",
-      "rounding": 8,
-      "borders": {},
+      "borders": {
+        "active": "#f1396d",
+        "inactive": "#595959aa"
+      },
       "btop": {
         "title": "#f1396d",
         "hi_fg": "#f1396d",
@@ -5650,8 +5964,10 @@
       "name": "Retro 82",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
-      "borders": {},
+      "borders": {
+        "active": "#faa968",
+        "inactive": "#595959aa"
+      },
       "btop": {
         "title": "#3f8f8a",
         "hi_fg": "#8cbfb8",
@@ -5746,9 +6062,9 @@
       "name": "RetroPC",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
       "borders": {
-        "active": "#cc9900"
+        "active": "#ffcc00",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#cc9900",
@@ -5818,8 +6134,10 @@
       "name": "Ristretto Light",
       "source": "extra",
       "mode": "light",
-      "rounding": 0,
-      "borders": {},
+      "borders": {
+        "active": "#85b34c",
+        "inactive": "#595959aa"
+      },
       "btop": {
         "title": "#28473f",
         "hi_fg": "#6a825e",
@@ -5889,8 +6207,10 @@
       "name": "RobZee84",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
-      "borders": {},
+      "borders": {
+        "active": "#ff7edb",
+        "inactive": "#595959aa"
+      },
       "btop": {
         "title": "#fede5d",
         "hi_fg": "#ff7edb",
@@ -5963,8 +6283,10 @@
       "name": "Rose Pine Dark",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
-      "borders": {},
+      "borders": {
+        "active": "#ebbcba",
+        "inactive": "#595959aa"
+      },
       "btop": {
         "title": "#908caa",
         "hi_fg": "#e0def4",
@@ -6037,8 +6359,10 @@
       "name": "Rose of Dune",
       "source": "extra",
       "mode": "light",
-      "rounding": 6,
-      "borders": {},
+      "borders": {
+        "active": "#76634c",
+        "inactive": "#595959aa"
+      },
       "btop": {
         "title": "#9e4f5b",
         "hi_fg": "#a02b16",
@@ -6113,9 +6437,9 @@
       "name": "Ryu",
       "source": "extra",
       "mode": "dark",
-      "rounding": 3,
       "borders": {
-        "inactive": "#050505"
+        "active": "#525e5a",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#d6d0c5",
@@ -6190,9 +6514,9 @@
       "name": "Saga",
       "source": "extra",
       "mode": "dark",
-      "rounding": 5,
       "borders": {
-        "inactive": "#05080a"
+        "active": "#b2fff3",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#ffe1e1",
@@ -6267,9 +6591,30 @@
       "name": "Sakura",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
-      "borders": {},
-      "btop": {},
+      "borders": {
+        "active": "#d9a56c",
+        "inactive": "#595959aa"
+      },
+      "btop": {
+        "title": "#f0eaed",
+        "hi_fg": "#d9a56c",
+        "inactive_fg": "#7a5c66",
+        "div_line": "#7a5c66",
+        "proc_misc": "#f8f6f7",
+        "cpu_box": "#d1b399",
+        "mem_box": "#f29b9a",
+        "net_box": "#e85f6f",
+        "proc_box": "#d9a56c",
+        "selected_bg": "#230e18",
+        "selected_fg": "#d9a56c",
+        "meter_bg": "#230e18",
+        "cpu_start": "#e8c099",
+        "cpu_mid": "#d9a56c",
+        "cpu_end": "#d1b399",
+        "temp_start": "#f29b9a",
+        "download_mid": "#e85f6f",
+        "upload_mid": "#e8c099"
+      },
       "iconTheme": "Yaru-red",
       "folderColor": "#dd5169",
       "colors": {
@@ -6324,8 +6669,10 @@
       "name": "Sakura Mochi",
       "source": "extra",
       "mode": "dark",
-      "rounding": 14,
-      "borders": {},
+      "borders": {
+        "active": "#f23888ee",
+        "inactive": "#5aa15d99"
+      },
       "btop": {
         "title": "#ffd0dc",
         "hi_fg": "#5aa15d",
@@ -6402,8 +6749,10 @@
       "name": "Sapphire",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
-      "borders": {},
+      "borders": {
+        "active": "#f7c3c6",
+        "inactive": "#595959aa"
+      },
       "btop": {
         "title": "#e0f7fa",
         "hi_fg": "#f7c3c6",
@@ -6477,9 +6826,9 @@
       "name": "Shades of Jade",
       "source": "extra",
       "mode": "dark",
-      "rounding": 2,
       "borders": {
-        "inactive": "#00110b"
+        "active": "#d1ffb0",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#fff7f2",
@@ -6552,9 +6901,30 @@
       "name": "Snow",
       "source": "extra",
       "mode": "light",
-      "rounding": 0,
-      "borders": {},
-      "btop": {},
+      "borders": {
+        "active": "#0a0a0a",
+        "inactive": "#595959aa"
+      },
+      "btop": {
+        "title": "#0a0a0a",
+        "hi_fg": "#0a0a0a",
+        "inactive_fg": "#919191",
+        "div_line": "#919191",
+        "proc_misc": "#000000",
+        "cpu_box": "#0a0a0a",
+        "mem_box": "#0a0a0a",
+        "net_box": "#0a0a0a",
+        "proc_box": "#0a0a0a",
+        "selected_bg": "#f7f7f7",
+        "selected_fg": "#0a0a0a",
+        "meter_bg": "#f7f7f7",
+        "cpu_start": "#0a0a0a",
+        "cpu_mid": "#0a0a0a",
+        "cpu_end": "#0a0a0a",
+        "temp_start": "#0a0a0a",
+        "download_mid": "#0a0a0a",
+        "upload_mid": "#0a0a0a"
+      },
       "iconTheme": "Yaru-grey",
       "folderColor": "#0a0a0a",
       "colors": {
@@ -6606,10 +6976,9 @@
       "name": "Snow Black",
       "source": "extra",
       "mode": "dark",
-      "rounding": 8,
       "borders": {
-        "active": "#a6a6a6ff",
-        "inactive": "#101010ff"
+        "active": "#888888",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#c0c0c0",
@@ -6694,9 +7063,9 @@
       "name": "Solarized",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
       "borders": {
-        "active": "#268bd2ff"
+        "active": "#268bd2",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#fdf6e3",
@@ -6766,9 +7135,9 @@
       "name": "Solarized Light",
       "source": "extra",
       "mode": "light",
-      "rounding": 0,
       "borders": {
-        "active": "#2aa198"
+        "active": "#268bd2",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#002b36",
@@ -6838,10 +7207,9 @@
       "name": "Solarized Osaka",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
       "borders": {
-        "active": "#e9e2d0ee",
-        "inactive": "#001c2b88"
+        "active": "#268bd2",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#fcf6e3",
@@ -6911,9 +7279,9 @@
       "name": "Solitude",
       "source": "extra",
       "mode": "dark",
-      "rounding": 6,
       "borders": {
-        "inactive": "#1e1e1e"
+        "active": "#798186",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#cacccc",
@@ -6989,12 +7357,30 @@
       "name": "Space Monkey",
       "source": "extra",
       "mode": "dark",
-      "rounding": 16,
       "borders": {
-        "active": "#a89984de",
-        "inactive": "#a8998480"
+        "active": "#bd4924",
+        "inactive": "#595959aa"
       },
-      "btop": {},
+      "btop": {
+        "title": "#e7aa5a",
+        "hi_fg": "#bd4924",
+        "inactive_fg": "#715026",
+        "div_line": "#715026",
+        "proc_misc": "#e7aa5a",
+        "cpu_box": "#a8a9eb",
+        "mem_box": "#df782d",
+        "net_box": "#fd6883",
+        "proc_box": "#bd4924",
+        "selected_bg": "#f4cc5d",
+        "selected_fg": "#bd4924",
+        "meter_bg": "#f4cc5d",
+        "cpu_start": "#bd4924",
+        "cpu_mid": "#66a891",
+        "cpu_end": "#a8a9eb",
+        "temp_start": "#df782d",
+        "download_mid": "#fd6883",
+        "upload_mid": "#bd4924"
+      },
       "iconTheme": "Yaru-wartybrown",
       "folderColor": "#a08367",
       "colors": {
@@ -7046,9 +7432,9 @@
       "name": "Sunset",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
       "borders": {
-        "active": "#070605ee"
+        "active": "#ffffff",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#ebd2a4",
@@ -7118,10 +7504,9 @@
       "name": "Sunset Drive",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
       "borders": {
-        "active": "#6e6e92",
-        "inactive": "#5c5c5e"
+        "active": "#33a1ff",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#6e6e92",
@@ -7192,10 +7577,9 @@
       "name": "Super Game Bro",
       "source": "extra",
       "mode": "dark",
-      "rounding": 10,
       "borders": {
-        "active": "#699020ff",
-        "inactive": "#416828ff"
+        "active": "#88a827",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#8a8a8d",
@@ -7266,9 +7650,9 @@
       "name": "Synthwave '84",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
       "borders": {
-        "active": "#8f00ff"
+        "active": "#ff00ff",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#ffff66",
@@ -7339,10 +7723,9 @@
       "name": "Temerald",
       "source": "extra",
       "mode": "dark",
-      "rounding": 2,
       "borders": {
-        "active": "#4ade7f",
-        "inactive": "#35332d"
+        "active": "#eaeaea",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#f0fdf4",
@@ -7440,8 +7823,10 @@
       "name": "The Greek",
       "source": "extra",
       "mode": "light",
-      "rounding": 0,
-      "borders": {},
+      "borders": {
+        "active": "#de6a41",
+        "inactive": "#595959aa"
+      },
       "btop": {
         "title": "#272a1f",
         "hi_fg": "#de6a41",
@@ -7515,8 +7900,10 @@
       "name": "Tokyo Night OLED",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
-      "borders": {},
+      "borders": {
+        "active": "#7aa2f7",
+        "inactive": "#595959aa"
+      },
       "btop": {
         "title": "#cfc9c2",
         "hi_fg": "#7dcfff",
@@ -7585,10 +7972,9 @@
       "name": "Tycho",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
       "borders": {
-        "active": "#b4756bee",
-        "inactive": "#1e212588"
+        "active": "#f0e9ec",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#b48162",
@@ -7660,8 +8046,10 @@
       "name": "Van Gogh",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
-      "borders": {},
+      "borders": {
+        "active": "#e6b422",
+        "inactive": "#595959aa"
+      },
       "btop": {
         "title": "#f2e2a4",
         "hi_fg": "#d9822b",
@@ -7738,8 +8126,10 @@
       "name": "Velvet Night",
       "source": "extra",
       "mode": "dark",
-      "rounding": 2,
-      "borders": {},
+      "borders": {
+        "active": "#9099a5",
+        "inactive": "#595959aa"
+      },
       "btop": {
         "title": "#b8b9bc",
         "hi_fg": "#e2687c",
@@ -7810,8 +8200,10 @@
       "name": "Venice from Above",
       "source": "extra",
       "mode": "light",
-      "rounding": 0,
-      "borders": {},
+      "borders": {
+        "active": "#72684b",
+        "inactive": "#595959aa"
+      },
       "btop": {
         "title": "#492924",
         "hi_fg": "#72684b",
@@ -7886,9 +8278,9 @@
       "name": "Vesper",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
       "borders": {
-        "active": "#ffc799"
+        "active": "#acb1ab",
+        "inactive": "#595959aa"
       },
       "btop": {
         "hi_fg": "#ffc799",
@@ -7947,10 +8339,9 @@
       "name": "VHS 80",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
       "borders": {
-        "active": "#8b7f2e",
-        "inactive": "#606060"
+        "active": "#862020",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#2f8383",
@@ -8022,9 +8413,9 @@
       "name": "Void",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
       "borders": {
-        "active": "#2b1b3f"
+        "active": "#bb9af7",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#9266c4",
@@ -8095,8 +8486,10 @@
       "name": "Waffle Cat",
       "source": "extra",
       "mode": "dark",
-      "rounding": 14,
-      "borders": {},
+      "borders": {
+        "active": "#c87d2a",
+        "inactive": "#6b5650"
+      },
       "btop": {
         "title": "#fff4d8",
         "hi_fg": "#c87d2a",
@@ -8171,10 +8564,9 @@
       "name": "Waveform Dark",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
       "borders": {
         "active": "#ff00ff",
-        "inactive": "#4a2020"
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#ff00ff",
@@ -8244,10 +8636,9 @@
       "name": "White Gold",
       "source": "extra",
       "mode": "light",
-      "rounding": 2,
       "borders": {
-        "active": "#2e311a",
-        "inactive": "#a89e86"
+        "active": "#005c32",
+        "inactive": "#595959aa"
       },
       "btop": {
         "title": "#695815",
@@ -8321,8 +8712,10 @@
       "name": "Windows Dark Mode",
       "source": "extra",
       "mode": "dark",
-      "rounding": 0,
-      "borders": {},
+      "borders": {
+        "active": "#0078d4",
+        "inactive": "#595959aa"
+      },
       "btop": {
         "title": "#0078d4",
         "hi_fg": "#c586c0",

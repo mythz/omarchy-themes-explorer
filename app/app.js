@@ -64,6 +64,7 @@
 
   const state = {
     themes: [],
+    rounding: 0,
     /* Community themes from extra-themes.json that are not installed here.
        Everything below treats the two lists identically -- `list` says which
        one `index` is walking -- because an extra theme carries exactly the
@@ -195,9 +196,11 @@
        the real desktop and not the magenta accent. */
     root.setProperty("--logo-ink", t.colors.green || t.colors.accent);
     root.setProperty("--folder", t.folderColor || t.colors.accent);
-    /* Hyprland rounding is in logical px against a 1920-wide screen; the
+    /* Rounding belongs to Omarchy, not to the theme -- every theme's staged
+       hyprland.lua only carries border colours -- so it is one value for the
+       whole list. It is in logical px against a 1920-wide screen, and the
        preview's viewport stands in for that screen, so scale it the same way. */
-    root.setProperty("--radius", (t.rounding || 0) / 19.2 + "vw");
+    root.setProperty("--radius", (state.rounding || 0) / 19.2 + "vw");
     document.body.dataset.mode = t.mode;
 
     const backgrounds = t.backgrounds;
@@ -524,6 +527,7 @@
     .then((data) => {
       state.themes = data.themes;
       state.extra = data.extra || [];
+      state.rounding = data.rounding || 0;
       state.current = data.current;
       buildPicker();
       const wanted = state.wantTheme || data.current;
