@@ -66,6 +66,40 @@
     branch: "",
   };
 
+  /* The status tray, matching what Omarchy's own bar shows on the right:
+     bluetooth, network, volume, display. Inline SVG on currentColor rather
+     than Nerd Font glyphs, so they keep their shape whatever font the theme
+     leaves us with, and take the bar's dimmed foreground like the rest of it. */
+  const TRAY_SVG = {
+    bluetooth:
+      '<svg class="tray-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">' +
+      '<path d="M10.28 2.22A.75.75 0 0 0 9 2.75v5.674L6.223 6.168a.75.75 0 1 0-.946 1.164' +
+      'L8.561 10l-3.284 2.668a.75.75 0 0 0 .946 1.164L9 11.576v5.674a.75.75 0 0 0 1.28.53l4-4' +
+      'a.75.75 0 0 0-.057-1.112L10.939 10l3.284-2.668a.75.75 0 0 0 .057-1.112zm.22 13.22v-3.864' +
+      'l2.132 1.732zm2.132-8.748L10.5 8.424V4.561zM4 10a1 1 0 1 1-2 0a1 1 0 0 1 2 0m13 0' +
+      'a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></svg>',
+    network:
+      '<svg class="tray-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
+      '<path d="M7 15h2v3h2v-3h2v3h2v-3h2v3h2V9h-4V6H9v3H5v9h2zM4.38 3h15.25A2.37 2.37 0 0 1 22 5.38' +
+      'v14.25A2.37 2.37 0 0 1 19.63 22H4.38A2.37 2.37 0 0 1 2 19.63V5.38C2 4.06 3.06 3 4.38 3"/></svg>',
+    speaker:
+      '<svg class="tray-icon" viewBox="0 0 56 56" fill="currentColor" aria-hidden="true">' +
+      '<path d="M48.16 48.934c.717.484 1.665.29 2.227-.503C53.929 43.359 56 36.836 56 29.926' +
+      'S53.91 16.472 50.386 11.4c-.56-.794-1.51-.987-2.226-.484c-.735.503-.851 1.471-.29 2.284' +
+      'c3.116 4.588 5.052 10.472 5.052 16.725c0 6.252-1.877 12.214-5.052 16.724c-.561.794-.445 1.761.29 2.284' +
+      'M21.642 47.6c1.317 0 2.265-.968 2.265-2.265V14.459c0-1.297-.948-2.38-2.303-2.38c-.949 0-1.588.425-2.614 1.393' +
+      'l-8.536 8.072a.76.76 0 0 1-.503.174H4.2c-2.729 0-4.2 1.49-4.2 4.394v7.51c0 2.904 1.471 4.395 4.2 4.395h5.75' +
+      'a.76.76 0 0 1 .503.174l8.536 8.15c.93.87 1.704 1.258 2.652 1.258m18.719-3.95c.754.504 1.684.31 2.226-.464' +
+      'c2.555-3.562 4.026-8.304 4.026-13.26c0-4.974-1.452-9.717-4.026-13.278c-.562-.755-1.472-.949-2.227-.446' +
+      'c-.735.504-.851 1.452-.27 2.284c2.11 3.098 3.406 7.163 3.406 11.44c0 4.278-1.258 8.382-3.426 11.44' +
+      'c-.542.833-.445 1.781.29 2.285m-7.724-5.226c.658.465 1.607.31 2.168-.445c1.51-2.032 2.42-5.013 2.42-8.053' +
+      'c0-3.038-.93-6-2.42-8.071c-.561-.755-1.49-.91-2.168-.446c-.852.562-.949 1.549-.33 2.4c1.124 1.51 1.801 3.814 1.801 6.118' +
+      'c0 2.303-.716 4.607-1.82 6.136c-.58.832-.483 1.78.349 2.361"/></svg>',
+    display:
+      '<svg class="tray-icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">' +
+      '<path d="M0 1v10h16V1zm15 9H1V2h14zm-4.5 2h-5L5 14l-1 1h8l-1-1z"/></svg>',
+  };
+
   const OMARCHY_MARK_SVG =
     '<svg class="oma-mark" viewBox="0 0 1200 1200" fill="currentColor" ' +
     'xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path ' +
@@ -866,8 +900,7 @@
       "</div>" +
       '<div class="bar-clock">Wednesday 17:52</div>' +
       '<div class="bar-tray">' +
-        "<span>" + GLYPH.plug + "</span><span>" + GLYPH.db + "</span>" +
-        "<span>" + GLYPH.music + "</span><span>" + GLYPH.bolt + "</span>" +
+        TRAY_SVG.bluetooth + TRAY_SVG.network + TRAY_SVG.speaker + TRAY_SVG.display +
       "</div>"
     );
   }
