@@ -805,14 +805,6 @@ body[data-mode="light"] {
   width: 1.9em;
   height: 1.5em;
 }
-/* Three shapes with nothing in common -- a bar that fills its box's width, a
-   frame that fills it, and a cross that uses half of it -- so each is scaled to
-   put the same amount of ink on screen. */
-/* The bar sits at 76% down its own viewBox, so it needs lifting to read as
-   centred in the button. */
-.vs-ico-min { width: 0.90em; height: 0.90em; transform: translateY(-0.23em); }
-.vs-ico-restore { width: 0.79em; height: 0.79em; }
-.vs-ico-close { width: 1.44em; height: 1.44em; }
 
 .vs-top { flex: 1; display: flex; min-height: 0; }
 .vs-rail {
@@ -841,6 +833,14 @@ body[data-mode="light"] {
 .vs-ico-debug    { width: 1.71em; height: 1.71em; }
 .vs-ico-ext      { width: 1.71em; height: 1.71em; }
 .vs-ico-settings { width: 1.83em; height: 1.83em; }
+
+/* Window controls. Three shapes with nothing in common -- a bar that fills its
+   viewBox's width, a frame that fills it, and a cross that uses half of it --
+   so each is scaled to put the same ink on screen. Declared after .vs-ico,
+   which is the same specificity and would otherwise win. */
+.vs-ico-min { width: 0.90em; height: 0.90em; transform: translateY(-0.23em); }
+.vs-ico-restore { width: 0.72em; height: 0.72em; }
+.vs-ico-close { width: 1.30em; height: 1.30em; }
 .vs-ico-logo     { width: 1.35em; height: 1.35em; flex: 0 0 auto; }
 
 /* The command centre's magnifier sits on a text line, not on its own row. */
