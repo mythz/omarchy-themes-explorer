@@ -198,6 +198,17 @@
       'H18v-.02c2.42-1.83 4-4.72 4-7.98c0-5.51-4.49-10-10-10M8.18 19.02C8.59 17.85 9.69 17 11 17h2' +
       'c1.31 0 2.42.85 2.82 2.02c-1.14.62-2.44.98-3.82.98s-2.69-.35-3.82-.98m9.3-1.21c-.81-1.66-2.51-2.82-4.48-2.82' +
       'h-2c-1.97 0-3.66 1.16-4.48 2.82A7.96 7.96 0 0 1 4 11.99c0-4.41 3.59-8 8-8s8 3.59 8 8c0 2.29-.97 4.36-2.52 5.82"/></svg>',
+    minimize:
+      '<svg class="vs-ico vs-ico-min" viewBox="0 0 640 640" fill="currentColor" aria-hidden="true">' +
+      '<path d="M64 488c0-13.3 10.7-24 24-24h464c13.3 0 24 10.7 24 24s-10.7 24-24 24H88c-13.3 0-24-10.7-24-24"/></svg>',
+    restore:
+      '<svg class="vs-ico vs-ico-restore" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
+      '<path d="M23 2v16h-1v1h-2v-2h1V3H7v1H5V2h1V1h16v1z"/>' +
+      '<path d="M18 6V5H2v1H1v16h1v1h16v-1h1V6ZM3 21V7h14v14Z"/></svg>',
+    close:
+      '<svg class="vs-ico vs-ico-close" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">' +
+      '<path d="M17.414 16L24 9.414L22.586 8L16 14.586L9.414 8L8 9.414L14.586 16L8 22.586L9.414 24L16 17.414' +
+      'L22.586 24L24 22.586z"/></svg>',
     settings:
       '<svg class="vs-ico vs-ico-settings" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">' +
       '<path d="M8 6a2 2 0 1 0 0 4a2 2 0 0 0 0-4M7 8a1 1 0 1 1 2 0a1 1 0 0 1-2 0m3.618-3.602a.71.71 0 0 1-.824-.567' +
@@ -1039,8 +1050,9 @@
           '<span class="vs-menu">File</span><span class="vs-menu">Edit</span>' +
           '<span class="vs-menu">Selection</span><span class="vs-menu">\u22ef</span>' +
           '<div class="vs-centre">' + VSCODE_SVG.search + " omarchy-themes</div>" +
-          '<span class="vs-wctl">\u2500</span><span class="vs-wctl">\u25a1</span>' +
-          '<span class="vs-wctl">\u2715</span>' +
+          '<span class="vs-wctl">' + VSCODE_SVG.minimize + "</span>" +
+          '<span class="vs-wctl">' + VSCODE_SVG.restore + "</span>" +
+          '<span class="vs-wctl vs-wctl-close">' + VSCODE_SVG.close + "</span>" +
         "</div>" +
         '<div class="vs-top">' +
           '<div class="vs-rail">' +

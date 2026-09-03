@@ -796,7 +796,23 @@ body[data-mode="light"] {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.vs-wctl { color: var(--fg); flex: 0 0 auto; font-size: 0.85em; }
+.vs-wctl {
+  color: var(--fg);
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.9em;
+  height: 1.5em;
+}
+/* Three shapes with nothing in common -- a bar that fills its box's width, a
+   frame that fills it, and a cross that uses half of it -- so each is scaled to
+   put the same amount of ink on screen. */
+/* The bar sits at 76% down its own viewBox, so it needs lifting to read as
+   centred in the button. */
+.vs-ico-min { width: 0.90em; height: 0.90em; transform: translateY(-0.23em); }
+.vs-ico-restore { width: 0.79em; height: 0.79em; }
+.vs-ico-close { width: 1.44em; height: 1.44em; }
 
 .vs-top { flex: 1; display: flex; min-height: 0; }
 .vs-rail {
