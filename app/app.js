@@ -266,10 +266,28 @@
     if (row) jump(row.dataset.list, +row.dataset.index);
   });
 
-  /* Bring the selected row into view whenever the list opens. */
-  $("themeWrap").addEventListener("mouseenter", () => {
+  /* The lists open from the theme name or the palette beside it, and close on a
+     timer so that crossing the gap between them -- or the seam between the two
+     lists -- does not shut them. Any of the regions cancels a pending close. */
+  const HOVER_GRACE = 260;
+  let closeTimer;
+
+  function openPicker() {
+    clearTimeout(closeTimer);
+    if ($("themeWrap").classList.contains("is-open")) return;
+    $("themeWrap").classList.add("is-open");
     const row = $("picker").querySelector(".picker-item.on");
     if (row) row.scrollIntoView({ block: "nearest" });
+  }
+
+  function closePickerSoon() {
+    clearTimeout(closeTimer);
+    closeTimer = setTimeout(() => $("themeWrap").classList.remove("is-open"), HOVER_GRACE);
+  }
+
+  [$("themeWrap"), $("swatches"), $("picker")].forEach((el) => {
+    el.addEventListener("mouseenter", openPicker);
+    el.addEventListener("mouseleave", closePickerSoon);
   });
 
   /* ── toast ───────────────────────────────────────────────────────── */

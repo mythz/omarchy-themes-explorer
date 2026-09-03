@@ -823,18 +823,20 @@ html, body {
   padding-top: 10px;         /* bridges the gap so hover is continuous */
   opacity: 0;
   pointer-events: none;
-  /* The delay is on closing only -- the open rule below zeroes it -- so the
-     lists survive the moment the pointer spends on neither trigger while
-     travelling from the swatches down into them. */
-  transition: opacity 0.14s ease 0.22s, transform 0.14s ease 0.22s;
+  transition: opacity 0.14s ease, transform 0.14s ease;
 }
-.hud-theme-wrap:hover .picker,
-.hud:has(.hud-swatches:hover) .picker,
-.picker:hover {
+
+/* Held open by a class rather than :hover. The trigger is two elements with a
+   strip of HUD between them (the theme name and the palette), so the pointer
+   is briefly over neither on the way down into the list -- and a CSS-only
+   version cannot survive that: `pointer-events` reverts the instant the hover
+   is lost, no matter what delay `opacity` carries, so the popover stops being
+   hoverable before the pointer arrives. app.js closes it on a short timer that
+   any of the three regions cancels. */
+.hud-theme-wrap.is-open .picker {
   opacity: 1;
   pointer-events: auto;
   transform: translateX(-50%) translateY(0);
-  transition-delay: 0s;
 }
 
 /* The extras hang off the right edge instead of joining a flex row, so that
