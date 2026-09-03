@@ -299,8 +299,26 @@
     "g"
   );
 
+  /* A doc comment is three scopes, not one: the tag, the {type} beside it, and
+     the name that follows -- treesitter reports @keyword, @type and
+     @variable.parameter, and both editors colour them differently from the
+     prose. Only the tags that actually take a name claim one, so the `A` in
+     "@returns {string} A 32-character string" stays prose. */
+  const DOC_TAG = /(@\w+)([ \t]*)(\{[^}]*\})?([ \t]*)([A-Za-z_$][\w$]*)?/g;
+  const NAMED_TAGS = /^@(param|arg|argument|property|prop)$/;
+
   function highlightComment(text) {
-    return esc(text).replace(/@\w+/g, (m) => '<span class="t-tag">' + m + "</span>");
+    return esc(text).replace(DOC_TAG, function (all, tag, gap1, type, gap2, name) {
+      let out = '<span class="t-tag">' + tag + "</span>" + gap1;
+      if (type) out += '<span class="t-doctype">' + type + "</span>";
+      out += gap2 || "";
+      if (name) {
+        out += NAMED_TAGS.test(tag)
+          ? '<span class="t-docname">' + name + "</span>"
+          : name;
+      }
+      return out;
+    });
   }
 
   /* Highlights one line of TS; `state` carries block-comment continuation. */

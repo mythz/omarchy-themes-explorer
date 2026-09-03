@@ -515,6 +515,9 @@ SYNTAX_SCOPES = {
     "var": "variable",
     "prop": "variable.other.property",
     "objkey": "meta.object-literal.key",
+    "docTag": "storage.type.class.jsdoc",
+    "docType": "entity.name.type.instance.jsdoc",
+    "docName": "variable.other.jsdoc",
     "cst": "variable.other.constant",
     "bool": "constant.language.boolean",
 }
@@ -562,6 +565,9 @@ SYNTAX_TEMPLATE = {
     "var": "foreground",         # variable
     "prop": "cyan",              # variable.other.property
     "objkey": "foreground",      # meta.object-literal.key
+    "docTag": "bright_magenta",  # @param / @returns
+    "docType": "yellow",         # the {type} beside it
+    "docName": "foreground",     # the name after the type
     "cst": "bright_yellow",      # variable.other.constant
     "bool": "orange",            # constant.language.boolean
 }
