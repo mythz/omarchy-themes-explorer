@@ -140,6 +140,26 @@ moves it off 8777.
 
 ## Extra themes
 
+Hovering the theme name opens two columns: **Installed themes**, which the
+button applies with `omarchy theme set`, and **Extra themes** — everything in
+`extra-themes.json` that is not installed here. Picking one previews it exactly
+like an installed theme, wallpaper included (loaded straight from GitHub), and
+the button changes from *Set as current theme* to **Install theme**, which runs
+`omarchy theme install` on the repo. That clones and applies it, so the theme
+moves into the installed column and becomes current in one step.
+
+The slug is what ties the two lists together: the build script derives it the
+same way `omarchy-theme-install` does, so a theme you have already installed
+drops out of the extra column instead of appearing twice. The page sends only
+that slug — the URL handed to `git clone` is looked up in the shipped
+`extra-themes.json`, never taken from the request, and an install over an
+already-installed slug is refused, since `omarchy-theme-install` would `rm -rf`
+the local copy first.
+
+The column simply does not appear when `extra-themes.json` is missing.
+
+### Building the list
+
 `extra-themes.json` describes every community theme listed in [the Omarchy
 manual's Extra Themes page][extra], in the same shape `/api/themes` returns for
 installed ones -- palette, mode, corner rounding, icon theme, folder colour --

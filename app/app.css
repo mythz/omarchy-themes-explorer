@@ -808,12 +808,17 @@ html, body {
    the rest of the HUD; the per-theme swatches carry the colour. */
 .hud-theme-wrap { position: relative; }
 
+/* Left-aligned rather than centred on the theme name: with the extra-themes
+   column open this is 560px wide, and the HUD now sits at the left edge of the
+   screen, so centring would push half of it off-screen. */
 .picker {
   position: absolute;
   top: 100%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-6px);
-  width: 272px;
+  left: 0;
+  transform: translateY(-6px);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
   padding-top: 10px;         /* bridges the gap so hover is continuous */
   opacity: 0;
   pointer-events: none;
@@ -823,8 +828,10 @@ html, body {
 .picker:hover {
   opacity: 1;
   pointer-events: auto;
-  transform: translateX(-50%) translateY(0);
+  transform: translateY(0);
 }
+
+.picker-col { width: 272px; flex: 0 0 auto; }
 
 .picker-head {
   padding: 9px 12px 7px;

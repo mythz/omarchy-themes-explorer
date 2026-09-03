@@ -22,6 +22,10 @@ APP_DIR = Path(__file__).resolve().parent
 # The launcher ships alongside the app inside the plugin folder, so the
 # server never depends on anything having been installed onto PATH.
 LAUNCHER = APP_DIR.parent / "bin/omarchy-themes-explorer"
+# Built by scripts/build-extra-themes.py and committed, so a fresh clone of the
+# plugin already has it. Absent is a normal state, not an error: the page just
+# does not offer the second column.
+EXTRA_THEMES = APP_DIR.parent / "extra-themes.json"
 USER_THEMES = HOME / ".config/omarchy/themes"
 STOCK_THEMES = Path(os.environ.get("OMARCHY_PATH", "/usr/share/omarchy")) / "themes"
 USER_BACKGROUNDS = HOME / ".config/omarchy/backgrounds"
@@ -280,6 +284,42 @@ def discover_themes():
     return themes
 
 
+def extra_themes(installed):
+    """Community themes from extra-themes.json that are not installed here.
+
+    A slug that exists locally is dropped rather than shown twice: the local
+    copy is the one the page can actually apply, and `omarchy theme install`
+    would overwrite it. Slugs match because the build script derives them the
+    same way omarchy-theme-install does.
+    """
+    try:
+        with open(EXTRA_THEMES, "rb") as f:
+            data = json.load(f)
+    except (OSError, ValueError):
+        return []
+    themes = data.get("themes")
+    if not isinstance(themes, list):
+        return []
+    return [
+        t
+        for t in themes
+        if isinstance(t, dict) and t.get("slug") and t["slug"] not in installed
+    ]
+
+
+def extra_repo(slug):
+    """The clone URL we published for this slug, or "" if we did not publish one.
+
+    The page sends a slug and never a URL: the thing about to be handed to
+    `git clone` has to come from a file we shipped, not from the request.
+    """
+    for theme in extra_themes(set()):
+        if theme["slug"] == slug:
+            repo = theme.get("repo") or ""
+            return repo if re.fullmatch(r"https://github\.com/[\w.-]+/[\w.-]+", repo) else ""
+    return ""
+
+
 def current_slug():
     try:
         return CURRENT_NAME.read_text().strip()
@@ -325,7 +365,14 @@ class Handler(BaseHTTPRequestHandler):
         query = parse_qs(url.query)
 
         if url.path == "/api/themes":
-            self.send_json({"current": current_slug(), "themes": discover_themes()})
+            themes = discover_themes()
+            self.send_json(
+                {
+                    "current": current_slug(),
+                    "themes": themes,
+                    "extra": extra_themes({t["slug"] for t in themes}),
+                }
+            )
             return
 
         if url.path == "/api/background":
@@ -370,7 +417,7 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json({"ok": False, "error": str(ex)}, 500)
             return
 
-        if path != "/api/apply":
+        if path not in ("/api/apply", "/api/install"):
             self.send_error(404)
             return
         length = int(self.headers.get("Content-Length") or 0)
@@ -384,6 +431,46 @@ class Handler(BaseHTTPRequestHandler):
         if not re.fullmatch(r"[a-z0-9][a-z0-9._-]*", slug):
             self.send_json({"ok": False, "error": "unknown theme"}, 400)
             return
+
+        # Cloning a theme someone else wrote, so the URL is looked up by slug in
+        # the file we shipped rather than taken from the request. `omarchy theme
+        # install` clones it and then applies it, which is why this answers with
+        # the same fields as /api/apply.
+        if path == "/api/install":
+            repo = extra_repo(slug)
+            if not repo:
+                self.send_json({"ok": False, "error": "not a known extra theme"}, 404)
+                return
+            # omarchy-theme-install rm -rf's an existing theme of the same name
+            # before cloning. The page never offers this -- an installed slug is
+            # filtered out of the extra list -- so reaching here means a request
+            # the UI cannot produce, and it must not eat a local theme.
+            if any((root / slug).is_dir() for root in (USER_THEMES, STOCK_THEMES)):
+                self.send_json({"ok": False, "error": "already installed"}, 409)
+                return
+            try:
+                done = subprocess.run(
+                    ["omarchy", "theme", "install", repo],
+                    capture_output=True,
+                    text=True,
+                    timeout=600,
+                )
+            except (OSError, subprocess.SubprocessError) as ex:
+                self.send_json({"ok": False, "error": str(ex)}, 500)
+                return
+            installed = any((root / slug).is_dir() for root in (USER_THEMES, STOCK_THEMES))
+            ok = done.returncode == 0 and installed
+            self.send_json(
+                {
+                    "ok": ok,
+                    "current": current_slug(),
+                    "themes": discover_themes(),
+                    "error": None if ok else (done.stderr or done.stdout).strip(),
+                },
+                200 if ok else 500,
+            )
+            return
+
         if not any((root / slug).is_dir() for root in (USER_THEMES, STOCK_THEMES)):
             self.send_json({"ok": False, "error": "theme not installed"}, 404)
             return

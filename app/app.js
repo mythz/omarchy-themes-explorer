@@ -64,6 +64,13 @@
 
   const state = {
     themes: [],
+    /* Community themes from extra-themes.json that are not installed here.
+       Everything below treats the two lists identically -- `list` says which
+       one `index` is walking -- because an extra theme carries exactly the
+       fields an installed one does. The only thing it cannot do is be applied,
+       so the apply button offers to install it instead. */
+    extra: [],
+    list: "installed",
     index: 0,
     current: "",
     layout: Object.assign({}, DEFAULT_LAYOUT),
@@ -118,7 +125,7 @@
         JSON.stringify({
           layout: state.layout,
           focus: state.focus,
-          theme: (state.themes[state.index] || {}).slug,
+          theme: (theme() || {}).slug,
         })
       );
     } catch (e) {
@@ -128,8 +135,16 @@
 
   /* ── rendering ───────────────────────────────────────────────────── */
 
+  function activeList() {
+    return state.list === "extra" ? state.extra : state.themes;
+  }
+
   function theme() {
-    return state.themes[state.index];
+    return activeList()[state.index];
+  }
+
+  function isExtra() {
+    return state.list === "extra";
   }
 
   function paint() {
@@ -168,7 +183,7 @@
 
     $("themeName").textContent = t.name;
     $("themeMeta").textContent =
-      t.mode + " · " + t.source + " · " + (state.index + 1) + "/" + state.themes.length;
+      t.mode + " · " + t.source + " · " + (state.index + 1) + "/" + activeList().length;
 
     $("swatches").innerHTML = ["accent", "red", "yellow", "green", "cyan", "blue", "magenta"]
       .map((k) => '<i style="background:' + t.colors[k] + '"></i>')
@@ -176,9 +191,13 @@
 
     markPicker();
 
-    const isCurrent = t.slug === state.current;
+    const isCurrent = !isExtra() && t.slug === state.current;
     const apply = $("apply");
-    apply.textContent = isCurrent ? "✓ Current theme" : "Set as current theme";
+    apply.textContent = isExtra()
+      ? "Install theme"
+      : isCurrent
+      ? "✓ Current theme"
+      : "Set as current theme";
     apply.classList.toggle("is-current", isCurrent);
     $("cycleBg").disabled = backgrounds.length < 2;
 
@@ -186,15 +205,16 @@
   }
 
   function go(delta) {
-    if (!state.themes.length) return;
-    const n = state.themes.length;
+    const n = activeList().length;
+    if (!n) return;
     state.index = (((state.index + delta) % n) + n) % n;
     paint();
     save();
   }
 
-  function jump(index) {
-    state.index = Math.max(0, Math.min(state.themes.length - 1, index));
+  function jump(list, index) {
+    state.list = list;
+    state.index = Math.max(0, Math.min(activeList().length - 1, index));
     paint();
     save();
   }
@@ -203,11 +223,12 @@
 
   const SWATCHES = ["accent", "red", "yellow", "green", "cyan", "blue", "magenta"];
 
-  function buildPicker() {
-    $("pickerList").innerHTML = state.themes
+  function rowsFor(themes, list) {
+    return themes
       .map(
         (t, i) =>
-          '<div class="picker-item" data-index="' + i + '" title="' + esc(t.name) + '">' +
+          '<div class="picker-item" data-list="' + list + '" data-index="' + i +
+          '" title="' + esc(t.name) + '">' +
           '<span class="picker-dots">' +
           SWATCHES.map((k) => '<i style="background:' + t.colors[k] + '"></i>').join("") +
           "</span>" +
@@ -218,24 +239,36 @@
       .join("");
   }
 
-  function markPicker() {
-    const rows = $("pickerList").children;
+  function buildPicker() {
+    $("pickerList").innerHTML = rowsFor(state.themes, "installed");
+    $("extraList").innerHTML = rowsFor(state.extra, "extra");
+    $("extraCol").hidden = !state.extra.length;
+    $("extraHead").textContent = "Extra themes · " + state.extra.length;
+  }
+
+  function markList(el, themes, list) {
+    const rows = el.children;
     for (let i = 0; i < rows.length; i++) {
-      const isCurrent = state.themes[i].slug === state.current;
-      rows[i].classList.toggle("on", i === state.index);
+      const isCurrent = list === "installed" && themes[i].slug === state.current;
+      rows[i].classList.toggle("on", list === state.list && i === state.index);
       rows[i].classList.toggle("current", isCurrent);
       rows[i].lastElementChild.textContent = isCurrent ? "current" : "";
     }
   }
 
-  $("pickerList").addEventListener("click", (e) => {
+  function markPicker() {
+    markList($("pickerList"), state.themes, "installed");
+    markList($("extraList"), state.extra, "extra");
+  }
+
+  $("picker").addEventListener("click", (e) => {
     const row = e.target.closest(".picker-item");
-    if (row) jump(+row.dataset.index);
+    if (row) jump(row.dataset.list, +row.dataset.index);
   });
 
   /* Bring the selected row into view whenever the list opens. */
   $("themeWrap").addEventListener("mouseenter", () => {
-    const row = $("pickerList").querySelector(".picker-item.on");
+    const row = $("picker").querySelector(".picker-item.on");
     if (row) row.scrollIntoView({ block: "nearest" });
   });
 
@@ -327,9 +360,48 @@
     paint();
   });
 
+  /* `omarchy theme install` clones the repo and then applies it, so a
+     successful install leaves the theme both installed and current. Rebuild
+     both lists from the server's answer and follow the theme across: it has
+     just moved out of the extra column and into the installed one. */
+  async function installTheme() {
+    const t = theme();
+    if (!t) return;
+    const button = $("apply");
+    button.disabled = true;
+    button.textContent = "Installing…";
+    try {
+      const res = await fetch("/api/install", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ theme: t.slug }),
+      });
+      const data = await res.json();
+      if (data.ok) {
+        state.themes = data.themes || state.themes;
+        state.extra = state.extra.filter((x) => x.slug !== t.slug);
+        state.current = data.current || t.slug;
+        const at = state.themes.findIndex((x) => x.slug === t.slug);
+        state.list = "installed";
+        state.index = at === -1 ? state.index : at;
+        buildPicker();
+        toast(t.name + " installed and applied");
+      } else {
+        toast(data.error || "omarchy theme install failed", true);
+      }
+    } catch (err) {
+      toast("Could not reach the preview server", true);
+    } finally {
+      button.disabled = false;
+      paint();
+      save();
+    }
+  }
+
   async function applyTheme() {
     const t = theme();
     if (!t) return;
+    if (isExtra()) return installTheme();
     const button = $("apply");
     button.disabled = true;
     button.textContent = "Applying…";
@@ -368,8 +440,8 @@
     switch (e.key) {
       case "ArrowLeft": go(-1); break;
       case "ArrowRight": go(1); break;
-      case "Home": jump(0); break;
-      case "End": jump(state.themes.length - 1); break;
+      case "Home": jump(state.list, 0); break;
+      case "End": jump(state.list, activeList().length - 1); break;
       case "Enter": applyTheme(); break;
       case "b": case "B": $("cycleBg").click(); break;
       case "h": case "H": $("hud").classList.toggle("hidden"); break;
@@ -395,10 +467,17 @@
     .then((r) => r.json())
     .then((data) => {
       state.themes = data.themes;
+      state.extra = data.extra || [];
       state.current = data.current;
       buildPicker();
       const wanted = state.wantTheme || data.current;
-      const at = state.themes.findIndex((t) => t.slug === wanted);
+      let at = state.themes.findIndex((t) => t.slug === wanted);
+      if (at === -1) {
+        /* The remembered theme may be one of the extras. */
+        const other = state.extra.findIndex((t) => t.slug === wanted);
+        if (other !== -1) state.list = "extra";
+        at = other;
+      }
       state.index = at === -1 ? 0 : at;
       paint();
     })

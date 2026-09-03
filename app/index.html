@@ -37,8 +37,16 @@
       <div class="hud-meta" id="themeMeta">&nbsp;</div>
     </div>
     <div class="picker" id="picker">
-      <div class="picker-head">Installed themes</div>
-      <div class="picker-list" id="pickerList"></div>
+      <div class="picker-col">
+        <div class="picker-head">Installed themes</div>
+        <div class="picker-list" id="pickerList"></div>
+      </div>
+      <!-- Only shown when extra-themes.json shipped with the plugin and still
+           has entries that are not installed here. -->
+      <div class="picker-col" id="extraCol" hidden>
+        <div class="picker-head" id="extraHead">Extra themes</div>
+        <div class="picker-list" id="extraList"></div>
+      </div>
     </div>
   </div>
   <button class="hud-arrow" id="next" title="Next theme (→)">›</button>
@@ -66,8 +74,9 @@
   <dl>
     <dt>← / →</dt><dd>Previous / next installed theme</dd>
     <dt>Home / End</dt><dd>First / last theme</dd>
-    <dt>Enter</dt><dd>Set the viewed theme as current</dd>
+    <dt>Enter</dt><dd>Set the viewed theme as current — or install it, if it is an extra theme</dd>
     <dt>B</dt><dd>Cycle this theme's backgrounds</dd>
+    <dt>Hover the theme name</dt><dd>Pick from the installed themes, or the extra themes you have not installed</dd>
     <dt>Right click a panel</dt><dd>Swap in a different app</dd>
     <dt>H</dt><dd>Hide / show this control bar</dd>
     <dt>?</dt><dd>Toggle this help</dd>
