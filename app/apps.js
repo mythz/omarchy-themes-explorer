@@ -72,18 +72,18 @@
      leaves us with, and take the bar's dimmed foreground like the rest of it. */
   const TRAY_SVG = {
     bluetooth:
-      '<svg class="tray-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">' +
+      '<svg class="tray-icon tray-bluetooth" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">' +
       '<path d="M10.28 2.22A.75.75 0 0 0 9 2.75v5.674L6.223 6.168a.75.75 0 1 0-.946 1.164' +
       'L8.561 10l-3.284 2.668a.75.75 0 0 0 .946 1.164L9 11.576v5.674a.75.75 0 0 0 1.28.53l4-4' +
       'a.75.75 0 0 0-.057-1.112L10.939 10l3.284-2.668a.75.75 0 0 0 .057-1.112zm.22 13.22v-3.864' +
       'l2.132 1.732zm2.132-8.748L10.5 8.424V4.561zM4 10a1 1 0 1 1-2 0a1 1 0 0 1 2 0m13 0' +
       'a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></svg>',
     network:
-      '<svg class="tray-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
+      '<svg class="tray-icon tray-network" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
       '<path d="M7 15h2v3h2v-3h2v3h2v-3h2v3h2V9h-4V6H9v3H5v9h2zM4.38 3h15.25A2.37 2.37 0 0 1 22 5.38' +
       'v14.25A2.37 2.37 0 0 1 19.63 22H4.38A2.37 2.37 0 0 1 2 19.63V5.38C2 4.06 3.06 3 4.38 3"/></svg>',
     speaker:
-      '<svg class="tray-icon" viewBox="0 0 56 56" fill="currentColor" aria-hidden="true">' +
+      '<svg class="tray-icon tray-speaker" viewBox="0 0 56 56" fill="currentColor" aria-hidden="true">' +
       '<path d="M48.16 48.934c.717.484 1.665.29 2.227-.503C53.929 43.359 56 36.836 56 29.926' +
       'S53.91 16.472 50.386 11.4c-.56-.794-1.51-.987-2.226-.484c-.735.503-.851 1.471-.29 2.284' +
       'c3.116 4.588 5.052 10.472 5.052 16.725c0 6.252-1.877 12.214-5.052 16.724c-.561.794-.445 1.761.29 2.284' +
@@ -96,8 +96,45 @@
       'c0-3.038-.93-6-2.42-8.071c-.561-.755-1.49-.91-2.168-.446c-.852.562-.949 1.549-.33 2.4c1.124 1.51 1.801 3.814 1.801 6.118' +
       'c0 2.303-.716 4.607-1.82 6.136c-.58.832-.483 1.78.349 2.361"/></svg>',
     display:
-      '<svg class="tray-icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">' +
+      '<svg class="tray-icon tray-display" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">' +
       '<path d="M0 1v10h16V1zm15 9H1V2h14zm-4.5 2h-5L5 14l-1 1h8l-1-1z"/></svg>',
+    robot:
+      '<svg class="tray-icon tray-robot" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
+      '<path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1' +
+      'a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73' +
+      'c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2M7.5 13A2.5 2.5 0 0 0 5 15.5A2.5 2.5 0 0 0 7.5 18a2.5 2.5 0 0 0 2.5-2.5' +
+      'A2.5 2.5 0 0 0 7.5 13m9 0a2.5 2.5 0 0 0-2.5 2.5a2.5 2.5 0 0 0 2.5 2.5a2.5 2.5 0 0 0 2.5-2.5a2.5 2.5 0 0 0-2.5-2.5"/></svg>',
+    /* Tailscale's mark is two rows of dots at different opacities. Drawn on
+       currentColor rather than the brand white it ships with, so it dims into
+       the bar with everything else instead of glaring out of a light theme. */
+    tailscale:
+      '<svg class="tray-icon tray-tailscale" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true">' +
+      '<path d="M65.6 318.1c35.3 0 63.9-28.6 63.9-63.9s-28.6-63.9-63.9-63.9S1.8 219 1.8 254.2s28.6 63.9 63.8 63.9' +
+      'm191.6 0c35.3 0 63.9-28.6 63.9-63.9s-28.6-63.9-63.9-63.9s-63.9 28.6-63.9 63.9s28.6 63.9 63.9 63.9' +
+      'm0 193.9c35.3 0 63.9-28.6 63.9-63.9s-28.6-63.9-63.9-63.9s-63.9 28.6-63.9 63.9s28.6 63.9 63.9 63.9' +
+      'm189.2-193.9c35.3 0 63.9-28.6 63.9-63.9s-28.6-63.9-63.9-63.9s-63.9 28.6-63.9 63.9s28.6 63.9 63.9 63.9"/>' +
+      '<path opacity=".5" d="M65.6 127.7c35.3 0 63.9-28.6 63.9-63.9S100.9 0 65.6 0S1.8 28.6 1.8 63.9s28.6 63.8 63.8 63.8' +
+      'm0 384.3c35.3 0 63.9-28.6 63.9-63.9s-28.6-63.9-63.9-63.9s-63.8 28.7-63.8 63.9S30.4 512 65.6 512' +
+      'm191.6-384.3c35.3 0 63.9-28.6 63.9-63.9S292.5 0 257.2 0s-63.9 28.6-63.9 63.9s28.6 63.8 63.9 63.8' +
+      'm189.2 0c35.3 0 63.9-28.6 63.9-63.9S481.6 0 446.4 0c-35.3 0-63.9 28.6-63.9 63.9s28.6 63.8 63.9 63.8' +
+      'm0 384.3c35.3 0 63.9-28.6 63.9-63.9s-28.6-63.9-63.9-63.9s-63.9 28.6-63.9 63.9s28.6 63.9 63.9 63.9"/></svg>',
+    chevron:
+      '<svg class="tray-icon tray-chevron" viewBox="0 0 1024 1024" fill="currentColor" aria-hidden="true">' +
+      '<path d="M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 0 0 0 50.3l450.8 352.1' +
+      'c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281l360-281.1c3.8-3 6.1-7.7 6.1-12.6"/></svg>',
+    coffee:
+      '<svg class="tray-icon tray-coffee" viewBox="0 0 640 640" fill="currentColor" aria-hidden="true">' +
+      '<path d="M96 128c0-17.7 14.3-32 32-32h352c70.7 0 128 57.3 128 128s-57.3 128-128 128c0 53-43 96-96 96' +
+      'H192c-53 0-96-43-96-96zm448 96c0-35.3-28.7-64-64-64v128c35.3 0 64-28.7 64-64M96 512h384c17.7 0 32 14.3 32 32' +
+      's-14.3 32-32 32H96c-17.7 0-32-14.3-32-32s14.3-32 32-32"/></svg>',
+    cloud:
+      '<svg class="tray-icon tray-cloud" viewBox="0 0 1024 1024" fill="currentColor" aria-hidden="true">' +
+      '<path d="M811.4 418.7C765.6 297.9 648.9 212 512.2 212S258.8 297.8 213 418.6C127.3 441.1 64 519.1 64 612' +
+      'c0 110.5 89.5 200 199.9 200h496.2C870.5 812 960 722.5 960 612c0-92.7-63.1-170.7-148.6-193.3' +
+      'm36.3 281a123.07 123.07 0 0 1-87.6 36.3H263.9c-33.1 0-64.2-12.9-87.6-36.3A123.3 123.3 0 0 1 140 612' +
+      'c0-28 9.1-54.3 26.2-76.3a125.7 125.7 0 0 1 66.1-43.7l37.9-9.9l13.9-36.6c8.6-22.8 20.6-44.1 35.7-63.4' +
+      'a245.6 245.6 0 0 1 52.4-49.9c41.1-28.9 89.5-44.2 140-44.2s98.9 15.3 140 44.2c19.9 14 37.5 30.8 52.4 49.9' +
+      'c15.1 19.3 27.1 40.7 35.7 63.4l13.8 36.5l37.8 10c54.3 14.5 92.1 63.8 92.1 120c0 33.1-12.9 64.3-36.3 87.7"/></svg>',
   };
 
   const OMARCHY_MARK_SVG =
@@ -898,8 +935,13 @@
         '<div class="bar-ws">' + ws + "</div>" +
         '<div class="bar-theme">' + GLYPH.brush + " " + esc(theme.name) + "</div>" +
       "</div>" +
-      '<div class="bar-clock">Wednesday 17:52</div>' +
+      '<div class="bar-clock">' +
+        TRAY_SVG.coffee + TRAY_SVG.cloud + "<span>Wednesday 17:52</span>" +
+      "</div>" +
       '<div class="bar-tray">' +
+        TRAY_SVG.chevron +
+        '<span class="tray-glyph">' + GLYPH.brush + "</span>" +
+        TRAY_SVG.tailscale + TRAY_SVG.robot +
         TRAY_SVG.bluetooth + TRAY_SVG.network + TRAY_SVG.speaker + TRAY_SVG.display +
       "</div>"
     );

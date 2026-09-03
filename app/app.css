@@ -177,19 +177,33 @@ html, body {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 0.55em;
   color: var(--fg-bright);
   white-space: nowrap;
   pointer-events: none;
 }
 .bar-tray { display: flex; align-items: center; gap: 0.85em; color: var(--fg-dark); }
-/* Sized off the bar's font like the glyphs they replace. The four come from
-   different sets and fill their viewBoxes by different amounts (the speaker's
-   ink is 68% of its box, the monitor's 87%), so each is scaled to land on the
-   same optical height instead of the same nominal one. */
+/* Sized off the bar's font like the glyphs they replace. They come from
+   different icon sets and fill their viewBoxes by very different amounts (the
+   cloud's ink is 59% of its box, Tailscale's 100%), so each is scaled to land
+   on the same optical height -- about 0.8em of ink -- instead of the same
+   nominal one. Keyed by class, not viewBox: several now share a viewBox. */
 .tray-icon { display: block; width: 1em; height: 1em; }
-.tray-icon[viewBox="0 0 20 20"] { width: 1.06em; height: 1.06em; }   /* bluetooth */
-.tray-icon[viewBox="0 0 56 56"] { width: 1.18em; height: 1.18em; }   /* speaker */
-.tray-icon[viewBox="0 0 16 16"] { width: 0.92em; height: 0.92em; }   /* display */
+.tray-bluetooth { width: 1.06em; height: 1.06em; }
+.tray-network   { width: 1.01em; height: 1.01em; }
+.tray-speaker   { width: 1.18em; height: 1.18em; }
+.tray-display   { width: 0.92em; height: 0.92em; }
+.tray-robot     { width: 0.88em; height: 0.88em; }
+.tray-tailscale { width: 0.80em; height: 0.80em; }
+.tray-chevron   { width: 1.09em; height: 1.09em; }
+.tray-coffee    { width: 1.07em; height: 1.07em; }
+.tray-cloud     { width: 1.37em; height: 1.37em; }
+
+/* The one that stays a font glyph: it is Themes Explorer's own bar icon, and
+   it should be the same paintbrush the real widget draws. */
+.tray-glyph { font-family: var(--mono); font-size: 0.85em; line-height: 1; }
 
 /* ── shared terminal chrome ──────────────────────────────────────────── */
 
