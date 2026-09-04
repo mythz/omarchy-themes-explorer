@@ -57,7 +57,7 @@ RESTORE_AFTER_BACKGROUNDS = {"right-top": "fastfetch", "right-bottom": "ls"}
 # The menu is demonstrated once, slowly, at the top of the film. Every swap
 # after that happens without it: the audience has seen how, and thirty-odd
 # themes of the same menu opening is thirty-odd themes of nothing new.
-SCENE_PAUSE = 3.0
+SCENE_PAUSE = 2.0
 
 # How long the pointer rests on a control before pressing it, so the button
 # being used is the one the eye is on -- and long enough for its tooltip.
@@ -180,6 +180,41 @@ class Driver:
             selector, fx, fy,
         )
 
+    RIPPLE = """
+      (function (x, y) {
+        if (!document.getElementById('demo-ripple-style')) {
+          const style = document.createElement('style');
+          style.id = 'demo-ripple-style';
+          style.textContent =
+            '@keyframes demo-ripple{from{transform:translate(-50%,-50%) scale(.25);' +
+            'opacity:.9}to{transform:translate(-50%,-50%) scale(1);opacity:0}}' +
+            '.demo-ripple{position:fixed;width:76px;height:76px;border-radius:50%;' +
+            'border:2px solid rgba(255,255,255,.95);box-shadow:0 0 12px rgba(255,255,255,.6),' +
+            'inset 0 0 12px rgba(255,255,255,.35);pointer-events:none;z-index:99999;' +
+            'animation:demo-ripple .55s ease-out forwards}';
+          document.head.appendChild(style);
+        }
+        const dot = document.createElement('div');
+        dot.className = 'demo-ripple';
+        dot.style.left = x + 'px';
+        dot.style.top = y + 'px';
+        document.body.appendChild(dot);
+        setTimeout(function () { dot.remove(); }, 700);
+      })(arguments[0], arguments[1]);
+    """
+
+    def ripple(self, x, y):
+        """A ring where the click lands, so the eye is told what was pressed.
+
+        Injected for the recording rather than shipped in the app: it exists to
+        be filmed, and nobody driving this with a mouse needs to be shown where
+        their own pointer is.
+        """
+        try:
+            self.js(self.RIPPLE, x, y)
+        except Exception:
+            pass
+
     def hover_click(self, selector, dwell):
         """Rest on a control before pressing it."""
         spot = self.centre(selector)
@@ -191,6 +226,7 @@ class Driver:
             {"type": "pointerMove", "duration": 420, "x": spot[0], "y": spot[1]},
         ])
         time.sleep(dwell)
+        self.ripple(spot[0], spot[1])
         self.pointer([
             {"type": "pointerDown", "button": 0},
             {"type": "pointerUp", "button": 0},
@@ -203,6 +239,9 @@ class Driver:
         self.pointer([
             {"type": "pointerMove", "duration": 260, "x": x, "y": y},
             {"type": "pause", "duration": 120},
+        ])
+        self.ripple(x, y)
+        self.pointer([
             {"type": "pointerDown", "button": button},
             {"type": "pointerUp", "button": button},
         ])
@@ -231,6 +270,9 @@ class Driver:
         self.pointer([
             {"type": "pointerMove", "duration": 220, "x": spot[0], "y": spot[1]},
             {"type": "pause", "duration": 90},
+        ])
+        self.ripple(spot[0], spot[1])
+        self.pointer([
             {"type": "pointerDown", "button": button},
             {"type": "pointerUp", "button": button},
         ])
@@ -449,13 +491,36 @@ def run(driver, beat, themes, log):
     rest = themes[1:]
     for number, theme in enumerate(rest, 1):
         log("theme %d/%d: %s" % (number, len(rest), theme["name"]))
-        driver.js(
-            "for (const row of document.querySelectorAll('#pickerList .picker-item'))"
-            "  if (row.querySelector('.picker-name').textContent === arguments[0])"
-            "    { row.click(); return; }",
-            theme["name"],
-        )
-        pause()
+
+        if number == 1:
+            # Shown once, the way a person would: hover the theme name to open
+            # the list, then pick from it. Every theme after this one arrives on
+            # the next arrow, which is the same journey with less ceremony.
+            log("  ...through the picker")
+            spot = driver.centre("#themeWrap")
+            if spot:
+                move_cursor(spot[0], spot[1])
+                driver.pointer([{"type": "pointerMove", "duration": 300,
+                                 "x": spot[0], "y": spot[1]}])
+                time.sleep(1.0)
+            index = driver.js(
+                "const rows=[...document.querySelectorAll('#pickerList .picker-item')];"
+                "return rows.findIndex(r =>"
+                "  r.querySelector('.picker-name').textContent === arguments[0]) + 1;",
+                theme["name"],
+            )
+            if index:
+                driver.js(
+                    "document.querySelector('#pickerList .picker-item:nth-child('"
+                    " + arguments[0] + ')').scrollIntoView({block:'nearest'});",
+                    index,
+                )
+                time.sleep(0.4)
+                driver.click("#pickerList .picker-item:nth-child(%d)" % index)
+            time.sleep(SCENE_PAUSE)
+        else:
+            driver.hover_click("#next", HOVER_DWELL / 3)
+            pause()
 
         # Clear in one step rather than one panel at a time: three panels
         # blanking in sequence is three beats of nothing happening.
@@ -517,8 +582,10 @@ def main():
         raise SystemExit("the preview server did not start on port %d" % args.port)
 
     themes = json.loads(urllib.request.urlopen(url + "api/themes").read())["themes"]
-    order = [t for t in themes if t["slug"] == FIRST_THEME]
-    order += [t for t in themes if t["slug"] != FIRST_THEME]
+    # The next arrow walks the picker's own order, so the tour follows it --
+    # starting at the intro's theme and wrapping around.
+    start = next((i for i, t in enumerate(themes) if t["slug"] == FIRST_THEME), 0)
+    order = themes[start:] + themes[:start]
     order = [{"name": t["name"], "backgrounds": len(t["backgrounds"])} for t in order]
     if args.themes:
         order = order[: args.themes]
