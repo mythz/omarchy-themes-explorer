@@ -43,7 +43,7 @@ PORT = 8799              # the preview server's port for this run
 CHROMEDRIVER_PORT = 9599
 
 
-CENTER_APPS = ["nvim", "vscode", "omenu", "none"]
+CENTER_APPS = ["nvim", "vscode", "omenu"]
 CORNER_APPS = ["nautilus", "lazyvim", "ls"]
 CENTER_SLOT = "center"
 CORNER_SLOT = "right-bottom"
@@ -480,7 +480,6 @@ def run(driver, beat, themes, log):
     log("intro: the centre panel, with the menu")
     for app in CENTER_APPS:
         swap_shown(CENTER_SLOT, app)
-    swap_shown(CENTER_SLOT, "nvim")
 
     log("intro: the bottom-right panel, with the menu")
     for app in CORNER_APPS:
@@ -539,15 +538,15 @@ def run(driver, beat, themes, log):
         # Both panels move on the same beat. Stepping them one after the other
         # was eight holds a theme where five say the same thing, and across
         # twenty-odd themes that is minutes of watching one panel wait for the
-        # other. The corner has fewer apps than the centre, so it simply stops
-        # changing once it runs out rather than looping back through them.
+        # other. The two lists are the same length so the cycle ends cleanly on
+        # the Omarchy menu and eza, and the next theme's clear takes it from
+        # there -- no blanking or restoring back to Neovim in between.
         for index in range(max(len(CENTER_APPS), len(CORNER_APPS))):
             if index < len(CENTER_APPS):
                 swap_quiet(CENTER_SLOT, CENTER_APPS[index], hold=False)
             if index < len(CORNER_APPS):
                 swap_quiet(CORNER_SLOT, CORNER_APPS[index], hold=False)
             pause()
-        swap_quiet(CENTER_SLOT, "nvim")
 
 
 # --- main ---------------------------------------------------------------
