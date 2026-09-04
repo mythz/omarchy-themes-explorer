@@ -8,7 +8,7 @@ Nautilus, LazyVim, Neovim, VS Code, the Omarchy menu and the bar itself — all
 repainted live from a theme's real `colors.toml`. Arrow through your installed
 themes, and apply the one you want without leaving the page.
 
-![Themes Explorer](docs/screenshot.png)
+![Themes Explorer](docs/theme-explorer-default.webp)
 
 ## Install
 
@@ -16,11 +16,22 @@ themes, and apply the one you want without leaving the page.
 omarchy plugin add https://github.com/mythz/omarchy-themes-explorer.git --enable
 ```
 
-Pick the **right** bar section when prompted. Nothing is written outside
-`~/.config/omarchy/plugins/mythz.themes-explorer` — the plugin is self-contained
-and puts nothing on your `PATH`.
+Pick the **right** bar section when prompted. The plugin is self-contained and
+puts nothing on your `PATH`, and it edits no configuration of yours: it writes
+only inside `~/.config/omarchy/plugins/mythz.themes-explorer` and its wallpaper
+thumbnails in `~/.cache/omarchy-themes-explorer`. Applying a theme is
+`omarchy theme set`, which is the same thing the menu does.
 
-Remove it with `omarchy plugin remove mythz.themes-explorer`.
+**Requirements.** Everything it needs ships with Omarchy: Python's standard
+library serves the page, Chrome shows it, and ImageMagick — in
+`omarchy-base.packages` — encodes the wallpaper thumbnails, which are simply
+skipped if it is ever missing. The only thing not already here is
+`chromedriver` (`pacman -S chromedriver`), and that is for the recording
+scripts, not for using the app.
+
+Remove it with `omarchy plugin remove mythz.themes-explorer`. That takes the
+plugin directory with it; `rm -rf ~/.cache/omarchy-themes-explorer` clears the
+thumbnails.
 
 ## Nesting it in the Omarchy menu
 
@@ -54,12 +65,20 @@ exactly like the bar icon.
 |---|---|
 | Click the bar icon | Open, or hide it again |
 | `←` `→` | Previous / next theme |
-| Hover the theme name | Jump straight to any installed theme |
-| `Enter` | Apply the theme you are looking at |
+| `Home` `End` | First / last theme |
+| `B` | Cycle this theme's wallpapers |
+| Hover the theme name or the palette | Pick from the installed themes, or the extra ones |
+| `Enter` | Apply the theme you are looking at — or install it, if it is an extra |
 | Right-click a panel | Swap the app shown there |
+| `H` | Hide the control bar, for an uncluttered look |
 | `Esc` or `✕` | Hide — returns to exactly the layout you left |
 | `Super + W` | Quit the app entirely |
 | `?` | Full key list |
+
+Every row in the list carries the theme's palette as swatches, and a sun on the
+light ones, so a light theme is obvious before you land on it.
+
+![Cycling a theme's wallpapers](docs/theme-explorer-backgrounds.webp)
 
 Right-clicking the bar icon opens it in a normal browser tab instead, which is
 handy for taking screenshots.
@@ -174,6 +193,8 @@ already-installed slug is refused, since `omarchy-theme-install` would `rm -rf`
 the local copy first.
 
 The column simply does not appear when `extra-themes.json` is missing.
+
+![Installed and extra themes side by side](docs/theme-explorer-installed-themes.webp)
 
 ### Wallpaper thumbnails
 
@@ -298,7 +319,7 @@ scripts/record-demo.py --pause 0.6    # quicker
 It switches to an empty workspace, opens the preview full screen on a fixed
 starting layout, and walks it: the shortcuts overlay, four backgrounds, then the
 centre panel and the bottom-right each stepped through their apps **with the
-context menu on screen**, three seconds a scene, right-clicked near the panel's
+context menu on screen**, two seconds a scene, right-clicked near the panel's
 corner so the menu opens beside the content rather than over it.
 
 After that the menu is never shown again. Every later swap goes through the
@@ -307,7 +328,10 @@ visible — the audience has seen how it is done, and thirty-odd themes of the
 same menu opening is thirty-odd themes of nothing new.
 
 After the intro, the centre and the bottom-right change on the same beat rather
-than one after the other — eight holds a theme where five say the same thing.
+than one after the other, and the cycle stops where the next theme wants it: the
+Omarchy menu in the centre, `eza` bottom-right. Eight holds a theme became
+three, since the next theme's clear blanks all of it anyway — 22 installed
+themes run **8:37 rather than 12:15**.
 
 While the backgrounds cycle — in the intro and for every theme after it — the
 centre and both right-hand panels are emptied in one step, leaving the logo and
@@ -409,6 +433,7 @@ you would rather not have it.
 
 ```
 manifest.json                  Omarchy plugin manifest
+preview.png                    the marketplace card image
 BarWidget.qml                  the bar button
 bin/omarchy-themes-explorer    launcher: server lifecycle + window placement
 app/server.py                  static files, theme discovery, apply/hide
@@ -418,7 +443,12 @@ app/apps.js                    the simulated apps
 app/icons.js                   Adwaita icon geometry
 app/tools/build-icons.py       regenerates icons.js from /usr/share/icons
 scripts/build-extra-themes.py  regenerates extra-themes.json from the manual
+scripts/record-demo.py         films the installed themes; owns the choreography
+scripts/record-extra.py        films the community themes
+scripts/record-open.py         films the opening beat, to stitch in front
+scripts/record-open-extra.py   the same opening, for the community film
 extra-themes.json              the community themes, ready to preview
+docs/                          the screenshots this README uses
 ```
 
 ## License
