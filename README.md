@@ -8,7 +8,10 @@ Nautilus, LazyVim, Neovim, VS Code, the Omarchy menu and the bar itself — all
 repainted live from a theme's real `colors.toml`. Arrow through your installed
 themes, and apply the one you want without leaving the page.
 
-![Themes Explorer](docs/theme-explorer-default.webp)
+[![Themes Explorer](docs/theme-explorer-default.webp)](https://youtu.be/WE7D5nX9e3E)
+
+▶ **[Try On Every Omarchy Theme Before You Switch](https://youtu.be/WE7D5nX9e3E)** — all 22 installed
+themes, filmed by the plugin's own [recording script](#recording-a-demo).
 
 ## Install
 
@@ -316,8 +319,9 @@ scripts/record-demo.py --themes 3     # only the first three themes
 scripts/record-demo.py --pause 0.6    # quicker
 ```
 
-It switches to an empty workspace, opens the preview full screen on a fixed
-starting layout, and walks it: the shortcuts overlay, four backgrounds, then the
+The film at the top of this page is one run of it. It switches to an empty
+workspace, opens the preview full screen on a fixed starting layout, and walks
+it: the shortcuts overlay, four backgrounds, then the
 centre panel and the bottom-right each stepped through their apps **with the
 context menu on screen**, two seconds a scene, right-clicked near the panel's
 corner so the menu opens beside the content rather than over it.
