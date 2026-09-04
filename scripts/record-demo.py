@@ -48,11 +48,11 @@ CORNER_APPS = ["nautilus", "lazyvim", "ls"]
 CENTER_SLOT = "center"
 CORNER_SLOT = "right-bottom"
 
-# Emptied together -- in one step, not one after another -- before the
-# backgrounds, leaving the two on the right and most of the wallpaper visible
-# while it cycles.
-CLEARED_SLOTS = ["center", "left-top", "left-bottom"]
-RESTORE_AFTER_BACKGROUNDS = {"left-top": "logo", "left-bottom": "btop"}
+# Emptied together -- in one step, not one after another -- while the
+# backgrounds cycle, leaving the logo and btop down the left and the rest of
+# the screen to the wallpaper.
+CLEARED_SLOTS = ["center", "right-top", "right-bottom"]
+RESTORE_AFTER_BACKGROUNDS = {"right-top": "fastfetch", "right-bottom": "ls"}
 
 # The menu is demonstrated once, slowly, at the top of the film. Every swap
 # after that happens without it: the audience has seen how, and thirty-odd
@@ -383,9 +383,15 @@ def run(driver, beat, themes, log):
     pause()
 
     log("intro: four backgrounds")
-    for _ in range(4):
-        driver.hover_click("#cycleBg", HOVER_DWELL if _ == 0 else HOVER_DWELL / 3)
+    for slot in CLEARED_SLOTS:
+        swap_quiet(slot, "none", hold=False)
+    pause()
+    for index in range(4):
+        driver.hover_click("#cycleBg", HOVER_DWELL if index == 0 else HOVER_DWELL / 3)
         pause()
+    for slot, app in RESTORE_AFTER_BACKGROUNDS.items():
+        swap_quiet(slot, app, hold=False)
+    pause()
 
     log("intro: the centre panel, with the menu")
     for app in CENTER_APPS:
@@ -396,8 +402,11 @@ def run(driver, beat, themes, log):
     for app in CORNER_APPS:
         swap_shown(CORNER_SLOT, app)
 
-    for number, theme in enumerate(themes, 1):
-        log("theme %d/%d: %s" % (number, len(themes), theme["name"]))
+    # The intro was the first theme's pass, menu and all, so the silent loop
+    # picks up at the second one.
+    rest = themes[1:]
+    for number, theme in enumerate(rest, 1):
+        log("theme %d/%d: %s" % (number, len(rest), theme["name"]))
         driver.js(
             "for (const row of document.querySelectorAll('#pickerList .picker-item'))"
             "  if (row.querySelector('.picker-name').textContent === arguments[0])"

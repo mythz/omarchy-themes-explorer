@@ -306,9 +306,10 @@ app's own handlers with the menu suppressed for the instant it would be
 visible — the audience has seen how it is done, and thirty-odd themes of the
 same menu opening is thirty-odd themes of nothing new.
 
-Each theme then empties the centre and both right-hand panels before cycling its
-backgrounds, so the wallpaper plays against as much of the screen as the layout
-can give it, and only then steps the panels through their apps.
+While the backgrounds cycle — in the intro and for every theme after it — the
+centre and both right-hand panels are emptied in one step, leaving the logo and
+btop down the left and the rest of the screen to the wallpaper. The intro is the
+first theme's pass, so the silent loop picks up at the second one.
 
 The page is driven through WebDriver rather than by synthesising input into the
 compositor: every step is a real click at real coordinates with the cursor
