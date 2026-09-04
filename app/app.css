@@ -93,6 +93,17 @@ html, body {
 
 .panel.is-focused { border-color: var(--panel-border-active); }
 
+/* Hyprland follows the pointer, so hovering a window is what focuses it: the
+   one under the cursor takes col.active_border and whichever had it drops back
+   to col.inactive_border. An empty tile and the menu overlay are not windows
+   and keep their transparent borders. */
+.tiles:has(.panel:hover) .panel.is-focused:not(:hover) {
+  border-color: var(--panel-border);
+}
+.panel:hover:not(.is-empty):not([data-app="omenu"]) {
+  border-color: var(--panel-border-active);
+}
+
 .panel[data-app="omenu"] {
   background: transparent;
   border-color: transparent;
