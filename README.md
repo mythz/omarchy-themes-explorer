@@ -339,6 +339,30 @@ above a simulated one.
 Needs `chromedriver` (`pacman -S chromedriver`); everything else is already
 here.
 
+### Recording the opening separately
+
+`scripts/record-open.py` films only the first beat — an empty workspace, the
+pointer travelling up to the paintbrush in the bar, and the window opening full
+screen — so it can be stitched in front of the tour:
+
+```bash
+scripts/record-open.py                  # about 11 seconds
+scripts/record-open.py --brush 2889,16  # if the bar's contents moved
+```
+
+It opens on the same theme, background and layout the tour starts from, so the
+two clips join without a jump. That is what `OMARCHY_THEMES_EXPLORER_QUERY` is
+for: the launcher appends it to the app's URL, and the page reads it as query
+parameters.
+
+It cannot press the widget. Clicking into Quickshell needs a synthetic pointer
+button, and Hyprland's Lua dispatcher table has `hl.dsp.cursor.move` but nothing
+that clicks — so the pointer travels there, rests long enough for the widget's
+own hover state to come up, and the script launches the app itself. On camera it
+is the same beat. Chrome puts a "press and hold Esc" toast over the window for
+its first few seconds, which is what a real click gets too; cut after it fades if
+you would rather not have it.
+
 ## Layout
 
 ```

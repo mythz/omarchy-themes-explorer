@@ -62,6 +62,13 @@ PID_FILE="$RUN_DIR/omarchy-themes-explorer.$PORT.pid"
 URL="http://127.0.0.1:$PORT/"          # health checks and --tab
 APP_URL="http://$APP_HOST:$PORT/"      # what the app window loads
 
+# A recording, or anything that wants the window to open on a particular theme
+# and layout, can say so without a second launcher. The page reads these as
+# query parameters; see app/app.js applyQuery.
+if [[ -n ${OMARCHY_THEMES_EXPLORER_QUERY:-} ]]; then
+  APP_URL="$APP_URL?${OMARCHY_THEMES_EXPLORER_QUERY#\?}"
+fi
+
 app_window() {
   hyprctl clients -j 2>/dev/null | python3 -c "
 import json, sys
