@@ -311,10 +311,12 @@ centre and both right-hand panels are emptied in one step, leaving the logo and
 btop down the left and the rest of the screen to the wallpaper. The intro is the
 first theme's pass, so the silent loop picks up at the second one.
 
-The page is driven through WebDriver rather than by synthesising input into the
-compositor: every step is a real click at real coordinates with the cursor
-visible where it lands, and it is deterministic, which is what makes a
-seven-minute run worth re-running after a one-line change. The constants at the
+The page is driven through WebDriver, which is deterministic — what makes a
+ten-minute run worth re-running after a one-line change. WebDriver only moves a
+pointer *inside* the page though, so the compositor's own cursor is moved to
+match through Hyprland's `hl.dsp.cursor.move`, gliding rather than jumping. It
+rests on a control for a beat before pressing it, which is long enough for the
+button's tooltip to come up and say what it does. The constants at the
 top of the file — the workspace, the beat, the app lists, the paintbrush
 position — are the tour.
 

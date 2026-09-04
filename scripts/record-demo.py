@@ -63,6 +63,10 @@ SCENE_PAUSE = 3.0
 # being used is the one the eye is on -- and long enough for its tooltip.
 HOVER_DWELL = 1.3
 
+# The pointer slides to a control rather than jumping to it.
+GLIDE_STEPS = 12
+GLIDE_SECONDS = 0.35
+
 # Where the right click lands, as a fraction of the panel -- near its top-right
 # corner rather than the middle, so the menu opens beside the panel's content
 # instead of over it.
@@ -92,6 +96,8 @@ INITIAL_LAYOUT = {
 
 class Driver:
     """Just enough of the WebDriver protocol, so there is no dependency."""
+
+    on_move = None      # set by the caller; moves the compositor's cursor too
 
     def __init__(self, port, url, profile):
         self.base = "http://127.0.0.1:%d" % port
@@ -179,6 +185,8 @@ class Driver:
         spot = self.centre(selector)
         if not spot:
             return False
+        if self.on_move:
+            self.on_move(spot[0], spot[1])
         self.pointer([
             {"type": "pointerMove", "duration": 420, "x": spot[0], "y": spot[1]},
         ])
@@ -190,6 +198,8 @@ class Driver:
         return True
 
     def click_at(self, x, y, button=0):
+        if self.on_move:
+            self.on_move(x, y)
         self.pointer([
             {"type": "pointerMove", "duration": 260, "x": x, "y": y},
             {"type": "pause", "duration": 120},
@@ -216,6 +226,8 @@ class Driver:
         spot = self.centre(selector)
         if not spot:
             return False
+        if self.on_move:
+            self.on_move(spot[0], spot[1])
         self.pointer([
             {"type": "pointerMove", "duration": 220, "x": spot[0], "y": spot[1]},
             {"type": "pause", "duration": 90},
@@ -253,6 +265,36 @@ def hypr(lua, *legacy):
                               capture_output=True, text=True)
         return done.returncode == 0 and "error" not in (done.stdout + done.stderr).lower()
     return False
+
+
+def move_cursor(x, y, glide=True):
+    """Move the pointer the compositor draws.
+
+    WebDriver's pointerMove only moves a pointer inside the page -- the click
+    lands, but the arrow on screen never goes near the button, which on camera
+    reads as the interface working by itself. Hyprland's Lua dispatcher table
+    has hl.dsp.cursor.move, and since the window is fullscreen a viewport
+    coordinate is a screen coordinate.
+    """
+    if glide:
+        here = cursor_position()
+        if here:
+            for step in range(1, GLIDE_STEPS):
+                fraction = step / GLIDE_STEPS
+                hypr('hl.dsp.cursor.move({ x = %d, y = %d })'
+                     % (here[0] + (x - here[0]) * fraction,
+                        here[1] + (y - here[1]) * fraction))
+                time.sleep(GLIDE_SECONDS / GLIDE_STEPS)
+    hypr('hl.dsp.cursor.move({ x = %d, y = %d })' % (x, y))
+
+
+def cursor_position():
+    done = subprocess.run(["hyprctl", "cursorpos"], capture_output=True, text=True)
+    try:
+        x, y = done.stdout.strip().split(",")
+        return int(x), int(y)
+    except ValueError:
+        return None
 
 
 def active_workspace():
@@ -502,6 +544,9 @@ def main():
                      + ["%s=%s" % (slot, app) for slot, app in INITIAL_LAYOUT.items()])
     driver = Driver(CHROMEDRIVER_PORT, url + "?" + query, profile)
 
+    # An instance attribute, so it is called as a plain function rather than
+    # bound as a method.
+    driver.on_move = move_cursor
     window = wait_for_window(before)
     if window:
         # A window that opened somewhere else would leave the recording on an
