@@ -1343,6 +1343,7 @@ body[data-mode="light"] {
   border-radius: 6px;
   cursor: pointer;
   color: #fff;
+  white-space: nowrap;
 }
 .menu-item:hover { background: rgba(255, 255, 255, 0.14); }
 .menu-item.on { background: rgba(255, 255, 255, 0.09); }

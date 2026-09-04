@@ -44,19 +44,24 @@ CHROMEDRIVER_PORT = 9599
 
 
 CENTER_APPS = ["nvim", "vscode", "omenu", "none"]
-CORNER_APPS = ["nautilus", "lazyvim", "none", "ls"]
+CORNER_APPS = ["nautilus", "lazyvim", "ls"]
 CENTER_SLOT = "center"
 CORNER_SLOT = "right-bottom"
 
-# Emptied together before the backgrounds, so only the two left-hand panels are
-# left and most of the wallpaper is visible while it cycles.
-CLEARED_SLOTS = ["center", "right-top", "right-bottom"]
-RESTORE_AFTER_BACKGROUNDS = {"right-top": "fastfetch"}
+# Emptied together -- in one step, not one after another -- before the
+# backgrounds, leaving the two on the right and most of the wallpaper visible
+# while it cycles.
+CLEARED_SLOTS = ["center", "left-top", "left-bottom"]
+RESTORE_AFTER_BACKGROUNDS = {"left-top": "logo", "left-bottom": "btop"}
 
 # The menu is demonstrated once, slowly, at the top of the film. Every swap
 # after that happens without it: the audience has seen how, and thirty-odd
 # themes of the same menu opening is thirty-odd themes of nothing new.
 SCENE_PAUSE = 3.0
+
+# How long the pointer rests on a control before pressing it, so the button
+# being used is the one the eye is on -- and long enough for its tooltip.
+HOVER_DWELL = 1.3
 
 # Where the right click lands, as a fraction of the panel -- near its top-right
 # corner rather than the middle, so the menu opens beside the panel's content
@@ -74,11 +79,11 @@ FIRST_THEME = "catppuccin"   # where the tour starts, and the intro's subject
 # middle is empty from the start, so the opening run of backgrounds plays
 # against as much wallpaper as possible.
 INITIAL_LAYOUT = {
-    "left-top": "fastfetch",
-    "left-bottom": "ls",
+    "left-top": "logo",
+    "left-bottom": "btop",
     "center": "none",
-    "right-top": "logo",
-    "right-bottom": "btop",
+    "right-top": "fastfetch",
+    "right-bottom": "ls",
 }
 
 
@@ -168,6 +173,21 @@ class Driver:
             "        Math.round(r.y+r.height*arguments[2])];",
             selector, fx, fy,
         )
+
+    def hover_click(self, selector, dwell):
+        """Rest on a control before pressing it."""
+        spot = self.centre(selector)
+        if not spot:
+            return False
+        self.pointer([
+            {"type": "pointerMove", "duration": 420, "x": spot[0], "y": spot[1]},
+        ])
+        time.sleep(dwell)
+        self.pointer([
+            {"type": "pointerDown", "button": 0},
+            {"type": "pointerUp", "button": 0},
+        ])
+        return True
 
     def click_at(self, x, y, button=0):
         self.pointer([
@@ -329,7 +349,7 @@ def run(driver, beat, themes, log):
         driver.click('.menu-item[data-app="%s"]' % app)
         time.sleep(SCENE_PAUSE)
 
-    def swap_quiet(slot, app):
+    def swap_quiet(slot, app, hold=True):
         """The same swap without the menu.
 
         It still goes through the app's own handlers -- the panel's contextmenu
@@ -353,17 +373,18 @@ def run(driver, beat, themes, log):
             "menu.style.visibility=was;",
             slot, app,
         )
-        pause()
+        if hold:
+            pause()
 
     log("intro: shortcuts overlay")
-    driver.click("#help")
+    driver.hover_click("#help", HOVER_DWELL)
     time.sleep(SCENE_PAUSE)
-    driver.click("#help")
+    driver.hover_click("#help", HOVER_DWELL / 2)
     pause()
 
     log("intro: four backgrounds")
     for _ in range(4):
-        driver.click("#cycleBg")
+        driver.hover_click("#cycleBg", HOVER_DWELL if _ == 0 else HOVER_DWELL / 3)
         pause()
 
     log("intro: the centre panel, with the menu")
@@ -385,17 +406,19 @@ def run(driver, beat, themes, log):
         )
         pause()
 
-        # Clear the right-hand side first, so the backgrounds play against as
-        # much wallpaper as the layout can give them.
+        # Clear in one step rather than one panel at a time: three panels
+        # blanking in sequence is three beats of nothing happening.
         for slot in CLEARED_SLOTS:
-            swap_quiet(slot, "none")
+            swap_quiet(slot, "none", hold=False)
+        pause()
 
         for _ in range(max(0, theme["backgrounds"] - 1)):
             driver.click("#cycleBg")
             pause()
 
         for slot, app in RESTORE_AFTER_BACKGROUNDS.items():
-            swap_quiet(slot, app)
+            swap_quiet(slot, app, hold=False)
+        pause()
 
         for app in CENTER_APPS:
             swap_quiet(CENTER_SLOT, app)
@@ -414,8 +437,8 @@ def main():
                         help="run the tour without recording it")
     parser.add_argument("--themes", type=int, default=0,
                         help="stop after this many themes")
-    parser.add_argument("--pause", type=float, default=1.0,
-                        help="seconds to hold each change (default 1)")
+    parser.add_argument("--pause", type=float, default=2.0,
+                        help="seconds to hold each change (default 2)")
     parser.add_argument("--port", type=int, default=PORT)
     parser.add_argument("--workspace", default=WORKSPACE)
     args = parser.parse_args()
