@@ -24,6 +24,7 @@ import argparse
 import base64
 import json
 import os
+import pathlib
 import shutil
 import signal
 import subprocess
@@ -41,14 +42,6 @@ WORKSPACE = "5"          # the empty workspace to perform on
 PORT = 8799              # the preview server's port for this run
 CHROMEDRIVER_PORT = 9599
 
-# Where the bar's paintbrush sits, in Hyprland's logical pixels. The cursor is
-# parked there before the window opens, so the recording reads as if the widget
-# had been clicked -- synthesising a real click into the bar would need ydotool
-# and a uinput device, which Omarchy does not ship.
-# Measured off a screenshot of the bar: the widget's ink sits at device
-# (3574, 15) on a 3840px monitor at scale 1.25. It moves whenever the tray
-# does, so re-measure with `grim` if the cursor lands somewhere odd.
-PAINTBRUSH_XY = (2859, 15)
 
 CENTER_APPS = ["nvim", "vscode", "omenu", "none"]
 CORNER_APPS = ["nautilus", "lazyvim", "none", "ls"]
@@ -65,10 +58,13 @@ class Driver:
 
     def __init__(self, port, url, profile):
         self.base = "http://127.0.0.1:%d" % port
+        # Kept rather than discarded: when this end of things goes wrong it is
+        # the only thing that says why.
+        self.log_path = "/tmp/record-demo-chromedriver.log"
+        self.log = open(self.log_path, "w")
         self.process = subprocess.Popen(
             ["chromedriver", "--port=%d" % port],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
+            stdout=self.log, stderr=subprocess.STDOUT,
         )
         for _ in range(40):
             time.sleep(0.25)
@@ -80,23 +76,39 @@ class Driver:
         else:
             raise SystemExit("chromedriver did not start")
 
-        self.session = self.call("POST", "/session", {
-            "capabilities": {"alwaysMatch": {"goog:chromeOptions": {"args": [
+        try:
+            self.session = self.start_session(url, profile)
+        except Exception as error:
+            self.log.flush()
+            raise SystemExit(
+                "could not open the browser: %s\nchromedriver said:\n%s"
+                % (error, pathlib.Path(self.log_path).read_text()[-800:])
+            )
+
+    def start_session(self, url, profile):
+        return self.call("POST", "/session", {
+            "capabilities": {"alwaysMatch": {"goog:chromeOptions": {
+                # Without this Chrome wears a yellow "controlled by automated
+                # test software" bar across the top of every frame.
+                "excludeSwitches": ["enable-automation"],
+                "args": [
                 "--app=" + url,
                 "--user-data-dir=" + profile,
                 "--no-first-run",
                 "--disable-features=Translate,MediaRouter",
                 "--autoplay-policy=no-user-gesture-required",
+                "--disable-infobars",
+                "--disable-blink-features=AutomationControlled",
             ]}}}
-        })["sessionId"]
+        }, timeout=60)["sessionId"]
 
-    def call(self, method, path, body=None):
+    def call(self, method, path, body=None, timeout=120):
         data = json.dumps(body).encode() if body is not None else None
         request = urllib.request.Request(
             self.base + path, data=data, method=method,
             headers={"Content-Type": "application/json"},
         )
-        with urllib.request.urlopen(request, timeout=120) as response:
+        with urllib.request.urlopen(request, timeout=timeout) as response:
             return json.loads(response.read())["value"]
 
     def js(self, script, *args):
@@ -141,8 +153,42 @@ class Driver:
 # --- the compositor -----------------------------------------------------
 
 
-def hypr(*args):
-    subprocess.run(["hyprctl"] + list(args), capture_output=True)
+def hypr(lua, *legacy):
+    """Dispatch through Hyprland, Lua first.
+
+    Omarchy runs the Lua config provider, where the legacy `dispatch workspace
+    5` is a parse error rather than a command -- and one that goes to stderr
+    while hyprctl still exits 0, so a call that silently did nothing looks
+    exactly like a call that worked. The output is what says which, so it is
+    read rather than discarded, and the legacy form is kept for a setup still
+    on the .conf parser.
+    """
+    done = subprocess.run(["hyprctl", "dispatch", lua], capture_output=True, text=True)
+    if done.returncode == 0 and "error" not in (done.stdout + done.stderr).lower():
+        return True
+    if legacy:
+        done = subprocess.run(["hyprctl", "dispatch"] + list(legacy),
+                              capture_output=True, text=True)
+        return done.returncode == 0 and "error" not in (done.stdout + done.stderr).lower()
+    return False
+
+
+def active_workspace():
+    done = subprocess.run(["hyprctl", "activeworkspace", "-j"],
+                          capture_output=True, text=True)
+    try:
+        return str(json.loads(done.stdout)["name"])
+    except (ValueError, KeyError):
+        return ""
+
+
+def go_to_workspace(name):
+    hypr('hl.dsp.focus({ workspace = "%s" })' % name, "workspace", name)
+    for _ in range(20):
+        if active_workspace() == name:
+            return True
+        time.sleep(0.1)
+    return False
 
 
 def clients():
@@ -169,12 +215,17 @@ def wait_for_window(before, timeout=25):
 
 def recorder_running():
     return subprocess.run(["pgrep", "-f", "^gpu-screen-recorder"],
-                          capture_output=True).returncode == 0
+                          stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode == 0
 
 
+# Never capture_output= around these. The recorder is backgrounded by the
+# command and inherits whatever stdout it was given, so a pipe stays open for
+# as long as the recording runs -- and subprocess.run waits for that pipe to
+# close, not for the command to exit. It blocks until the recording ends, which
+# is never, because the thing that would end it is the rest of this script.
 def start_recording():
     subprocess.run(["omarchy-capture-screenrecording", "--fullscreen"],
-                   capture_output=True)
+                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     for _ in range(40):
         if recorder_running():
             return True
@@ -184,7 +235,7 @@ def start_recording():
 
 def stop_recording():
     subprocess.run(["omarchy-capture-screenrecording", "--stop-recording"],
-                   capture_output=True)
+                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     for _ in range(60):
         if not recorder_running():
             return
@@ -303,10 +354,16 @@ def main():
     print("Recording %d themes at %.1fs a beat on workspace %s"
           % (len(order), args.pause, args.workspace))
 
-    hypr("dispatch", "workspace", args.workspace)
+    origin = active_workspace()
+    if not go_to_workspace(args.workspace):
+        server.terminate()
+        raise SystemExit(
+            "could not switch to workspace %s -- the recording would have been of\n"
+            "whatever was already on screen. Check `hyprctl activeworkspace`."
+            % args.workspace
+        )
+    log("on workspace %s (was %s)" % (args.workspace, origin))
     time.sleep(0.6)
-    hypr("dispatch", "movecursor", str(PAINTBRUSH_XY[0]), str(PAINTBRUSH_XY[1]))
-    time.sleep(0.4)
 
     recording = False
     if not args.no_record:
@@ -322,7 +379,22 @@ def main():
 
     window = wait_for_window(before)
     if window:
-        hypr("dispatch", "fullscreen", "0")
+        # A window that opened somewhere else would leave the recording on an
+        # empty workspace, so put it where the camera is pointed.
+        on = next((c["workspace"]["name"] for c in clients()
+                   if c["address"] == window), "")
+        if str(on) != args.workspace:
+            log("window opened on %s, moving it" % on)
+            hypr('hl.dsp.window.move({ workspace = "%s", window = "address:%s" })'
+                 % (args.workspace, window),
+                 "movetoworkspace", "%s,address:%s" % (args.workspace, window))
+            go_to_workspace(args.workspace)
+        # Maximised, not fullscreen. A truly fullscreen window can take the
+        # direct scanout path, where the compositor hands its buffer straight to
+        # the display -- and a DRM capture then records the composited desktop
+        # without it, which is a recording of an empty workspace. Maximised
+        # keeps it composited, and keeps Omarchy's bar in frame.
+        hypr('hl.dsp.window.fullscreen({ mode = "maximized" })', "fullscreen", "1")
     time.sleep(1.5)
 
     try:
@@ -334,6 +406,8 @@ def main():
         if recording:
             stop_recording()
         server.terminate()
+        if origin and origin != args.workspace:
+            go_to_workspace(origin)
 
     if recording:
         newest = newest_recording()

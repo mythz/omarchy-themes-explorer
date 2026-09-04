@@ -308,10 +308,13 @@ seven-minute run worth re-running after a one-line change. The constants at the
 top of the file — the workspace, the beat, the app lists, the paintbrush
 position — are the tour.
 
-One thing it cannot do is click the bar widget itself. Synthesising a click
-into Quickshell needs `ydotool` and a uinput device, which Omarchy does not
-ship, so the script parks the cursor over the paintbrush and opens the window
-itself. It reads the same on camera.
+One thing it cannot do is click the bar widget itself, or move the pointer
+there first: Omarchy runs Hyprland's Lua config provider, which has no cursor
+dispatcher, and synthesising a click into Quickshell would need `ydotool` and a
+uinput device. The script opens the window itself.
+
+The window is maximised rather than fullscreen, which keeps Omarchy's own bar
+in frame — worth knowing if you want it out of shot.
 
 Needs `chromedriver` (`pacman -S chromedriver`); everything else is already
 here.
