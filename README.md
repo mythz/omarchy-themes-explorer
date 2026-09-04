@@ -316,9 +316,16 @@ ten-minute run worth re-running after a one-line change. WebDriver only moves a
 pointer *inside* the page though, so the compositor's own cursor is moved to
 match through Hyprland's `hl.dsp.cursor.move`, gliding rather than jumping. It
 rests on a control for a beat before pressing it, which is long enough for the
-button's tooltip to come up and say what it does. The constants at the
-top of the file — the workspace, the beat, the app lists, the paintbrush
-position — are the tour.
+button's tooltip to come up and say what it does, and a ring ripples out of
+whatever was clicked. Both exist to be filmed and are injected by the script
+rather than shipped in the app — nobody driving this with a mouse needs to be
+shown where their own pointer is.
+
+The first change of theme goes through the picker, hovering the theme name to
+open the list and choosing from it; every theme after that arrives on the next
+arrow, which is the same journey with less ceremony. The constants at the top of
+the file — the workspace, the beat, the scene hold, the app lists, the opening
+layout — are the tour.
 
 One thing it cannot do is click the bar widget itself, or move the pointer
 there first: Omarchy runs Hyprland's Lua config provider, which has no cursor
