@@ -181,7 +181,7 @@ An extra theme's wallpapers stay on GitHub and are often enormous — Pulsar's
 first one is 12 MB at 7680×4320 — so arrowing through the list would otherwise
 sit on a blank desktop while each one downloads. The server keeps a small WebP
 of each background it has been asked for under
-`~/.cache/omarchy-themes-explorer/backgrounds/<theme>/<n>.webp`, paints that
+`~/.cache/omarchy-themes-explorer/backgrounds/<theme>/<background>.webp`, paints that
 immediately, and lets the original replace it when it arrives. That Pulsar
 wallpaper caches at 93 KB — **132× smaller**.
 

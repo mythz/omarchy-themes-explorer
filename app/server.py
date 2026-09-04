@@ -739,7 +739,7 @@ USER_AGENT = "omarchy-themes-explorer/1.0"
 
 # Bumped whenever the recipe above changes, so thumbnails encoded by an older
 # one are cleared rather than served forever.
-THUMB_VERSION = "2"
+THUMB_VERSION = "3"
 
 _thumb_lock = threading.Lock()
 _thumb_busy = set()
@@ -755,8 +755,23 @@ def encoder():
     return None
 
 
-def thumb_path(slug, index):
-    return THUMB_CACHE / slug / ("%d.webp" % index)
+def thumb_name(url):
+    """`.../backgrounds/0-glow-pool.jpg?raw=true` -> `0-glow-pool.webp`.
+
+    Naming these by index was wrong, not just opaque: the index is a position in
+    a list that extra-themes.json regenerates, so a theme that adds or reorders
+    a wallpaper would have index 0 answer with the thumbnail of a different
+    picture. The name comes from someone else's repository, so it is reduced to
+    a bare filename over a known character set before it is joined to a path.
+    """
+    base = os.path.basename(urlparse(url).path)
+    base = os.path.splitext(base)[0]
+    base = re.sub(r"[^A-Za-z0-9._-]", "_", base).lstrip(".")[:80]
+    return (base or "background") + ".webp"
+
+
+def thumb_path(slug, url):
+    return THUMB_CACHE / slug / thumb_name(url)
 
 
 def clear_stale_thumbs():
@@ -780,7 +795,7 @@ def build_thumb(slug, index, url):
     tool = encoder()
     if not tool:
         return
-    destination = thumb_path(slug, index)
+    destination = thumb_path(slug, url)
     temp_source = None
     try:
         request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
@@ -917,15 +932,17 @@ class Handler(BaseHTTPRequestHandler):
             except ValueError:
                 self.send_error(404)
                 return
-            path = thumb_path(slug, index)
+            remote = extra_background(slug, index)
+            if not remote:
+                self.send_error(404)
+                return
+            path = thumb_path(slug, remote)
             if path.is_file():
                 self.send_file(path, cache=True)
                 return
             # Nothing cached yet: answer 404 so the page falls straight through
             # to the original, and fetch it in the background for next time.
-            remote = extra_background(slug, index)
-            if remote:
-                request_thumb(slug, index, remote)
+            request_thumb(slug, index, remote)
             self.send_error(404)
             return
 
