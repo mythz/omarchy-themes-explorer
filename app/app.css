@@ -82,7 +82,7 @@ html, body {
   position: relative;
   flex: 1;
   min-height: 0;
-  border: 2px solid var(--panel-border);
+  border: var(--border-w, 2px) solid var(--panel-border);
   border-radius: var(--radius);
   overflow: hidden;
   container-type: size;
@@ -120,7 +120,7 @@ html, body {
   content: "";
   position: absolute;
   inset: 0;
-  border: 2px dashed transparent;
+  border: var(--border-w, 2px) dashed transparent;
   border-radius: var(--radius);
   transition: border-color 0.18s ease;
 }

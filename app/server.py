@@ -256,15 +256,22 @@ def title_case(slug):
 # `rounding_power`, `dots_rounding` and `gradient_rounding` are different
 # settings and must not be mistaken for it.
 ROUNDING_RE = re.compile(r"(?<![\w])rounding\s*=\s*(\d+)")
+BORDER_RE = re.compile(r"(?<![\w])border_size\s*=\s*(\d+)")
 LOOKNFEEL = Path(os.environ.get("OMARCHY_PATH", "/usr/share/omarchy")) / "default/hypr/looknfeel.lua"
 
 
-def system_rounding():
+def system_metrics():
+    """Corner radius and border width, both Omarchy's rather than the theme's."""
     try:
-        found = ROUNDING_RE.search(LOOKNFEEL.read_text(errors="replace"))
+        text = LOOKNFEEL.read_text(errors="replace")
     except OSError:
-        return 0
-    return int(found.group(1)) if found else 0
+        return {"rounding": 0, "border": 2}
+    rounding = ROUNDING_RE.search(text)
+    border = BORDER_RE.search(text)
+    return {
+        "rounding": int(rounding.group(1)) if rounding else 0,
+        "border": int(border.group(1)) if border else 2,
+    }
 
 
 # A theme names a Yaru icon variant in icons.theme, which is what actually
@@ -915,7 +922,7 @@ class Handler(BaseHTTPRequestHandler):
             self.send_json(
                 {
                     "current": current_slug(),
-                    "rounding": system_rounding(),
+                    "metrics": system_metrics(),
                     "themes": themes,
                     "extra": extra_themes({t["slug"] for t in themes}),
                 }

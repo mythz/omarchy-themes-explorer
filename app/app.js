@@ -64,7 +64,7 @@
 
   const state = {
     themes: [],
-    rounding: 0,
+    metrics: { rounding: 0, border: 2 },
     /* Community themes from extra-themes.json that are not installed here.
        Everything below treats the two lists identically -- `list` says which
        one `index` is walking -- because an extra theme carries exactly the
@@ -265,11 +265,20 @@
       "color-mix(in srgb, " + t.colors.muted + " 55%, " + t.colors.background + ")"
     );
     root.setProperty("--folder", t.folderColor || t.colors.accent);
-    /* Rounding belongs to Omarchy, not to the theme -- every theme's staged
-       hyprland.lua only carries border colours -- so it is one value for the
-       whole list. It is in logical px against a 1920-wide screen, and the
-       preview's viewport stands in for that screen, so scale it the same way. */
-    root.setProperty("--radius", (state.rounding || 0) / 19.2 + "vw");
+    /* Rounding and border width belong to Omarchy, not to the theme -- every
+       theme's staged hyprland.lua only carries border colours -- so they are
+       one value for the whole list.
+
+       The border is matched in *device* pixels, because that is what Hyprland
+       draws: measured off a screenshot at scale 1.25, a border_size of 2 comes
+       out 2 device pixels wide, not 2.5. A flat 2px of CSS is 2.5 device pixels
+       at that scale, which is the panel edge reading a pixel heavier than every
+       real window beside it. */
+    root.setProperty("--radius", (state.metrics.rounding || 0) / 19.2 + "vw");
+    root.setProperty(
+      "--border-w",
+      (state.metrics.border || 0) / (window.devicePixelRatio || 1) + "px"
+    );
     document.body.dataset.mode = t.mode;
 
     const backgrounds = t.backgrounds;
@@ -610,7 +619,7 @@
     .then((data) => {
       state.themes = data.themes;
       state.extra = data.extra || [];
-      state.rounding = data.rounding || 0;
+      state.metrics = data.metrics || state.metrics;
       state.current = data.current;
       buildPicker();
       const wanted = state.wantTheme || data.current;
