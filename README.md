@@ -342,6 +342,33 @@ above a simulated one.
 Needs `chromedriver` (`pacman -S chromedriver`); everything else is already
 here.
 
+### Recording the extra themes
+
+`scripts/record-extra.py` is the same film for the community themes, without
+the opening: no shortcuts overlay, no menu being demonstrated, no picker. It
+starts on the first extra theme and gives every one of them the pass the tour
+gives its second theme onwards.
+
+```bash
+scripts/record-extra.py                  # all 115 of them
+scripts/record-extra.py --themes 3       # only the first three
+scripts/record-extra.py --backgrounds 2  # at most two wallpapers each
+scripts/record-extra.py --start nordic   # begin somewhere else
+```
+
+The choreography itself lives in `record-demo.py`'s `Stage`, which both scripts
+perform, so there is one copy of it to change.
+
+Extra themes are not installed, so their wallpapers come off GitHub rather than
+off disk. Two things follow. The thumbnail cache is warmed before the camera
+rolls — 614 wallpapers across the 115 themes, so the first run spends a while
+there and later ones do not — and every wallpaper change waits for the picture
+to arrive rather than filming the gap. `--no-prewarm` skips the first,
+`--background-wait` bounds the second.
+
+Uncapped it is half an hour: `--backgrounds 4` (the default) puts it near 31
+minutes, `--backgrounds 2` near 26. One theme alone ships 29 wallpapers.
+
 ### Recording the opening separately
 
 `scripts/record-open.py` films only the first beat — an empty workspace, the

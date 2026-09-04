@@ -419,21 +419,31 @@ def newest_recording():
 # --- the choreography ---------------------------------------------------
 
 
-def run(driver, beat, themes, log):
-    def pause(times=1):
-        time.sleep(beat * times)
+class Stage:
+    """The moves a tour is made of, on one driver at one tempo.
 
-    def swap_shown(slot, app):
+    Kept out of run() so record-extra.py performs the same choreography from
+    the same code rather than a copy of it that drifts.
+    """
+
+    def __init__(self, driver, beat):
+        self.driver = driver
+        self.beat = beat
+
+    def pause(self, times=1):
+        time.sleep(self.beat * times)
+
+    def swap_shown(self, slot, app):
         """Right click near the panel's corner and pick out of the menu."""
-        spot = driver.spot('[data-slot="%s"]' % slot, *MENU_SPOT)
+        spot = self.driver.spot('[data-slot="%s"]' % slot, *MENU_SPOT)
         if not spot:
             return
-        driver.click_at(spot[0], spot[1], button=2)
+        self.driver.click_at(spot[0], spot[1], button=2)
         time.sleep(min(1.2, SCENE_PAUSE / 2))
-        driver.click('.menu-item[data-app="%s"]' % app)
+        self.driver.click('.menu-item[data-app="%s"]' % app)
         time.sleep(SCENE_PAUSE)
 
-    def swap_quiet(slot, app, hold=True):
+    def swap_quiet(self, slot, app, hold=True):
         """The same swap without the menu.
 
         It still goes through the app's own handlers -- the panel's contextmenu
@@ -442,7 +452,7 @@ def run(driver, beat, themes, log):
         hidden for the instant it would otherwise be on screen, and all of it
         happens inside one evaluation, so no frame ever contains it.
         """
-        driver.js(
+        self.driver.js(
             "const panel=document.querySelector('[data-slot=\"'+arguments[0]+'\"]');"
             "const menu=document.getElementById('menu');"
             "if(!panel) return;"
@@ -458,7 +468,50 @@ def run(driver, beat, themes, log):
             slot, app,
         )
         if hold:
-            pause()
+            self.pause()
+
+    def theme_pass(self, backgrounds, settle=None):
+        """One theme's turn: its wallpapers, then its panels.
+
+        `settle` is called after every wallpaper change. Installed themes need
+        nothing -- the file is local -- but an extra theme's is a download, and
+        the caller waits for it rather than filming the gap.
+        """
+        # Clear in one step rather than one panel at a time: three panels
+        # blanking in sequence is three beats of nothing happening.
+        for slot in CLEARED_SLOTS:
+            self.swap_quiet(slot, "none", hold=False)
+        self.pause()
+
+        for _ in range(max(0, backgrounds - 1)):
+            self.driver.click("#cycleBg")
+            if settle:
+                settle()
+            self.pause()
+
+        for slot, app in RESTORE_AFTER_BACKGROUNDS.items():
+            self.swap_quiet(slot, app, hold=False)
+        self.pause()
+
+        # Both panels move on the same beat. Stepping them one after the other
+        # was eight holds a theme where five say the same thing, and across
+        # twenty-odd themes that is minutes of watching one panel wait for the
+        # other. The two lists are the same length so the cycle ends cleanly on
+        # the Omarchy menu and eza, and the next theme's clear takes it from
+        # there -- no blanking or restoring back to Neovim in between.
+        for index in range(max(len(CENTER_APPS), len(CORNER_APPS))):
+            if index < len(CENTER_APPS):
+                self.swap_quiet(CENTER_SLOT, CENTER_APPS[index], hold=False)
+            if index < len(CORNER_APPS):
+                self.swap_quiet(CORNER_SLOT, CORNER_APPS[index], hold=False)
+            self.pause()
+
+
+def run(driver, beat, themes, log):
+    stage = Stage(driver, beat)
+    pause = stage.pause
+    swap_shown = stage.swap_shown
+    swap_quiet = stage.swap_quiet
 
     log("intro: shortcuts overlay")
     driver.hover_click("#help", HOVER_DWELL)
@@ -521,32 +574,7 @@ def run(driver, beat, themes, log):
             driver.hover_click("#next", HOVER_DWELL / 3)
             pause()
 
-        # Clear in one step rather than one panel at a time: three panels
-        # blanking in sequence is three beats of nothing happening.
-        for slot in CLEARED_SLOTS:
-            swap_quiet(slot, "none", hold=False)
-        pause()
-
-        for _ in range(max(0, theme["backgrounds"] - 1)):
-            driver.click("#cycleBg")
-            pause()
-
-        for slot, app in RESTORE_AFTER_BACKGROUNDS.items():
-            swap_quiet(slot, app, hold=False)
-        pause()
-
-        # Both panels move on the same beat. Stepping them one after the other
-        # was eight holds a theme where five say the same thing, and across
-        # twenty-odd themes that is minutes of watching one panel wait for the
-        # other. The two lists are the same length so the cycle ends cleanly on
-        # the Omarchy menu and eza, and the next theme's clear takes it from
-        # there -- no blanking or restoring back to Neovim in between.
-        for index in range(max(len(CENTER_APPS), len(CORNER_APPS))):
-            if index < len(CENTER_APPS):
-                swap_quiet(CENTER_SLOT, CENTER_APPS[index], hold=False)
-            if index < len(CORNER_APPS):
-                swap_quiet(CORNER_SLOT, CORNER_APPS[index], hold=False)
-            pause()
+        stage.theme_pass(theme["backgrounds"])
 
 
 # --- main ---------------------------------------------------------------
