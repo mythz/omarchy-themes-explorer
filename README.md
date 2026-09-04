@@ -183,7 +183,22 @@ sit on a blank desktop while each one downloads. The server keeps a small WebP
 of each background it has been asked for under
 `~/.cache/omarchy-themes-explorer/backgrounds/<theme>/<n>.webp`, paints that
 immediately, and lets the original replace it when it arrives. That Pulsar
-wallpaper caches at 39 KB — **304× smaller**.
+wallpaper caches at 93 KB — **132× smaller**.
+
+The recipe is 1600px at quality 80, falling back to a 92 KB target size only
+when quality 80 overshoots 100 KB, so a simple image is not padded out to fill
+a budget it has no use for. Measured against the original resampled to display
+width, over a detailed photo, a flat render and a painted scene:
+
+| | size | PSNR |
+|---|---|---|
+| 960px q55 | 39.5 / 17.5 / 29.2 KB | 28.7 / 32.9 / 29.5 dB |
+| 1600px q80 | 92.6 / 67.7 / 97.1 KB | 32.3 / 37.4 / 34.8 dB |
+
+1600 rather than 1920 because under a fixed budget the extra pixels cost more
+than they return on a detailed photo — 1920 measured 0.8 dB *worse* there —
+while giving up under a dB on the easy ones. Bumping `THUMB_VERSION` clears
+thumbnails encoded by an older recipe.
 
 Switching to a theme with nothing cached clears the wallpaper at once rather
 than leaving the previous theme's up: the element's own background is the new

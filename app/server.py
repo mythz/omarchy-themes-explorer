@@ -718,10 +718,28 @@ THUMB_CACHE = (
     Path(os.environ.get("XDG_CACHE_HOME") or (HOME / ".cache"))
     / "omarchy-themes-explorer/backgrounds"
 )
-THUMB_WIDTH = 960
-THUMB_QUALITY = 55
+# 1600px at quality 80, and only if that overshoots the budget is the encoder
+# asked to hit a size instead. Measured against the original resampled to
+# display width, over a detailed photo, a flat render and a painted scene:
+#
+#   960px q55        39.5 / 17.5 / 29.2 KB   28.7 / 32.9 / 29.5 dB
+#   1600px q80       92.6 / 67.7 / 97.1 KB   32.3 / 37.4 / 34.8 dB
+#
+# Quality first because a simple image has no use for the whole budget -- the
+# flat render lands at 68KB on its own. Width is 1600 rather than 1920 because
+# under a fixed budget the extra pixels cost more than they return on a
+# detailed photo (1920 measured 0.8dB *worse* there), while giving up under a
+# dB on the easy ones.
+THUMB_WIDTH = 1600
+THUMB_QUALITY = 80
+THUMB_BUDGET = 92000
+THUMB_CAP = 100 * 1024
 THUMB_MAX_BYTES = 64 * 1024 * 1024
 USER_AGENT = "omarchy-themes-explorer/1.0"
+
+# Bumped whenever the recipe above changes, so thumbnails encoded by an older
+# one are cleared rather than served forever.
+THUMB_VERSION = "2"
 
 _thumb_lock = threading.Lock()
 _thumb_busy = set()
@@ -739,6 +757,22 @@ def encoder():
 
 def thumb_path(slug, index):
     return THUMB_CACHE / slug / ("%d.webp" % index)
+
+
+def clear_stale_thumbs():
+    """Drop the cache when the encoding recipe has changed under it."""
+    marker = THUMB_CACHE / ".version"
+    try:
+        if marker.read_text().strip() == THUMB_VERSION:
+            return
+    except OSError:
+        pass
+    shutil.rmtree(THUMB_CACHE, ignore_errors=True)
+    try:
+        THUMB_CACHE.mkdir(parents=True, exist_ok=True)
+        marker.write_text(THUMB_VERSION)
+    except OSError:
+        pass
 
 
 def build_thumb(slug, index, url):
@@ -761,17 +795,27 @@ def build_thumb(slug, index, url):
         # ">" only ever shrinks; a wallpaper already smaller than the thumbnail
         # is left at its own size rather than blown up.
         partial = destination.with_name(destination.name + ".part")
-        done = subprocess.run(
+
+        def encode(extra):
             # `webp:` names the format outright. Without it ImageMagick reads
             # the format off the output extension, and a ".part" it does not
             # recognise silently leaves the file in the input's format -- a JPEG
             # that then gets renamed to .webp and served with the wrong type.
-            [tool, temp_source, "-resize", "%dx>" % THUMB_WIDTH,
-             "-quality", str(THUMB_QUALITY), "-strip", "webp:" + str(partial)],
-            capture_output=True,
-            timeout=120,
-        )
-        if done.returncode == 0 and partial.is_file() and partial.stat().st_size:
+            done = subprocess.run(
+                [tool, temp_source, "-resize", "%dx>" % THUMB_WIDTH]
+                + extra
+                + ["-strip", "webp:" + str(partial)],
+                capture_output=True,
+                timeout=120,
+            )
+            if done.returncode != 0 or not partial.is_file():
+                return 0
+            return partial.stat().st_size
+
+        size = encode(["-quality", str(THUMB_QUALITY)])
+        if size > THUMB_CAP:
+            size = encode(["-define", "webp:target-size=%d" % THUMB_BUDGET])
+        if size:
             partial.replace(destination)
         elif partial.exists():
             partial.unlink()
@@ -1008,6 +1052,7 @@ class Handler(BaseHTTPRequestHandler):
 
 
 def main():
+    clear_stale_thumbs()
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 8777
     server = ThreadingHTTPServer(("127.0.0.1", port), Handler)
     print("Themes Explorer on http://127.0.0.1:%d" % server.server_address[1])
