@@ -306,6 +306,9 @@ app's own handlers with the menu suppressed for the instant it would be
 visible — the audience has seen how it is done, and thirty-odd themes of the
 same menu opening is thirty-odd themes of nothing new.
 
+After the intro, the centre and the bottom-right change on the same beat rather
+than one after the other — eight holds a theme where five say the same thing.
+
 While the backgrounds cycle — in the intro and for every theme after it — the
 centre and both right-hand panels are emptied in one step, leaving the logo and
 btop down the left and the rest of the screen to the wallpaper. The intro is the

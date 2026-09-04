@@ -536,12 +536,18 @@ def run(driver, beat, themes, log):
             swap_quiet(slot, app, hold=False)
         pause()
 
-        for app in CENTER_APPS:
-            swap_quiet(CENTER_SLOT, app)
+        # Both panels move on the same beat. Stepping them one after the other
+        # was eight holds a theme where five say the same thing, and across
+        # twenty-odd themes that is minutes of watching one panel wait for the
+        # other. The corner has fewer apps than the centre, so it simply stops
+        # changing once it runs out rather than looping back through them.
+        for index in range(max(len(CENTER_APPS), len(CORNER_APPS))):
+            if index < len(CENTER_APPS):
+                swap_quiet(CENTER_SLOT, CENTER_APPS[index], hold=False)
+            if index < len(CORNER_APPS):
+                swap_quiet(CORNER_SLOT, CORNER_APPS[index], hold=False)
+            pause()
         swap_quiet(CENTER_SLOT, "nvim")
-
-        for app in CORNER_APPS:
-            swap_quiet(CORNER_SLOT, app)
 
 
 # --- main ---------------------------------------------------------------
