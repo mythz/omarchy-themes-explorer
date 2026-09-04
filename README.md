@@ -185,6 +185,12 @@ of each background it has been asked for under
 immediately, and lets the original replace it when it arrives. That Pulsar
 wallpaper caches at 39 KB — **304× smaller**.
 
+Switching to a theme with nothing cached clears the wallpaper at once rather
+than leaving the previous theme's up: the element's own background is the new
+theme's darkest shade, so the desktop is never wearing one theme's colours and
+another's picture. A wallpaper the browser already holds is painted straight
+away instead, so arrowing back and forth does not flash.
+
 Only the thumbnail is kept; the original is written to a temp file, encoded and
 deleted. The first view of a background answers 404 and fetches in the
 background, so it is the *second* visit to a theme that is instant. Encoding

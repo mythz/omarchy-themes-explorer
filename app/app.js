@@ -158,13 +158,31 @@
   function showWallpaper(slug, index, url) {
     const el = $("wallpaper");
     const token = ++wallpaperToken;
+    let full = false;
 
-    if (!/^https?:/i.test(url)) {
+    const original = new Image();
+    original.onload = function () {
+      full = true;
+      if (token === wallpaperToken) el.style.backgroundImage = 'url("' + url + '")';
+    };
+    original.src = url;
+
+    /* Already decoded -- a theme you have seen before, or a local file the
+       browser still holds. Paint it without ever clearing, so arrowing back
+       and forth does not flash. */
+    if (original.complete) {
       el.style.backgroundImage = 'url("' + url + '")';
       return;
     }
 
-    let full = false;
+    /* Nothing to show yet, so drop the outgoing theme's wallpaper immediately:
+       leaving it up means the desktop spends the download wearing one theme's
+       colours and another's picture. The element's own background is the
+       theme's darkest shade, which is what shows through. */
+    el.style.backgroundImage = "none";
+
+    if (!/^https?:/i.test(url)) return;
+
     const thumb = new Image();
     thumb.onload = function () {
       /* Never over the real thing, which may already have landed. */
@@ -174,13 +192,9 @@
     };
     thumb.src =
       "/api/extra-background?theme=" + encodeURIComponent(slug) + "&index=" + index;
-
-    const original = new Image();
-    original.onload = function () {
-      full = true;
-      if (token === wallpaperToken) el.style.backgroundImage = 'url("' + url + '")';
-    };
-    original.src = url;
+    if (thumb.complete && !full && token === wallpaperToken) {
+      el.style.backgroundImage = 'url("' + thumb.src + '")';
+    }
   }
 
   function paint() {
