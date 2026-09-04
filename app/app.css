@@ -1240,6 +1240,15 @@ body[data-mode="light"] {
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
 }
 .picker-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.picker-sun {
+  width: 13px;
+  height: 13px;
+  flex: 0 0 auto;
+  margin-left: auto;
+  opacity: 0.85;
+}
+.picker-item.on .picker-sun,
+.picker-item:hover .picker-sun { opacity: 1; }
 .picker-tag { font-size: 10px; opacity: 0.55; flex: 0 0 auto; }
 .picker-item.current .picker-tag { opacity: 0.9; color: #8fdca5; }
 

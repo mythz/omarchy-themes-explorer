@@ -284,16 +284,28 @@
 
   const SWATCHES = ["accent", "red", "yellow", "green", "cyan", "blue", "magenta"];
 
+  /* Marks a light theme in the list. The palette swatches alone do not say it:
+     plenty of dark themes are pale and a couple of light ones are muted. */
+  const SUN =
+    '<svg class="picker-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor"' +
+    ' stroke-width="2" stroke-linecap="round" aria-hidden="true">' +
+    /* Filled core, stroked rays: at 12px an outlined circle closes up into a
+       smudge, while a solid dot still reads as the middle of a sun. */
+    '<circle cx="12" cy="12" r="3.6" fill="currentColor" stroke="none"/>' +
+    '<path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4' +
+    'M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+
   function rowsFor(themes, list) {
     return themes
       .map(
         (t, i) =>
           '<div class="picker-item" data-list="' + list + '" data-index="' + i +
-          '" title="' + esc(t.name) + '">' +
+          '" title="' + esc(t.name) + (t.mode === "light" ? " (light)" : "") + '">' +
           '<span class="picker-dots">' +
           SWATCHES.map((k) => '<i style="background:' + t.colors[k] + '"></i>').join("") +
           "</span>" +
           '<span class="picker-name">' + esc(t.name) + "</span>" +
+          (t.mode === "light" ? SUN : "") +
           '<span class="picker-tag"></span>' +
           "</div>"
       )
@@ -313,7 +325,8 @@
       const isCurrent = list === "installed" && themes[i].slug === state.current;
       rows[i].classList.toggle("on", list === state.list && i === state.index);
       rows[i].classList.toggle("current", isCurrent);
-      rows[i].lastElementChild.textContent = isCurrent ? "current" : "";
+      /* By class, not lastElementChild: a light theme's row ends with the sun. */
+      rows[i].querySelector(".picker-tag").textContent = isCurrent ? "current" : "";
     }
   }
 
