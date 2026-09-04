@@ -295,11 +295,20 @@ scripts/record-demo.py --themes 3     # only the first three themes
 scripts/record-demo.py --pause 0.6    # quicker
 ```
 
-It switches to an empty workspace, parks the cursor on the bar's paintbrush,
-opens the preview full screen, and then walks it: the shortcuts overlay, four
-backgrounds, the centre panel through Neovim / VS Code / the Omarchy menu /
-nothing, the bottom-right through Nautilus / LazyVim / nothing / eza — and then
-every installed theme in turn, cycling its backgrounds and both panels.
+It switches to an empty workspace, opens the preview full screen on a fixed
+starting layout, and walks it: the shortcuts overlay, four backgrounds, then the
+centre panel and the bottom-right each stepped through their apps **with the
+context menu on screen**, three seconds a scene, right-clicked near the panel's
+corner so the menu opens beside the content rather than over it.
+
+After that the menu is never shown again. Every later swap goes through the
+app's own handlers with the menu suppressed for the instant it would be
+visible — the audience has seen how it is done, and thirty-odd themes of the
+same menu opening is thirty-odd themes of nothing new.
+
+Each theme then empties the centre and both right-hand panels before cycling its
+backgrounds, so the wallpaper plays against as much of the screen as the layout
+can give it, and only then steps the panels through their apps.
 
 The page is driven through WebDriver rather than by synthesising input into the
 compositor: every step is a real click at real coordinates with the cursor
@@ -313,8 +322,9 @@ there first: Omarchy runs Hyprland's Lua config provider, which has no cursor
 dispatcher, and synthesising a click into Quickshell would need `ydotool` and a
 uinput device. The script opens the window itself.
 
-The window is maximised rather than fullscreen, which keeps Omarchy's own bar
-in frame — worth knowing if you want it out of shot.
+The window is opened fullscreen, so a frame is the simulated desktop and
+nothing else — no Chrome window inside a recording of a desktop, and no real bar
+above a simulated one.
 
 Needs `chromedriver` (`pacman -S chromedriver`); everything else is already
 here.

@@ -45,9 +45,41 @@ CHROMEDRIVER_PORT = 9599
 
 CENTER_APPS = ["nvim", "vscode", "omenu", "none"]
 CORNER_APPS = ["nautilus", "lazyvim", "none", "ls"]
+CENTER_SLOT = "center"
 CORNER_SLOT = "right-bottom"
 
+# Emptied together before the backgrounds, so only the two left-hand panels are
+# left and most of the wallpaper is visible while it cycles.
+CLEARED_SLOTS = ["center", "right-top", "right-bottom"]
+RESTORE_AFTER_BACKGROUNDS = {"right-top": "fastfetch"}
+
+# The menu is demonstrated once, slowly, at the top of the film. Every swap
+# after that happens without it: the audience has seen how, and thirty-odd
+# themes of the same menu opening is thirty-odd themes of nothing new.
+SCENE_PAUSE = 3.0
+
+# Where the right click lands, as a fraction of the panel -- near its top-right
+# corner rather than the middle, so the menu opens beside the panel's content
+# instead of over it.
+MENU_SPOT = (0.86, 0.18)
+
+# Long enough for Chrome's fullscreen toast to come and go before the recorder
+# starts.
+SETTLE = 4.5
+
 FIRST_THEME = "catppuccin"   # where the tour starts, and the intro's subject
+
+# The layout the film opens on. The app takes these as query parameters, so the
+# first frame is already right -- nothing rearranges itself on camera. The
+# middle is empty from the start, so the opening run of backgrounds plays
+# against as much wallpaper as possible.
+INITIAL_LAYOUT = {
+    "left-top": "fastfetch",
+    "left-bottom": "ls",
+    "center": "none",
+    "right-top": "logo",
+    "right-bottom": "btop",
+}
 
 
 # --- webdriver ----------------------------------------------------------
@@ -108,12 +140,42 @@ class Driver:
             self.base + path, data=data, method=method,
             headers={"Content-Type": "application/json"},
         )
-        with urllib.request.urlopen(request, timeout=timeout) as response:
-            return json.loads(response.read())["value"]
+        try:
+            with urllib.request.urlopen(request, timeout=timeout) as response:
+                return json.loads(response.read())["value"]
+        except urllib.error.HTTPError as error:
+            # WebDriver puts the reason in the body; without it a failure is a
+            # bare "404: Not Found" with nothing saying which call broke.
+            detail = ""
+            try:
+                detail = json.loads(error.read())["value"].get("message", "")
+            except Exception:
+                pass
+            raise RuntimeError("%s %s -> %s %s"
+                               % (method, path, error.code, detail[:300])) from None
 
     def js(self, script, *args):
         return self.call("POST", "/session/%s/execute/sync" % self.session,
                          {"script": script, "args": list(args)})
+
+    def spot(self, selector, fx, fy):
+        """A point inside an element, as a fraction of its box."""
+        return self.js(
+            "const e=document.querySelector(arguments[0]);"
+            "if(!e) return null;"
+            "const r=e.getBoundingClientRect();"
+            "return [Math.round(r.x+r.width*arguments[1]),"
+            "        Math.round(r.y+r.height*arguments[2])];",
+            selector, fx, fy,
+        )
+
+    def click_at(self, x, y, button=0):
+        self.pointer([
+            {"type": "pointerMove", "duration": 260, "x": x, "y": y},
+            {"type": "pause", "duration": 120},
+            {"type": "pointerDown", "button": button},
+            {"type": "pointerUp", "button": button},
+        ])
 
     def centre(self, selector):
         return self.js(
@@ -257,17 +319,45 @@ def run(driver, beat, themes, log):
     def pause(times=1):
         time.sleep(beat * times)
 
-    def swap(slot, app):
-        """Right click a panel and pick an app out of the menu it opens."""
-        if not driver.click('[data-slot="%s"]' % slot, button=2):
+    def swap_shown(slot, app):
+        """Right click near the panel's corner and pick out of the menu."""
+        spot = driver.spot('[data-slot="%s"]' % slot, *MENU_SPOT)
+        if not spot:
             return
-        pause(0.5)
+        driver.click_at(spot[0], spot[1], button=2)
+        time.sleep(min(1.2, SCENE_PAUSE / 2))
         driver.click('.menu-item[data-app="%s"]' % app)
+        time.sleep(SCENE_PAUSE)
+
+    def swap_quiet(slot, app):
+        """The same swap without the menu.
+
+        It still goes through the app's own handlers -- the panel's contextmenu
+        listener and the menu item's click -- rather than reaching into its
+        state, so what is recorded is what a user would get. The menu is only
+        hidden for the instant it would otherwise be on screen, and all of it
+        happens inside one evaluation, so no frame ever contains it.
+        """
+        driver.js(
+            "const panel=document.querySelector('[data-slot=\"'+arguments[0]+'\"]');"
+            "const menu=document.getElementById('menu');"
+            "if(!panel) return;"
+            "const box=panel.getBoundingClientRect();"
+            "const was=menu.style.visibility;"
+            "menu.style.visibility='hidden';"
+            "panel.dispatchEvent(new MouseEvent('contextmenu',"
+            "  {bubbles:true,clientX:box.x+box.width/2,clientY:box.y+box.height/2}));"
+            "const item=document.querySelector('.menu-item[data-app=\"'+arguments[1]+'\"]');"
+            "if(item) item.click();"
+            "menu.hidden=true;"
+            "menu.style.visibility=was;",
+            slot, app,
+        )
         pause()
 
     log("intro: shortcuts overlay")
     driver.click("#help")
-    pause(2)
+    time.sleep(SCENE_PAUSE)
     driver.click("#help")
     pause()
 
@@ -276,14 +366,14 @@ def run(driver, beat, themes, log):
         driver.click("#cycleBg")
         pause()
 
-    log("intro: the centre panel")
+    log("intro: the centre panel, with the menu")
     for app in CENTER_APPS:
-        swap("center", app)
-    swap("center", "nvim")
+        swap_shown(CENTER_SLOT, app)
+    swap_shown(CENTER_SLOT, "nvim")
 
-    log("intro: the bottom-right panel")
+    log("intro: the bottom-right panel, with the menu")
     for app in CORNER_APPS:
-        swap(CORNER_SLOT, app)
+        swap_shown(CORNER_SLOT, app)
 
     for number, theme in enumerate(themes, 1):
         log("theme %d/%d: %s" % (number, len(themes), theme["name"]))
@@ -295,16 +385,24 @@ def run(driver, beat, themes, log):
         )
         pause()
 
+        # Clear the right-hand side first, so the backgrounds play against as
+        # much wallpaper as the layout can give them.
+        for slot in CLEARED_SLOTS:
+            swap_quiet(slot, "none")
+
         for _ in range(max(0, theme["backgrounds"] - 1)):
             driver.click("#cycleBg")
             pause()
 
+        for slot, app in RESTORE_AFTER_BACKGROUNDS.items():
+            swap_quiet(slot, app)
+
         for app in CENTER_APPS:
-            swap("center", app)
-        swap("center", "nvim")
+            swap_quiet(CENTER_SLOT, app)
+        swap_quiet(CENTER_SLOT, "nvim")
 
         for app in CORNER_APPS:
-            swap(CORNER_SLOT, app)
+            swap_quiet(CORNER_SLOT, app)
 
 
 # --- main ---------------------------------------------------------------
@@ -365,17 +463,12 @@ def main():
     log("on workspace %s (was %s)" % (args.workspace, origin))
     time.sleep(0.6)
 
-    recording = False
-    if not args.no_record:
-        recording = start_recording()
-        if not recording:
-            log("recorder did not start -- carrying on without it")
-        time.sleep(1.2)
-
     before = {c["address"] for c in clients()}
     profile = "/tmp/themes-explorer-record-profile"
     shutil.rmtree(profile, ignore_errors=True)
-    driver = Driver(CHROMEDRIVER_PORT, url + "?theme=" + FIRST_THEME, profile)
+    query = "&".join(["theme=" + FIRST_THEME]
+                     + ["%s=%s" % (slot, app) for slot, app in INITIAL_LAYOUT.items()])
+    driver = Driver(CHROMEDRIVER_PORT, url + "?" + query, profile)
 
     window = wait_for_window(before)
     if window:
@@ -389,13 +482,20 @@ def main():
                  % (args.workspace, window),
                  "movetoworkspace", "%s,address:%s" % (args.workspace, window))
             go_to_workspace(args.workspace)
-        # Maximised, not fullscreen. A truly fullscreen window can take the
-        # direct scanout path, where the compositor hands its buffer straight to
-        # the display -- and a DRM capture then records the composited desktop
-        # without it, which is a recording of an empty workspace. Maximised
-        # keeps it composited, and keeps Omarchy's bar in frame.
-        hypr('hl.dsp.window.fullscreen({ mode = "maximized" })', "fullscreen", "1")
-    time.sleep(1.5)
+        # Fullscreen, so the frame is the simulated desktop and nothing else --
+        # no Chrome window inside the recording of a desktop.
+        hypr('hl.dsp.window.fullscreen({ mode = "fullscreen" })', "fullscreen", "0")
+
+    # Only now start recording. Chrome puts a "press and hold Esc to exit full
+    # screen" toast over the top for the first few seconds, and the film should
+    # not open on it -- nor on an empty workspace waiting for a window.
+    time.sleep(SETTLE)
+    recording = False
+    if not args.no_record:
+        recording = start_recording()
+        if not recording:
+            log("recorder did not start -- carrying on without it")
+        time.sleep(1.0)
 
     try:
         run(driver, args.pause, order, log)
