@@ -148,6 +148,41 @@
     return state.list === "extra";
   }
 
+  /* An installed theme's wallpaper is a local file and paints at once. An extra
+     theme's is on GitHub and can be megabytes, so the server's cached thumbnail
+     goes up first and the original replaces it when it arrives. Both are raced
+     rather than chained: whichever answers first shows, and the token means a
+     theme you have already arrowed past cannot paint over the one you are on. */
+  let wallpaperToken = 0;
+
+  function showWallpaper(slug, index, url) {
+    const el = $("wallpaper");
+    const token = ++wallpaperToken;
+
+    if (!/^https?:/i.test(url)) {
+      el.style.backgroundImage = 'url("' + url + '")';
+      return;
+    }
+
+    let full = false;
+    const thumb = new Image();
+    thumb.onload = function () {
+      /* Never over the real thing, which may already have landed. */
+      if (token === wallpaperToken && !full) {
+        el.style.backgroundImage = 'url("' + thumb.src + '")';
+      }
+    };
+    thumb.src =
+      "/api/extra-background?theme=" + encodeURIComponent(slug) + "&index=" + index;
+
+    const original = new Image();
+    original.onload = function () {
+      full = true;
+      if (token === wallpaperToken) el.style.backgroundImage = 'url("' + url + '")';
+    };
+    original.src = url;
+  }
+
   function paint() {
     const t = theme();
     if (!t) return;
@@ -226,8 +261,9 @@
     const backgrounds = t.backgrounds;
     if (backgrounds.length) {
       const i = (state.bgIndex[t.slug] || 0) % backgrounds.length;
-      $("wallpaper").style.backgroundImage = 'url("' + backgrounds[i] + '")';
+      showWallpaper(t.slug, i, backgrounds[i]);
     } else {
+      wallpaperToken++;
       $("wallpaper").style.backgroundImage = "none";
     }
 

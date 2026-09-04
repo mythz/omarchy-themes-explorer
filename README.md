@@ -175,6 +175,25 @@ the local copy first.
 
 The column simply does not appear when `extra-themes.json` is missing.
 
+### Wallpaper thumbnails
+
+An extra theme's wallpapers stay on GitHub and are often enormous — Pulsar's
+first one is 12 MB at 7680×4320 — so arrowing through the list would otherwise
+sit on a blank desktop while each one downloads. The server keeps a small WebP
+of each background it has been asked for under
+`~/.cache/omarchy-themes-explorer/backgrounds/<theme>/<n>.webp`, paints that
+immediately, and lets the original replace it when it arrives. That Pulsar
+wallpaper caches at 39 KB — **304× smaller**.
+
+Only the thumbnail is kept; the original is written to a temp file, encoded and
+deleted. The first view of a background answers 404 and fetches in the
+background, so it is the *second* visit to a theme that is instant. Encoding
+needs ImageMagick; without it the cache stays empty and the page just loads the
+originals, as it did before.
+
+Nothing prunes the cache — 40 KB per background you have actually looked at,
+so `rm -rf ~/.cache/omarchy-themes-explorer` if it ever bothers you.
+
 ### Building the list
 
 `extra-themes.json` describes every community theme listed in [the Omarchy

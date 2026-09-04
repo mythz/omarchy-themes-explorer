@@ -10,9 +10,14 @@ import json
 import mimetypes
 import os
 import re
+import shutil
 import subprocess
 import sys
+import tempfile
+import threading
 import tomllib
+import urllib.error
+import urllib.request
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
@@ -702,6 +707,106 @@ def extra_repo(slug):
     return ""
 
 
+# --- extra-theme wallpaper thumbnails ------------------------------------
+
+# An extra theme's wallpapers live on GitHub and run to megabytes -- Pulsar's
+# first one is 12MB at 7680x4320. Downloading that before anything appears
+# makes browsing the list feel broken, so a small WebP of each is kept here and
+# painted first while the original loads over it. Only the thumbnail is stored;
+# the original is written to a temp file, encoded, and deleted.
+THUMB_CACHE = (
+    Path(os.environ.get("XDG_CACHE_HOME") or (HOME / ".cache"))
+    / "omarchy-themes-explorer/backgrounds"
+)
+THUMB_WIDTH = 960
+THUMB_QUALITY = 55
+THUMB_MAX_BYTES = 64 * 1024 * 1024
+USER_AGENT = "omarchy-themes-explorer/1.0"
+
+_thumb_lock = threading.Lock()
+_thumb_busy = set()
+
+
+def encoder():
+    """ImageMagick under either of its names, or None -- the cache is an
+    optimisation, so its absence has to be survivable."""
+    for name in ("magick", "convert"):
+        found = shutil.which(name)
+        if found:
+            return found
+    return None
+
+
+def thumb_path(slug, index):
+    return THUMB_CACHE / slug / ("%d.webp" % index)
+
+
+def build_thumb(slug, index, url):
+    """Fetch one wallpaper and write a small WebP of it. Runs off the request."""
+    tool = encoder()
+    if not tool:
+        return
+    destination = thumb_path(slug, index)
+    temp_source = None
+    try:
+        request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+        with urllib.request.urlopen(request, timeout=60) as response:
+            length = response.headers.get("Content-Length")
+            if length and int(length) > THUMB_MAX_BYTES:
+                return
+            with tempfile.NamedTemporaryFile(delete=False) as handle:
+                temp_source = handle.name
+                shutil.copyfileobj(response, handle, 1 << 20)
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        # ">" only ever shrinks; a wallpaper already smaller than the thumbnail
+        # is left at its own size rather than blown up.
+        partial = destination.with_name(destination.name + ".part")
+        done = subprocess.run(
+            # `webp:` names the format outright. Without it ImageMagick reads
+            # the format off the output extension, and a ".part" it does not
+            # recognise silently leaves the file in the input's format -- a JPEG
+            # that then gets renamed to .webp and served with the wrong type.
+            [tool, temp_source, "-resize", "%dx>" % THUMB_WIDTH,
+             "-quality", str(THUMB_QUALITY), "-strip", "webp:" + str(partial)],
+            capture_output=True,
+            timeout=120,
+        )
+        if done.returncode == 0 and partial.is_file() and partial.stat().st_size:
+            partial.replace(destination)
+        elif partial.exists():
+            partial.unlink()
+    except (OSError, ValueError, urllib.error.URLError, subprocess.SubprocessError):
+        pass
+    finally:
+        if temp_source:
+            try:
+                os.unlink(temp_source)
+            except OSError:
+                pass
+        with _thumb_lock:
+            _thumb_busy.discard((slug, index))
+
+
+def request_thumb(slug, index, url):
+    with _thumb_lock:
+        if (slug, index) in _thumb_busy:
+            return
+        _thumb_busy.add((slug, index))
+    threading.Thread(target=build_thumb, args=(slug, index, url), daemon=True).start()
+
+
+def extra_background(slug, index):
+    """The published URL of one extra theme's wallpaper, or "" if there is none."""
+    for theme in extra_themes(set()):
+        if theme["slug"] != slug:
+            continue
+        images = theme.get("backgrounds") or []
+        if 0 <= index < len(images):
+            return images[index]
+        return ""
+    return ""
+
+
 def current_slug():
     try:
         return CURRENT_NAME.read_text().strip()
@@ -756,6 +861,28 @@ class Handler(BaseHTTPRequestHandler):
                     "extra": extra_themes({t["slug"] for t in themes}),
                 }
             )
+            return
+
+        if url.path == "/api/extra-background":
+            slug = (query.get("theme") or [""])[0]
+            if not re.fullmatch(r"[a-z0-9][a-z0-9._-]*", slug):
+                self.send_error(404)
+                return
+            try:
+                index = int((query.get("index") or ["0"])[0])
+            except ValueError:
+                self.send_error(404)
+                return
+            path = thumb_path(slug, index)
+            if path.is_file():
+                self.send_file(path, cache=True)
+                return
+            # Nothing cached yet: answer 404 so the page falls straight through
+            # to the original, and fetch it in the background for next time.
+            remote = extra_background(slug, index)
+            if remote:
+                request_thumb(slug, index, remote)
+            self.send_error(404)
             return
 
         if url.path == "/api/background":
