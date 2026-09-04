@@ -282,6 +282,40 @@ bytes.
 
 [extra]: https://learn.omacom.io/2/the-omarchy-manual/90/extra-themes
 
+## Recording a demo
+
+`scripts/record-demo.py` performs a scripted tour and records it with Omarchy's
+own recorder (`gpu-screen-recorder`), so a run is repeatable and the tour is
+editable:
+
+```bash
+scripts/record-demo.py                # the full tour, every installed theme
+scripts/record-demo.py --no-record    # rehearse the choreography
+scripts/record-demo.py --themes 3     # only the first three themes
+scripts/record-demo.py --pause 0.6    # quicker
+```
+
+It switches to an empty workspace, parks the cursor on the bar's paintbrush,
+opens the preview full screen, and then walks it: the shortcuts overlay, four
+backgrounds, the centre panel through Neovim / VS Code / the Omarchy menu /
+nothing, the bottom-right through Nautilus / LazyVim / nothing / eza — and then
+every installed theme in turn, cycling its backgrounds and both panels.
+
+The page is driven through WebDriver rather than by synthesising input into the
+compositor: every step is a real click at real coordinates with the cursor
+visible where it lands, and it is deterministic, which is what makes a
+seven-minute run worth re-running after a one-line change. The constants at the
+top of the file — the workspace, the beat, the app lists, the paintbrush
+position — are the tour.
+
+One thing it cannot do is click the bar widget itself. Synthesising a click
+into Quickshell needs `ydotool` and a uinput device, which Omarchy does not
+ship, so the script parks the cursor over the paintbrush and opens the window
+itself. It reads the same on camera.
+
+Needs `chromedriver` (`pacman -S chromedriver`); everything else is already
+here.
+
 ## Layout
 
 ```
