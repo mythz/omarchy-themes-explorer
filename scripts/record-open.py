@@ -78,16 +78,24 @@ def glide(start, end, seconds):
         time.sleep(seconds / steps)
 
 
-def main():
-    parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
+def arguments(description):
+    """The options every opening clip takes.
+
+    Shared with record-open-extra.py, which films the same beat and differs
+    only in which theme the window opens on.
+    """
+    parser = argparse.ArgumentParser(description=description)
     parser.add_argument("--no-record", action="store_true")
     parser.add_argument("--workspace", default=WORKSPACE)
     parser.add_argument("--brush", default="%d,%d" % PAINTBRUSH,
                         help="the widget's position as x,y in logical pixels")
     parser.add_argument("--hold", type=float, default=HOLD,
                         help="seconds to hold on the opened app (default 5)")
-    args = parser.parse_args()
+    return parser
 
+
+def open_app(theme, args):
+    """Film the pointer reaching the widget and the app opening on `theme`."""
     try:
         brush = tuple(int(part) for part in args.brush.split(","))
     except ValueError:
@@ -102,7 +110,7 @@ def main():
     # launcher passes this through to the page as query parameters.
     environment = dict(os.environ)
     environment["OMARCHY_THEMES_EXPLORER_QUERY"] = "&".join(
-        ["theme=" + demo.FIRST_THEME]
+        ["theme=" + theme]
         + ["%s=%s" % (slot, app) for slot, app in demo.INITIAL_LAYOUT.items()]
     )
 
@@ -157,6 +165,10 @@ def main():
 
     if origin and origin != args.workspace:
         demo.go_to_workspace(origin)
+
+
+def main():
+    open_app(demo.FIRST_THEME, arguments(__doc__.split("\n\n")[0]).parse_args())
 
 
 if __name__ == "__main__":

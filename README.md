@@ -385,6 +385,18 @@ two clips join without a jump. That is what `OMARCHY_THEMES_EXPLORER_QUERY` is
 for: the launcher appends it to the app's URL, and the page reads it as query
 parameters.
 
+`scripts/record-open-extra.py` is the same clip for the community tour, ending
+on what `record-extra.py` starts from — the first extra theme, its first
+wallpaper, the same layout:
+
+```bash
+scripts/record-open-extra.py                 # about 11 seconds
+scripts/record-open-extra.py --start nordic  # if the tour begins elsewhere
+```
+
+Which theme that is comes from `record-extra.py` itself, so the two cannot
+disagree about where the tour begins.
+
 It cannot press the widget. Clicking into Quickshell needs a synthetic pointer
 button, and Hyprland's Lua dispatcher table has `hl.dsp.cursor.move` but nothing
 that clicks — so the pointer travels there, rests long enough for the widget's

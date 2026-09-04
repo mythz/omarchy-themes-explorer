@@ -57,6 +57,36 @@ MAX_BACKGROUNDS = 4
 BACKGROUND_WAIT = 6.0
 
 
+def extra_list():
+    """The extra themes the app will show, in the order this film walks them.
+
+    Read straight out of the server's own code rather than over HTTP, so the
+    opening clip can find out where the tour starts without standing a server
+    up. It is the same answer /api/themes gives: extra-themes.json minus
+    anything already installed here.
+    """
+    spec = importlib.util.spec_from_file_location("server", REPO / "app/server.py")
+    server = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(server)
+    installed = {t["slug"] for t in server.discover_themes()}
+    return server.extra_themes(installed)
+
+
+def opening_theme(start=""):
+    """The slug this film opens on -- what an opening clip should end on."""
+    themes = extra_list()
+    if not themes:
+        raise SystemExit(
+            "no extra themes -- extra-themes.json is missing or empty.\n"
+            "Build it with scripts/build-extra-themes.py."
+        )
+    if not start:
+        return themes[0]["slug"]
+    if not any(t["slug"] == start for t in themes):
+        raise SystemExit("no extra theme with slug %r" % start)
+    return start
+
+
 def wallpaper_source(driver):
     return driver.js(
         "return getComputedStyle(document.getElementById('wallpaper')).backgroundImage;"
