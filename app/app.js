@@ -175,13 +175,17 @@
       return;
     }
 
-    /* Nothing to show yet, so drop the outgoing theme's wallpaper immediately:
-       leaving it up means the desktop spends the download wearing one theme's
-       colours and another's picture. The element's own background is the
-       theme's darkest shade, which is what shows through. */
-    el.style.backgroundImage = "none";
-
+    /* An installed theme's wallpaper is a local file and lands in milliseconds,
+       so it is left to arrive over whatever is on screen -- clearing first only
+       buys a blank flash between two pictures that are both about to be right.
+       A remote one is a different matter: seconds, sometimes megabytes. */
     if (!/^https?:/i.test(url)) return;
+
+    /* Drop the outgoing theme's wallpaper immediately, or the desktop spends
+       the download wearing one theme's colours and another's picture. The
+       element's own background is the theme's darkest shade, which is what
+       shows through. */
+    el.style.backgroundImage = "none";
 
     const thumb = new Image();
     thumb.onload = function () {

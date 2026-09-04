@@ -200,8 +200,13 @@ than they return on a detailed photo — 1920 measured 0.8 dB *worse* there —
 while giving up under a dB on the easy ones. Bumping `THUMB_VERSION` clears
 thumbnails encoded by an older recipe.
 
-Switching to a theme with nothing cached clears the wallpaper at once rather
-than leaving the previous theme's up: the element's own background is the new
+Only extra themes go through any of this. An installed theme's wallpaper is a
+local file that lands in milliseconds, so it is shown as-is and left to arrive
+over whatever is on screen — clearing first would only buy a blank flash
+between two pictures that are both about to be right.
+
+Switching to an *extra* theme with nothing cached clears the wallpaper at once
+rather than leaving the previous theme's up: the element's own background is the new
 theme's darkest shade, so the desktop is never wearing one theme's colours and
 another's picture. A wallpaper the browser already holds is painted straight
 away instead, so arrowing back and forth does not flash.
