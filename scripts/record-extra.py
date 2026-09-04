@@ -11,6 +11,7 @@ cycling together -- moving on with the next arrow.
     scripts/record-extra.py --themes 3       # only the first three
     scripts/record-extra.py --backgrounds 2  # at most two wallpapers each
     scripts/record-extra.py --no-record      # rehearse it
+    scripts/record-extra.py --start vesper   # resume from there to the end
 
 Extra themes are not installed, so their wallpapers come off GitHub rather than
 off disk. Two things follow: the server's thumbnail cache is warmed before the
@@ -175,7 +176,7 @@ def main():
     parser.add_argument("--themes", type=int, default=0,
                         help="stop after this many themes")
     parser.add_argument("--start", default="",
-                        help="slug of the theme to begin on")
+                        help="slug of the theme to begin on; runs to the end of the list")
     parser.add_argument("--backgrounds", type=int, default=MAX_BACKGROUNDS,
                         help="most wallpapers to show per theme (default %d)" % MAX_BACKGROUNDS)
     parser.add_argument("--pause", type=float, default=demo.SCENE_PAUSE,
@@ -223,7 +224,11 @@ def main():
         if at is None:
             server.terminate()
             raise SystemExit("no extra theme with slug %r" % args.start)
-        extra = extra[at:] + extra[:at]
+        # Runs to the end of the list rather than wrapping back to the top.
+        # --start is how a stopped run is resumed, and a resume that carries on
+        # into the themes the first film already covered is worse than useless:
+        # it is minutes of footage that has to be found and cut back out.
+        extra = extra[at:]
 
     order = [{"name": t["name"], "slug": t["slug"],
               "backgrounds": min(len(t["backgrounds"]), max(1, args.backgrounds))}
@@ -291,6 +296,12 @@ def main():
         run(driver, args.pause, order, log, args.background_wait)
     except KeyboardInterrupt:
         log("interrupted")
+    except Exception as failure:
+        # Chrome can go away mid-run -- a crash, or someone closing the window.
+        # Everything filmed up to that point is still worth having, so say what
+        # happened and carry on to the report rather than dying on a traceback
+        # that buries where the recording went.
+        log("stopped early: %s" % failure)
     finally:
         driver.quit()
         if recording:

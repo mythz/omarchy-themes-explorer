@@ -381,8 +381,12 @@ gives its second theme onwards.
 scripts/record-extra.py                  # all 115 of them
 scripts/record-extra.py --themes 3       # only the first three
 scripts/record-extra.py --backgrounds 2  # at most two wallpapers each
-scripts/record-extra.py --start nordic   # begin somewhere else
+scripts/record-extra.py --start nordic   # resume from there to the end
 ```
+
+`--start` runs to the end of the list rather than wrapping back to the top: it
+is how a stopped run is resumed, and a resume that carries on into themes the
+first film already covered is footage you have to find and cut back out.
 
 The choreography itself lives in `record-demo.py`'s `Stage`, which both scripts
 perform, so there is one copy of it to change.
