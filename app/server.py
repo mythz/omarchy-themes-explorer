@@ -890,6 +890,24 @@ class Handler(BaseHTTPRequestHandler):
         if os.environ.get("OTP_VERBOSE"):
             sys.stderr.write("%s - %s\n" % (self.address_string(), fmt % args))
 
+    def from_another_site(self):
+        """True when a POST came from a page that is not this app.
+
+        The server listens on loopback, but loopback is not a boundary a
+        browser respects: any page the user visits can post to 127.0.0.1, and
+        a form-style POST needs no preflight to get through. Without a check,
+        a visited page could switch the user's theme.
+
+        Sec-Fetch-Site is the check. The browser sets it and script cannot, so
+        `same-origin` (the app's own fetch) and `none` (typed or launched) are
+        the only values a real request has. Absent means the request did not
+        come from a browser at all -- curl, or a script driving the API -- and
+        that is a caller who could as easily run `omarchy theme set` directly,
+        so there is nothing to defend there.
+        """
+        site = self.headers.get("Sec-Fetch-Site")
+        return site is not None and site not in ("same-origin", "none")
+
     def send_json(self, payload, status=200):
         body = json.dumps(payload).encode()
         self.send_response(status)
@@ -979,6 +997,10 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         path = urlparse(self.path).path
+
+        if self.from_another_site():
+            self.send_json({"ok": False, "error": "cross-site request"}, 403)
+            return
 
         # Lets the page dismiss itself (Escape, or the close button) by asking
         # the launcher to toggle its scratchpad away. Takes no input: it runs
