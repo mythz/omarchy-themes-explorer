@@ -13,6 +13,9 @@ themes, and apply the one you want without leaving the page.
 ▶ **[Try On Every Omarchy Theme Before You Switch](https://youtu.be/WE7D5nX9e3E)** — all 22 installed
 themes, filmed by the plugin's own [recording script](#recording-a-demo).
 
+▶ **[112 Omarchy Themes You Don't Have Installed](https://youtu.be/nelOqC_Y2G0)** — the same tour of
+every [extra theme](#extra-themes), none of them installed.
+
 ## Install
 
 ```bash
@@ -198,6 +201,10 @@ the local copy first.
 The column simply does not appear when `extra-themes.json` is missing.
 
 ![Installed and extra themes side by side](docs/theme-explorer-installed-themes.webp)
+
+All 112 of them, one after another, are in [112 Omarchy Themes You Don't Have
+Installed](https://youtu.be/nelOqC_Y2G0) — filmed with
+[record-extra.py](#recording-the-extra-themes).
 
 ### Wallpaper thumbnails
 
