@@ -528,7 +528,7 @@
     try {
       const res = await fetch("/api/install", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...API_TOKEN },
         body: JSON.stringify({ theme: t.slug }),
       });
       const data = await res.json();
@@ -553,6 +553,13 @@
     }
   }
 
+  /* The server mints a token per launch and writes it into index.html; every
+     request that changes something has to send it back. */
+  const API_TOKEN = {
+    "X-Themes-Explorer-Token":
+      document.querySelector('meta[name="explorer-token"]')?.content || "",
+  };
+
   async function applyTheme() {
     const t = theme();
     if (!t) return;
@@ -563,7 +570,7 @@
     try {
       const res = await fetch("/api/apply", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...API_TOKEN },
         body: JSON.stringify({ theme: t.slug }),
       });
       const data = await res.json();
@@ -586,7 +593,7 @@
   /* Hides the window rather than closing it, so the next open comes back to
      the theme and layout you left. */
   function hideApp() {
-    fetch("/api/hide", { method: "POST" }).catch(() => {});
+    fetch("/api/hide", { method: "POST", headers: API_TOKEN }).catch(() => {});
   }
   $("close").addEventListener("click", hideApp);
 

@@ -180,6 +180,31 @@ The launcher works without the bar widget:
 `--hide` toggles the scratchpad, `--stop` shuts the server down, `--port N`
 moves it off 8777.
 
+## Security
+
+The server listens on loopback only, but a browser will still send requests
+there from any page you visit, so it guards itself:
+
+- **Host allowlist.** Every request must be addressed to `127.0.0.1`,
+  `localhost` or `omarchy-themes-explorer.localhost` on its own port. A hostile
+  site that rebinds its DNS name to 127.0.0.1 looks same-origin to the browser,
+  but its name is still in the `Host` header, so it gets a 403.
+- **Per-launch token.** The server mints a random token at startup and writes it
+  into `index.html`. `/api/apply`, `/api/install` and `/api/hide` refuse any
+  request that does not send it back in `X-Themes-Explorer-Token`.
+- **Origin and Sec-Fetch-Site.** A POST that the browser marks as coming from
+  another site is refused before anything else is looked at.
+
+The launcher keeps its PID file in `$XDG_RUNTIME_DIR/omarchy-themes-explorer`
+(or `~/.cache/omarchy-themes-explorer/run` without one), never `/tmp`. It
+refuses a directory that is a symlink or not owned by you, creates the file
+with mode 0600 without following anything already at that path, and `--stop`
+signals the PID only if it is still your `server.py` on that port.
+
+```bash
+python3 -m unittest discover tests   # regression tests for both boundaries
+```
+
 ## Extra themes
 
 Hovering the theme name opens two columns: **Installed themes**, which the
@@ -463,6 +488,7 @@ scripts/record-extra.py        films the community themes
 scripts/record-open.py         films the opening beat, to stitch in front
 scripts/record-open-extra.py   the same opening, for the community film
 extra-themes.json              the community themes, ready to preview
+tests/                         server request boundary and launcher PID file
 docs/                          the screenshots this README uses
 ```
 

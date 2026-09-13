@@ -6,10 +6,12 @@ actually installed on this machine, so the page can render each one and hand
 "make this the current theme" back to `omarchy theme set`.
 """
 
+import hmac
 import json
 import mimetypes
 import os
 import re
+import secrets
 import shutil
 import subprocess
 import sys
@@ -35,6 +37,15 @@ USER_THEMES = HOME / ".config/omarchy/themes"
 STOCK_THEMES = Path(os.environ.get("OMARCHY_PATH", "/usr/share/omarchy")) / "themes"
 USER_BACKGROUNDS = HOME / ".config/omarchy/backgrounds"
 CURRENT_NAME = HOME / ".local/state/omarchy/current/theme.name"
+
+# The names the launcher opens the app under: 127.0.0.1 for --tab and health
+# checks, the .localhost alias for the app window. Anything else in a Host
+# header is a rebound DNS name and is refused.
+HOST_NAMES = ("127.0.0.1", "localhost", "omarchy-themes-explorer.localhost")
+# Minted per launch and written into index.html, which only a known Host can
+# read. Every state-changing request has to send it back.
+TOKEN = secrets.token_urlsafe(32)
+TOKEN_HEADER = "X-Themes-Explorer-Token"
 
 IMAGE_EXT = {".jpg", ".jpeg", ".png", ".webp", ".avif"}
 ANSI_NAMES = ["black", "red", "green", "yellow", "blue", "magenta", "cyan", "white"]
@@ -890,6 +901,22 @@ class Handler(BaseHTTPRequestHandler):
         if os.environ.get("OTP_VERBOSE"):
             sys.stderr.write("%s - %s\n" % (self.address_string(), fmt % args))
 
+    def known_hosts(self):
+        port = self.server.server_address[1]
+        return {"%s:%d" % (name, port) for name in HOST_NAMES}
+
+    def wrong_host(self):
+        """True when the request was addressed to a name that is not this app.
+
+        DNS rebinding is how a hostile page gets past a same-origin check: it
+        points its own name at 127.0.0.1, and the browser then treats requests
+        to that name as same-origin while they land here. The Host header still
+        carries the hostile name, so only the names this server is launched
+        under are answered -- for reads as well as writes, or a rebound page
+        could read the token out of index.html.
+        """
+        return self.headers.get("Host", "").lower() not in self.known_hosts()
+
     def from_another_site(self):
         """True when a POST came from a page that is not this app.
 
@@ -898,15 +925,19 @@ class Handler(BaseHTTPRequestHandler):
         a form-style POST needs no preflight to get through. Without a check,
         a visited page could switch the user's theme.
 
-        Sec-Fetch-Site is the check. The browser sets it and script cannot, so
-        `same-origin` (the app's own fetch) and `none` (typed or launched) are
-        the only values a real request has. Absent means the request did not
-        come from a browser at all -- curl, or a script driving the API -- and
-        that is a caller who could as easily run `omarchy theme set` directly,
-        so there is nothing to defend there.
+        Sec-Fetch-Site and Origin are set by the browser, not page script, so
+        a request that names another site is refused outright. On top of that
+        every state-changing request must echo the per-launch token, which only
+        a page served by this process -- under a known Host -- has ever seen.
         """
         site = self.headers.get("Sec-Fetch-Site")
-        return site is not None and site not in ("same-origin", "none")
+        if site is not None and site not in ("same-origin", "none"):
+            return True
+        origin = self.headers.get("Origin")
+        if origin is not None and origin.lower() not in {"http://" + h for h in self.known_hosts()}:
+            return True
+        token = self.headers.get(TOKEN_HEADER, "")
+        return not hmac.compare_digest(token.encode(), TOKEN.encode())
 
     def send_json(self, payload, status=200):
         body = json.dumps(payload).encode()
@@ -923,6 +954,9 @@ class Handler(BaseHTTPRequestHandler):
         except OSError:
             self.send_error(404)
             return
+        if path == APP_DIR / "index.html":
+            meta = '<meta name="explorer-token" content="%s">' % TOKEN
+            body = body.replace(b'<meta charset="utf-8">', b'<meta charset="utf-8">\n' + meta.encode(), 1)
         ctype = mimetypes.guess_type(path.name)[0] or "application/octet-stream"
         self.send_response(200)
         self.send_header("Content-Type", ctype)
@@ -932,6 +966,9 @@ class Handler(BaseHTTPRequestHandler):
         self.wfile.write(body)
 
     def do_GET(self):
+        if self.wrong_host():
+            self.send_json({"ok": False, "error": "unknown host"}, 403)
+            return
         url = urlparse(self.path)
         query = parse_qs(url.query)
 
@@ -998,7 +1035,7 @@ class Handler(BaseHTTPRequestHandler):
     def do_POST(self):
         path = urlparse(self.path).path
 
-        if self.from_another_site():
+        if self.wrong_host() or self.from_another_site():
             self.send_json({"ok": False, "error": "cross-site request"}, 403)
             return
 

@@ -13,8 +13,16 @@ set -euo pipefail
 # to this script. `omarchy plugin add` only clones a repo -- there is no install
 # step -- so nothing may assume a copy under ~/.local or a name on PATH.
 SELF_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
-APP_DIR="$SELF_DIR/../app"
-RUN_DIR="${XDG_RUNTIME_DIR:-/tmp}"
+APP_DIR="$(cd -- "$SELF_DIR/../app" && pwd)"
+
+# The PID file lives in a directory only this user can reach. XDG_RUNTIME_DIR
+# is exactly that on any systemd login; without it, fall back under $HOME and
+# never /tmp, where another user could plant the file or a symlink first.
+if [[ -n ${XDG_RUNTIME_DIR:-} ]]; then
+  RUN_DIR="$XDG_RUNTIME_DIR/omarchy-themes-explorer"
+else
+  RUN_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/omarchy-themes-explorer/run"
+fi
 
 # Chrome derives an app window's class from the URL host, and resolves any
 # *.localhost name to loopback itself. Serving the app under an alias therefore
@@ -142,12 +150,41 @@ hypr_fullscreen() {
   hyprctl dispatch fullscreen 0 >/dev/null 2>&1 || true
 }
 
+# Refuse to go on unless RUN_DIR is a real directory, owned by this user and
+# closed to everyone else -- a symlink, or one somebody else made, is not ours
+# to write a PID file into or to read one out of.
+private_run_dir() {
+  if [[ ! -L $RUN_DIR ]]; then
+    mkdir -p -m 700 -- "$RUN_DIR" 2>/dev/null || true
+    [[ -d $RUN_DIR && -O $RUN_DIR ]] && chmod 700 -- "$RUN_DIR"
+  fi
+  if [[ -L $RUN_DIR || ! -d $RUN_DIR || ! -O $RUN_DIR || $(stat -c %a -- "$RUN_DIR") != 700 ]]; then
+    echo "Refusing to use $RUN_DIR: not a private directory owned by $(id -un)" >&2
+    exit 1
+  fi
+}
+
+# The PID file only says which process to look at, never what to kill: a server
+# that died leaves its number behind for the kernel to hand to something else.
+# Answer the PID only if it is still this user's server.py on this port.
+server_pid() {
+  local pid argv=()
+  [[ -f $PID_FILE && ! -L $PID_FILE && -O $PID_FILE ]] || return 1
+  pid=$(<"$PID_FILE")
+  [[ $pid =~ ^[0-9]+$ && -O /proc/$pid ]] || return 1
+  mapfile -d '' -t argv 2>/dev/null <"/proc/$pid/cmdline" || return 1
+  [[ ${argv[1]:-} == "$APP_DIR/server.py" && ${argv[2]:-} == "$PORT" ]] || return 1
+  echo "$pid"
+}
+
+private_run_dir
+
 if [[ -n ${STOP:-} ]]; then
-  if [[ -f $PID_FILE ]] && kill "$(<"$PID_FILE")" 2>/dev/null; then
-    rm -f "$PID_FILE"
+  if pid=$(server_pid) && kill "$pid" 2>/dev/null; then
+    rm -f -- "$PID_FILE"
     echo "Stopped."
   else
-    rm -f "$PID_FILE"
+    rm -f -- "$PID_FILE"
     echo "Not running."
   fi
   exit 0
@@ -155,7 +192,11 @@ fi
 
 if ! curl -sf --max-time 1 "$URL" >/dev/null 2>&1; then
   setsid python3 "$APP_DIR/server.py" "$PORT" >/dev/null 2>&1 </dev/null &
-  echo $! > "$PID_FILE"
+  pid=$!
+  # Replace rather than write through: noclobber makes the redirect create the
+  # file exclusively, so nothing already sitting at that name is followed.
+  rm -f -- "$PID_FILE"
+  (umask 077; set -o noclobber; echo "$pid" >"$PID_FILE")
   for _ in {1..40}; do
     curl -sf --max-time 1 "$URL" >/dev/null 2>&1 && break
     sleep 0.1
