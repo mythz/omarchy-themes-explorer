@@ -515,8 +515,8 @@
     paint();
   });
 
-  /* `omarchy theme install` clones the repo and then applies it, so a
-     successful install leaves the theme both installed and current. Rebuild
+  /* The server checks out the catalogue's exact commit before applying it,
+     so a successful install leaves the theme both installed and current. Rebuild
      both lists from the server's answer and follow the theme across: it has
      just moved out of the extra column and into the installed one. */
   async function installTheme() {
@@ -542,7 +542,7 @@
         buildPicker();
         toast(t.name + " installed and applied");
       } else {
-        toast(data.error || "omarchy theme install failed", true);
+        toast(data.error || "Theme install failed", true);
       }
     } catch (err) {
       toast("Could not reach the preview server", true);

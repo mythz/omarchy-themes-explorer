@@ -14,9 +14,9 @@ Each repo is read with one blobless partial clone:
 
 which is ~150KB and one round trip per theme. It names the default branch (which
 is not always `main`), lists every file, and brings down the config files small
-enough to matter while leaving the wallpapers on GitHub -- where they stay: the
-backgrounds in the output are URLs, so this file is ~250KB and the plugin can
-refresh it on every launch. Downloading each repo's zip would be the same idea
+enough to matter while leaving the wallpapers on GitHub. The output records
+the cloned commit and uses it in wallpaper URLs, so a later branch move cannot
+change either the preview or installed bytes. Downloading each repo's zip would be the same idea
 at ~20MB a theme, and its root directory is named `-HEAD`, so it would not even
 answer the branch question.
 
@@ -205,13 +205,16 @@ class Clone:
     """A blobless, checkout-less, single-commit clone of one theme repo.
 
     Everything the build needs is answered locally from it: the default branch
-    name, the file list, and the contents of the config files. Wallpapers are
+    name, exact commit, file list, and contents of config files. Wallpapers are
     over the 64k filter, so they are never transferred -- they stay URLs.
     """
 
     def __init__(self, path):
         self.path = path
         self.branch = git(["symbolic-ref", "--short", "HEAD"], cwd=path).stdout.strip() or "HEAD"
+        self.commit = git(["rev-parse", "HEAD"], cwd=path).stdout.strip()
+        if not re.fullmatch(r"[0-9a-f]{40}", self.commit):
+            raise ValueError("repository has no full commit SHA")
         listing = git(["ls-tree", "-r", "--name-only", "HEAD"], cwd=path).stdout
         self.files = [line for line in listing.splitlines() if line]
 
@@ -335,11 +338,11 @@ def theme_root(paths):
     return ""
 
 
-def blob_url(owner, repo, branch, path):
+def blob_url(owner, repo, commit, path):
     return "https://github.com/%s/%s/blob/%s/%s?raw=true" % (
         owner,
         repo,
-        urllib.parse.quote(branch),
+        commit,
         urllib.parse.quote(path),
     )
 
@@ -434,7 +437,7 @@ def build_theme(listing, cache_dir, refresh, http=None):
 
     bg_prefix = prefix + "backgrounds/"
     backgrounds = [
-        blob_url(owner, repo, clone.branch, path)
+        blob_url(owner, repo, clone.commit, path)
         for path in sorted(clone.files)
         if path.startswith(bg_prefix)
         and "/" not in path[len(bg_prefix) :]
@@ -455,8 +458,8 @@ def build_theme(listing, cache_dir, refresh, http=None):
         "backgrounds": backgrounds,
         "repo": listing["repo"],
         "branch": clone.branch,
+        "commit": clone.commit,
         "preview": listing["preview"],
-        "install": "omarchy theme install %s" % listing["repo"],
     }
 
     # Nice to have, never required: only asked for when a token makes it free.
