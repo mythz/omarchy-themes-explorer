@@ -202,7 +202,7 @@ with mode 0600 without following anything already at that path, and `--stop`
 signals the PID only if it is still your `server.py` on that port.
 
 ```bash
-python3 -m unittest discover tests   # regression tests for both boundaries
+python3 -m unittest discover tests   # request, launcher, and pinned-install regressions
 ```
 
 ## Extra themes
@@ -211,17 +211,20 @@ Hovering the theme name opens two columns: **Installed themes**, which the
 button applies with `omarchy theme set`, and **Extra themes** — everything in
 `extra-themes.json` that is not installed here. Picking one previews it exactly
 like an installed theme, wallpaper included (loaded straight from GitHub), and
-the button changes from *Set as current theme* to **Install theme**, which runs
-`omarchy theme install` on the repo. That clones and applies it, so the theme
-moves into the installed column and becomes current in one step.
+the button changes from *Set as current theme* to **Install theme**. The server
+fetches the exact commit recorded in the catalogue, checks it out in a temporary
+directory, verifies its SHA, then places the theme under the user themes folder
+and applies it. The theme moves into the installed column and becomes current.
 
 The slug is what ties the two lists together: the build script derives it the
 same way `omarchy-theme-install` does, so a theme you have already installed
 drops out of the extra column instead of appearing twice. The page sends only
-that slug — the URL handed to `git clone` is looked up in the shipped
-`extra-themes.json`, never taken from the request, and an install over an
-already-installed slug is refused, since `omarchy-theme-install` would `rm -rf`
-the local copy first.
+that slug — the repository URL and 40-character commit are looked up in the
+shipped `extra-themes.json`, never taken from the request. Entries without both
+are hidden, and an install over an already-installed slug is refused. If a
+pinned commit is no longer fetchable, installation fails without adding a theme.
+Omarchy's separate `omarchy theme update` command does not manage these pinned
+checkouts; rebuild and review the catalogue to publish an updated commit.
 
 The column simply does not appear when `extra-themes.json` is missing.
 
@@ -282,7 +285,7 @@ so `rm -rf ~/.cache/omarchy-themes-explorer` if it ever bothers you.
 manual's Extra Themes page][extra], in the same shape `/api/themes` returns for
 installed ones -- palette, mode, corner rounding, icon theme, folder colour --
 so the page can render one without it being on disk. Backgrounds stay as
-GitHub URLs (`.../blob/main/backgrounds/1-pulsar-dark.jpg?raw=true`); nothing
+GitHub URLs with full commit SHAs (`.../blob/<commit>/backgrounds/1-pulsar-dark.jpg?raw=true`); nothing
 is vendored, which keeps the file around 250 KB.
 
 Rebuild it with:
@@ -298,11 +301,12 @@ Each repo is read with one blobless partial clone:
 git clone --filter=blob:limit=64k --no-checkout --depth=1 --single-branch
 ```
 
-which is about 150 KB and one round trip per theme -- 17 MB and ~30 seconds for
-all 115, then under a second on a warm cache (`.cache/extra-themes`,
+which is about 150 KB and one round trip per theme, then under a second on a
+warm cache (`.cache/extra-themes`,
 gitignored). That single clone answers everything: the default branch, the file
-list, and the config files, while the 64k filter leaves the wallpapers on
-GitHub where they belong.
+list, the exact commit and the config files, while the 64k filter leaves the
+wallpapers on GitHub where they belong. Use `--refresh` before publishing a new
+catalogue; otherwise cached repository snapshots retain their old commits.
 
 **No GitHub token is needed.** If one is around (`GITHUB_TOKEN`, `GH_TOKEN`, or
 a logged-in `gh`) each theme also gets its repo description, star count and
@@ -317,9 +321,8 @@ Some notes on what it does, since the inputs are other people's repos:
 - Slugs reproduce `omarchy-theme-install` exactly (`basename`, minus a leading
   `omarchy-` and a trailing `-theme`, lowercased). That is what lets the page
   tell that an extra theme is already installed.
-- The branch is read, never assumed. Aetheria's default branch is
-  `omarchy-aetheria-theme`, so a hardcoded `main` in the background URLs would
-  quietly 404.
+- The branch is read, never assumed, and its commit is recorded. Wallpaper URLs
+  use that commit so a later branch move cannot change the previewed files.
 - The theme root is found rather than assumed: the shallowest directory holding
   a `colors.toml` or `alacritty.toml`, for the few repos that vendor the theme
   a level down.

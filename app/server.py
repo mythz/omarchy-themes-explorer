@@ -6,6 +6,8 @@ actually installed on this machine, so the page can render each one and hand
 "make this the current theme" back to `omarchy theme set`.
 """
 
+import ctypes
+import errno
 import hmac
 import json
 import mimetypes
@@ -693,8 +695,7 @@ def extra_themes(installed):
     """Community themes from extra-themes.json that are not installed here.
 
     A slug that exists locally is dropped rather than shown twice: the local
-    copy is the one the page can actually apply, and `omarchy theme install`
-    would overwrite it. Slugs match because the build script derives them the
+    copy is the one the page can actually apply. Slugs match because the build script derives them the
     same way omarchy-theme-install does.
     """
     try:
@@ -709,20 +710,82 @@ def extra_themes(installed):
         t
         for t in themes
         if isinstance(t, dict) and t.get("slug") and t["slug"] not in installed
+        and valid_extra_source(t)
     ]
 
 
-def extra_repo(slug):
-    """The clone URL we published for this slug, or "" if we did not publish one.
+def valid_extra_source(theme):
+    """Only expose catalogue entries bound to one immutable GitHub commit."""
+    return bool(
+        isinstance(theme.get("repo"), str)
+        and re.fullmatch(r"https://github\.com/[\w.-]+/[\w.-]+", theme["repo"])
+        and isinstance(theme.get("commit"), str)
+        and re.fullmatch(r"[0-9a-f]{40}", theme["commit"])
+    )
+
+
+def extra_source(slug):
+    """The repository and commit we published for this slug, or None.
 
     The page sends a slug and never a URL: the thing about to be handed to
-    `git clone` has to come from a file we shipped, not from the request.
+    Git has to come from a file we shipped, not from the request.
     """
     for theme in extra_themes(set()):
         if theme["slug"] == slug:
-            repo = theme.get("repo") or ""
-            return repo if re.fullmatch(r"https://github\.com/[\w.-]+/[\w.-]+", repo) else ""
-    return ""
+            return theme["repo"], theme["commit"]
+    return None
+
+
+def publish_staged_theme(stage, destination):
+    """Linux renameat2 publishes a whole checkout without replacing a theme."""
+    libc = ctypes.CDLL(None, use_errno=True)
+    result = libc.renameat2(-100, os.fsencode(stage), -100, os.fsencode(destination), 1)
+    if result:
+        error = ctypes.get_errno()
+        if error in (errno.EEXIST, errno.ENOTEMPTY):
+            raise FileExistsError(error, os.strerror(error), str(destination))
+        raise OSError(error, os.strerror(error), str(destination))
+
+
+def install_extra_theme(slug, repo, commit):
+    """Stage and verify the catalogue commit before Omarchy can apply it."""
+    USER_THEMES.mkdir(parents=True, exist_ok=True)
+    destination = USER_THEMES / slug
+    if destination.exists() or destination.is_symlink():
+        raise FileExistsError("already installed")
+    with tempfile.TemporaryDirectory(prefix=".themes-explorer-", dir=USER_THEMES) as tmp:
+        stage = Path(tmp) / "theme"
+        stage.mkdir()
+        env = dict(
+            os.environ, GIT_TERMINAL_PROMPT="0", GIT_ASKPASS="",
+            GIT_CONFIG_NOSYSTEM="1", GIT_CONFIG_GLOBAL="/dev/null",
+            GIT_LFS_SKIP_SMUDGE="1",
+        )
+
+        def git(*args):
+            done = subprocess.run(
+                ["git", *args], cwd=stage, env=env, capture_output=True,
+                text=True, timeout=600,
+            )
+            if done.returncode:
+                raise RuntimeError((done.stderr or done.stdout).strip() or "git failed")
+            return done.stdout.strip()
+
+        git("init", "-q")
+        git("remote", "add", "origin", repo)
+        git("fetch", "-q", "--depth=1", "origin", commit)
+        git("checkout", "-q", "--detach", "FETCH_HEAD")
+        if git("rev-parse", "HEAD") != commit:
+            raise RuntimeError("fetched theme commit does not match catalogue")
+        if destination.exists() or destination.is_symlink():
+            raise FileExistsError("already installed")
+        publish_staged_theme(stage, destination)
+
+    done = subprocess.run(
+        ["omarchy", "theme", "set", slug], capture_output=True, text=True, timeout=60,
+    )
+    if done.returncode:
+        raise RuntimeError((done.stderr or done.stdout).strip() or "theme activation failed")
 
 
 # --- extra-theme wallpaper thumbnails ------------------------------------
@@ -1069,42 +1132,33 @@ class Handler(BaseHTTPRequestHandler):
             self.send_json({"ok": False, "error": "unknown theme"}, 400)
             return
 
-        # Cloning a theme someone else wrote, so the URL is looked up by slug in
-        # the file we shipped rather than taken from the request. `omarchy theme
-        # install` clones it and then applies it, which is why this answers with
-        # the same fields as /api/apply.
+        # Both the URL and exact commit come from the shipped catalogue. Omarchy's
+        # normal installer clones mutable HEAD and applies it immediately.
         if path == "/api/install":
-            repo = extra_repo(slug)
-            if not repo:
+            source = extra_source(slug)
+            if not source:
                 self.send_json({"ok": False, "error": "not a known extra theme"}, 404)
                 return
-            # omarchy-theme-install rm -rf's an existing theme of the same name
-            # before cloning. The page never offers this -- an installed slug is
-            # filtered out of the extra list -- so reaching here means a request
-            # the UI cannot produce, and it must not eat a local theme.
-            if any((root / slug).is_dir() for root in (USER_THEMES, STOCK_THEMES)):
+            if any((root / slug).exists() or (root / slug).is_symlink()
+                   for root in (USER_THEMES, STOCK_THEMES)):
                 self.send_json({"ok": False, "error": "already installed"}, 409)
                 return
             try:
-                done = subprocess.run(
-                    ["omarchy", "theme", "install", repo],
-                    capture_output=True,
-                    text=True,
-                    timeout=600,
-                )
-            except (OSError, subprocess.SubprocessError) as ex:
+                install_extra_theme(slug, *source)
+            except FileExistsError:
+                self.send_json({"ok": False, "error": "already installed"}, 409)
+                return
+            except (OSError, RuntimeError, subprocess.SubprocessError) as ex:
                 self.send_json({"ok": False, "error": str(ex)}, 500)
                 return
-            installed = any((root / slug).is_dir() for root in (USER_THEMES, STOCK_THEMES))
-            ok = done.returncode == 0 and installed
             self.send_json(
                 {
-                    "ok": ok,
+                    "ok": True,
                     "current": current_slug(),
                     "themes": discover_themes(),
-                    "error": None if ok else (done.stderr or done.stdout).strip(),
+                    "error": None,
                 },
-                200 if ok else 500,
+                200,
             )
             return
 
